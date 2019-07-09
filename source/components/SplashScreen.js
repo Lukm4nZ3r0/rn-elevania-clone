@@ -12,26 +12,6 @@ class BackgroundCarousel extends React.Component{
         }
     }
 
-    // componentDidMount = () =>{
-    //     setInterval(()=>{
-    //         this.setState(
-    //             prev=>({
-    //                 selectedIndex:
-    //                     prev.selectedIndex === this.props.images.length - 1 
-    //                         ? 0 
-    //                         : prev.selectedIndex + 1
-    //                     }),
-    //                     ()=>{
-    //                         this.scrollRef.current.scrollTo({
-    //                             animated: true,
-    //                             y: 0,
-    //                             x: DEVICE_WIDTH + this.state.selectedIndex
-    //                         })
-    //                     }
-    //         )
-    //     },3000)
-    // }
-
     setSelectedIndex = event =>{
         // width of the viewSize
         const viewSize = event.nativeEvent.layoutMeasurement.width
@@ -106,7 +86,10 @@ const images = [
     "https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
     ];
 
-class Index extends React.Component{
+class SplashScreen extends React.Component{
+    static navigationOptions = {
+        header:null
+    }
     render(){
         return(
             <View>
@@ -116,4 +99,4 @@ class Index extends React.Component{
     }
 }
 
-export default Index
+export default SplashScreen

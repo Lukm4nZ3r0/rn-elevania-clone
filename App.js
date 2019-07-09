@@ -10,7 +10,7 @@ import {
 
 import {Provider} from 'react-redux'
 import store from './source/publics/redux/store'
-import Index from './source/components/Index'
+import Index from './source/screens/Index'
 
 class App extends Component{
   render(){

@@ -183,7 +183,7 @@ class Register extends Component{
                                 <Text style={{fontSize:16, color:'#a7a9ab'}}>Ingin berjualan di elevAAAnia?</Text>
                                 <Text style={{fontSize:20, color:'#a7a9ab'}}>Daftar Sebagai Seller</Text>
                                 {sellerCategory.map(seller=>
-                                <TouchableOpacity key={seller.id} style={{margin:10, borderWidth:1, borderColor:'grey', alignItems: 'center', justifyContent:'center', width:'100%', padding:15}}>
+                                <TouchableOpacity key={seller.id} style={{margin:10, height:70, borderWidth:1, borderColor:'grey', alignItems: 'center', justifyContent:'center', width:'100%', padding:15}}>
                                     <View style={{ flexDirection:'row', alignItems: 'center', justifyContent:'center'}}>
                                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
                                         <Image 
@@ -192,7 +192,7 @@ class Register extends Component{
                                         />
                                         </View>
                                         <View style={{flex:2}}>
-                                            <Text style={{fontSize:20, color:'black'}}>{seller.titleID}</Text>
+                                            <Text style={{fontSize:20, color:'black', fontWeight:'bold'}}>{seller.titleID}</Text>
                                             <Text style={{fontSize:18, color:'black'}}>{seller.titleEN}</Text>
                                         </View>
                                     </View>

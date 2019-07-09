@@ -3,11 +3,17 @@ import {View,Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 class Login extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            login:false
+        }
+    }
     static navigationOptions = {
         header:null
     }
     componentDidMount(){
-        // this.props.navigation.navigate('SplashScreen')
+        this.props.navigation.navigate('SplashScreen', {navigation:this.props.navigation})
     }
     render(){
         return(

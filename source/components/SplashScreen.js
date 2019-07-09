@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {View, Text, ScrollView, Dimensions, Image, StyleSheet} from 'react-native'
+import {View, Text, ScrollView, Dimensions, Image, StyleSheet, TouchableOpacity} from 'react-native'
 
 const DEVICE_WIDTH = Dimensions.get('window').width
 
@@ -36,11 +36,21 @@ class BackgroundCarousel extends React.Component{
                     {images.map(image =>(
                         <Image 
                             key={image}
-                            source={{uri: image}}
+                            source={{uri:image}}
                             style={styles.backgroundImage}
                         />
                     ))}
                 </ScrollView>
+
+                {this.state.selectedIndex == this.props.images.length-1 &&
+                <TouchableOpacity 
+                    onPress={()=>this.props.navigation.goBack()} 
+                    style={{position:'absolute', padding:10, bottom:'10%', marginLeft:'30%', marginRight:'30%', backgroundColor:'green', alignItems:'center', justifyContent:'center'}}
+                >
+                    <Text style={{color:'white', fontWeight:'bold'}}>GETTING STARTED</Text>
+                </TouchableOpacity>
+                }
+
                 <View style={styles.circleDiv}>
                     {images.map((image,i)=>(
                         <View
@@ -61,7 +71,7 @@ const styles = StyleSheet.create({
     },
     circleDiv:{
         position:'absolute',
-        bottom:15,
+        bottom:35,
         height:10,
         width:'100%',
         display:'flex',
@@ -70,20 +80,19 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     whiteCircle:{
-        width:6,
-        height:6,
-        borderRadius:3,
+        width:25,
+        height:25,
+        borderRadius:25,
         margin:5,
-        backgroundColor:'#fff'
+        backgroundColor:'orange'
     }
 })
 
 const images = [
-    "https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-    "https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80",
-    "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-    "https://images.unsplash.com/photo-1429087969512-1e85aab2683d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-    "https://images.unsplash.com/photo-1505678261036-a3fcc5e884ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+    "https://drive.google.com/open?id=1zW1WdZjo28P0ZHaumZ10BTUH9spQ_l8y",
+    "https://drive.google.com/open?id=1sDl1_1N1sGwTCI6IMhk1bsuphPD50lOf",
+    "https://drive.google.com/open?id=1-Vy5BCPizXlqolxcFeIcoDntfYuTZNST",
+    "https://drive.google.com/open?id=1laONWJUZpGTeKKrmSv5VjdWXWa86jcxT",
     ];
 
 class SplashScreen extends React.Component{
@@ -93,7 +102,7 @@ class SplashScreen extends React.Component{
     render(){
         return(
             <View>
-                <BackgroundCarousel images={images}/>
+                <BackgroundCarousel images={images} navigation={this.props.navigation}/>
             </View>
         )
     }

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {View} from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import Auth from '../components/Auth'
+import SplashScreen from '../components/SplashScreen'
 import Register from '../components/Register'
 import Profile from '../components/Profile'
 import EditProfile from '../components/EditProfile'
@@ -10,11 +11,15 @@ import AddAddress from '../components/AddAddress'
 import ChangePassword from '../components/ChangePassword'
 import ProductCategory from '../components/ProductCategory'
 
-import SplashScreen from '../components/SplashScreen'
-
 const AppNavigator = createStackNavigator({
     Category: {
         screen:ProductCategory
+    },
+    Auth:{
+        screen:Auth
+    },
+    SplashScreen:{
+        screen:SplashScreen
     },
     Profile:{
         screen:Profile
@@ -27,12 +32,6 @@ const AppNavigator = createStackNavigator({
     },
     ChangePassword:{
         screen:ChangePassword
-    },
-    Auth:{
-        screen:Auth
-    },
-    SplashScreen:{
-        screen:SplashScreen
     },
     Register:{
         screen:Register

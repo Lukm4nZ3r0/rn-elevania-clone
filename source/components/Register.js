@@ -8,7 +8,7 @@ class Register extends Component{
         super(props);
         this.state = {
           isDateTimePickerVisible: false,
-          birthDate:[],
+          birthDate:'',
           gender:'',
           defaultRole:'buyer'
         }
@@ -75,6 +75,11 @@ class Register extends Component{
                 imageLink:'http://www.elevenia.co.id/img_11ia/member/ic-global.png'
             },
         ]
+
+        
+        let newDate = new Date(this.state.birthDate).toString().split(' ')
+        newDate = newDate[2]+'-'+newDate[1]+'-'+newDate[3]
+
         return(
             <View style={{flex:1, backgroundColor:'#e8eaed'}}>
                 <View style={{flex:1, flexDirection:'row', alignItems:'center', justifyContent: 'center'}}>
@@ -142,7 +147,7 @@ class Register extends Component{
                                     <View style={{flex:1, marginTop:20, width:'100%', alignItems:'center', justifyContent:'center'}}>
                                         <TouchableOpacity style={{flex:1, flexDirection:'row', alignContent:'flex-start', width:'85%'}} onPress={this.showDateTimePicker}>
                                             <View style={{flex:1}}>
-                                                <Text>Tanggal Lahir</Text>
+                                                <Text>{this.state.birthDate == '' ?'Tanggal Lahir': newDate}</Text>
                                             </View>
                                             <FontAwesome name="sort-down"/>
                                         </TouchableOpacity>

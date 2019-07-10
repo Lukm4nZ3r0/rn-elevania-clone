@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import {View} from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-import Login from '../components/Login'
+import Auth from '../components/Auth'
 import Register from '../components/Register'
 
 import SplashScreen from '../components/SplashScreen'
 
 const AppNavigator = createStackNavigator({
-    Login:{
-        screen:Login
+    Auth:{
+        screen:Auth
     },
     SplashScreen:{
         screen:SplashScreen

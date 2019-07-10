@@ -1,20 +1,37 @@
 import React, {Component} from 'react'
-import {View,Text, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView} from 'react-native'
+import {View,Text, TextInput, TouchableOpacity, ScrollView} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import HomeScreen from './HomeScreen'
 
-class Login extends Component {
+class Auth extends Component {
     constructor(props){
         super(props)
         this.state = {
-            login:false
+            login:true
         }
     }
     static navigationOptions = {
         header:null
     }
     componentDidMount(){
-        this.props.navigation.navigate('SplashScreen', {navigation:this.props.navigation})
+        this.state.login == false && this.props.navigation.navigate('SplashScreen', {navigation:this.props.navigation})
     }
+    logoutEvent = () =>{
+        this.setState({login:false})
+    }
+    loginEvent = () =>{
+        this.setState({login:true})
+    }
+    render(){
+        return(
+            <View style={{flex:1}}>
+            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen loginEvent={this.loginEvent} navigation={this.props.navigation} />}
+            </View>
+        )
+    }
+}
+
+class LoginScreen extends Component{
     render(){
         return(
             <View style={{flex:1, backgroundColor:'#e8eaed'}}>
@@ -44,7 +61,7 @@ class Login extends Component {
                         <View style={{ width:'100%', alignItems:'center', justifyContent:'center'}}>
                             <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Email" />
                             <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Password" />
-                            <TouchableOpacity style={{marginTop:20,width:'90%', alignItems:'center', justifyContent: 'center', padding:10, borderRadius:5, backgroundColor:'orange'}}>
+                            <TouchableOpacity style={{marginTop:20,width:'90%', alignItems:'center', justifyContent: 'center', padding:10, borderRadius:5, backgroundColor:'orange'}} onPress={this.props.loginEvent}>
                                 <Text style={{color:'white', fontSize:20}}>Login</Text>
                             </TouchableOpacity>
                             <Text style={{fontSize:17, color:'orange', marginTop:15, marginBottom:20, fontWeight:'bold'}}>Lupa Password?</Text>
@@ -56,4 +73,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default Auth

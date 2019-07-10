@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import Home from './Home'
+import DrawerCustom from './DrawerCustom'
 import {
     createDrawerNavigator,
     createAppContainer,
@@ -18,6 +19,9 @@ const homeNavigator = createDrawerNavigator(
         Home:{
             screen: homeStack
         }
+    },
+    {
+        contentComponent: DrawerCustom
     }
 )
 

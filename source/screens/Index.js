@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {View} from 'react-native'
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import Auth from '../components/Auth'
+import SplashScreen from '../components/SplashScreen'
 import Register from '../components/Register'
 import Profile from '../components/Profile'
 import EditProfile from '../components/EditProfile'
@@ -9,9 +10,13 @@ import Header from '../components/Header'
 import AddAddress from '../components/AddAddress'
 import ChangePassword from '../components/ChangePassword'
 
-import SplashScreen from '../components/SplashScreen'
-
 const AppNavigator = createStackNavigator({
+    Auth:{
+        screen:Auth
+    },
+    SplashScreen:{
+        screen:SplashScreen
+    },
     Profile:{
         screen:Profile
     },
@@ -23,12 +28,6 @@ const AppNavigator = createStackNavigator({
     },
     ChangePassword:{
         screen:ChangePassword
-    },
-    Auth:{
-        screen:Auth
-    },
-    SplashScreen:{
-        screen:SplashScreen
     },
     Register:{
         screen:Register

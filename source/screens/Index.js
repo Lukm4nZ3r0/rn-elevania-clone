@@ -9,8 +9,12 @@ import EditProfile from '../components/EditProfile'
 import Header from '../components/Header'
 import AddAddress from '../components/AddAddress'
 import ChangePassword from '../components/ChangePassword'
+import ProductCategory from '../components/ProductCategory'
 
 const AppNavigator = createStackNavigator({
+    Category: {
+        screen:ProductCategory
+    },
     Auth:{
         screen:Auth
     },

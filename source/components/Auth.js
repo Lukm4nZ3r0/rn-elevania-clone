@@ -2,12 +2,16 @@ import React, {Component} from 'react'
 import {View,Text, TextInput, TouchableOpacity, ScrollView} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import HomeScreen from './HomeScreen'
+import { connect } from 'react-redux'
+import { login } from '../publics/redux/actions/user'
 
 class Auth extends Component {
     constructor(props){
         super(props)
         this.state = {
-            login:true
+            login:false,
+            email:'',
+            password:''
         }
     }
     static navigationOptions = {
@@ -20,12 +24,15 @@ class Auth extends Component {
         this.setState({login:false})
     }
     loginEvent = () =>{
-        this.setState({login:true})
+        this.props.dispatch( login ( this.state.email,this.state.password ));
+        if(this.props.user.data) this.setState({login:'true'})   
     }
+    setEmail = (text) => this.setState({email: text})
+    setPassword = (text)=> this.setState({password: text})
     render(){
         return(
             <View style={{flex:1}}>
-            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen loginEvent={this.loginEvent} navigation={this.props.navigation} />}
+            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen loginEvent={this.loginEvent} setEmail={this.setEmail} setPassword={this.setPassword} navigation={this.props.navigation} />}
             </View>
         )
     }
@@ -59,8 +66,8 @@ class LoginScreen extends Component{
                             </View>
                         </View>
                         <View style={{ width:'100%', alignItems:'center', justifyContent:'center'}}>
-                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Email" />
-                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Password" />
+                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Email" onChangeText ={this.props.setEmail}/>
+                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Password" onChangeText={this.props.setPassword} />
                             <TouchableOpacity style={{marginTop:20,width:'90%', alignItems:'center', justifyContent: 'center', padding:10, borderRadius:5, backgroundColor:'orange'}} onPress={this.props.loginEvent}>
                                 <Text style={{color:'white', fontSize:20}}>Login</Text>
                             </TouchableOpacity>
@@ -72,5 +79,9 @@ class LoginScreen extends Component{
         )
     }
 }
-
-export default Auth
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+  }
+export default connect(mapStateToProps)(Auth)

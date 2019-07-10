@@ -26,7 +26,44 @@ class Home extends Component{
                 {
                     imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070811000838746_9793495_1.jpg'
                 }
-            ]
+            ],
+            categoryHeader:[
+                {
+                    key:0,
+                    category:'Home'
+                },
+                {
+                    key:1,
+                    category:'Top 100'
+                },
+                {
+                    key:2,
+                    category:'Daily Deals'
+                },
+                {
+                    key:3,
+                    category:'E-Mart'
+                }
+            ],
+            anotherFeature:[
+                {
+                    key:0,
+                    feature:'Pulsa'
+                },
+                {
+                    key:1,
+                    feature:'Paket Data'
+                },
+                {
+                    key:2,
+                    feature:'PLN'
+                },
+                {
+                    key:3,
+                    feature:'Voucher'
+                }
+            ],
+            selectedFeature:0
         }
     }
     static navigationOptions = ({navigation}) => {
@@ -36,7 +73,7 @@ class Home extends Component{
                 elevation:0
             },
             headerLeft: (
-                <TouchableOpacity style={{marginLeft:15}}>
+                <TouchableOpacity style={{marginLeft:15}} onPress={()=>navigation.openDrawer()}>
                     <FontAwesome style={{fontSize:25, color:'white'}} name="bars" />
                 </TouchableOpacity>
             ),
@@ -88,20 +125,13 @@ class Home extends Component{
         return(
             <View style={{flex:1}}>
                 <View style={{flexDirection:'row', backgroundColor:'#ff8040', padding:15}}>
-                    <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                        <Text style={{color:'white'}}>Home</Text>
-                    </View>
-                    <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                        <Text style={{color:'white'}}>Top 100</Text>
-                    </View>
-                    <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                        <Text style={{color:'white'}}>Daily Deals</Text>
-                    </View>
-                    <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                        <Text style={{color:'white'}}>E-Mart</Text>
-                    </View>
+                    {this.state.categoryHeader.map((item,i)=>
+                        <TouchableOpacity key={item.key} style={{flex:1,alignItems:'center', justifyContent:'center'}}>
+                            <Text style={{color:'white'}}>{item.category}</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
-                <ScrollView style={{flex:15, backgroundColor:'#e8eaed'}}>
+                <ScrollView style={{flex:15, backgroundColor:'#e8eaed', height:'100%'}}>
                     <View style={{height:175}}>
                         <Carousel
                             ref={ref=>this.carousel = ref}
@@ -113,33 +143,23 @@ class Home extends Component{
                                 index=>this.setState({activeIndex:index})
                             }
                         />
-                        <View style={{position:'absolute', flexDirection:'row', backgroundColor:'grey', width:'35%', bottom:0, right:0}}>
+                        <View style={{position:'absolute', flexDirection:'row', backgroundColor:'grey', width:'35%', bottom:0, right:0, padding:5}}>
                             <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><FontAwesome style={{color:'white', fontSize:15}} name="list" /></View>
-                            <View style={{flex:3, alignItems:'center', justifyContent:'center'}}><Text style={{color:'white', fontSize:15}}>Semua Promo</Text></View>
+                            <View style={{flex:3, alignItems:'center', justifyContent:'center'}}><Text style={{color:'white', fontSize:11}}>Semua Promo</Text></View>
                         </View>
                         <View style={{position:'absolute', flexDirection:'row', bottom:20, left:10}}>
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
+                            {this.state.carouselItems.map((item,i)=>
+                                <View key={i} style={{width:8, height:8, borderRadius:25, backgroundColor: this.state.activeIndex == i ? '#ff8040' : '#e8eaed', margin:3}} />
+                            )}
                         </View>
                     </View>
                     <View style={{flexDirection:'row', backgroundColor:'white', padding:15}}>
-                        <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                            <View style={{height:25}}><Text style={{color:'orange'}}>Pulsa</Text></View>
-                            <View style={{marginTop:10, width:'100%', height:1, backgroundColor:'orange'}} />
-                        </View>
-                        <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                            <View style={{height:25}}><Text style={{color:'black'}}>Paket Data</Text></View>
-                            <View style={{marginTop:10, width:'100%', height:1, backgroundColor:'white'}} />
-                        </View>
-                        <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                            <View style={{height:25}}><Text style={{color:'black'}}>PLN</Text></View>
-                            <View style={{marginTop:10, width:'100%', height:1, backgroundColor:'white'}} />
-                        </View>
-                        <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                            <View style={{height:25}}><Text style={{ color:'black'}}>Voucher</Text></View>
-                            <View style={{marginTop:10, width:'100%', height:1, backgroundColor:'white'}} />
-                        </View>
+                        {this.state.anotherFeature.map((feature,i)=>
+                        <TouchableOpacity onPress={()=>this.setState({selectedFeature:feature.key})} key={feature.key} style={{flex:1,alignItems:'center', justifyContent:'center'}}>
+                            <View style={{height:25}}><Text style={{color: this.state.selectedFeature == i ? 'orange' : 'grey', fontSize:10}}>{feature.feature}</Text></View>
+                            <View style={{marginTop:10, width:'100%', height:1, backgroundColor: this.state.selectedFeature == i ? 'orange' : 'white'}} />
+                        </TouchableOpacity>
+                        )}
                         <View style={{flex:1,alignItems:'center', justifyContent:'center'}}>
                             <View style={{height:25}}><FontAwesome style={{color:'black', fontSize:25}} name="ellipsis-h"/></View>
                             <View style={{marginTop:10, width:'100%', height:1, backgroundColor:'white'}} />
@@ -155,12 +175,12 @@ class Home extends Component{
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{marginTop:10, backgroundColor:'white', width:'100%'}}>
+                    <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
                         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>Special Corners</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
                         </View>
-                        <ScrollView style={{padding:10}} horizontal={true}>
+                        <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
                             <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
                                 <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
                                 <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>

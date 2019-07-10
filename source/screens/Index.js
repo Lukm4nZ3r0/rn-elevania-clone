@@ -10,10 +10,11 @@ import Header from '../components/Header'
 import AddAddress from '../components/AddAddress'
 import ChangePassword from '../components/ChangePassword'
 import ProductCategory from '../components/ProductCategory'
+import DetailProduct from '../components/DetailProduct'
 
 const AppNavigator = createStackNavigator({
     Category: {
-        screen:ProductCategory
+        screen:DetailProduct
     },
     Auth:{
         screen:Auth

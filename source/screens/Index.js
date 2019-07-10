@@ -8,10 +8,14 @@ import EditProfile from '../components/EditProfile'
 import Header from '../components/Header'
 import AddAddress from '../components/AddAddress'
 import ChangePassword from '../components/ChangePassword'
+import ProductCategory from '../components/ProductCategory'
 
 import SplashScreen from '../components/SplashScreen'
 
 const AppNavigator = createStackNavigator({
+    Category: {
+        screen:ProductCategory
+    },
     Profile:{
         screen:Profile
     },

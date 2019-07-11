@@ -3,7 +3,7 @@ import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} fr
 import { Tab, Header, Input, Left, Right, Title, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, ListItem} from 'native-base';
 import SwitchToggle from 'react-native-switch-toggle';
 
-class AddAddress extends Component{
+class EditAddress extends Component{
     state = {
         province : '',
         city : '',
@@ -35,7 +35,7 @@ class AddAddress extends Component{
             width: '100%',
             textAlign: 'left',
             color: 'white',
-            fontWeight:'bold'
+            fontWeight:'bold',
         },
         headerStyle: {
             backgroundColor : '#ff8040'
@@ -154,14 +154,19 @@ class AddAddress extends Component{
                 />
                 </Right>
             </ListItem>
-          <Button
-            onPress={()=> this.props.navigation.goBack()} 
-            style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}>
+            <View style={{marginTop:'5%'}}>
+            <Button onPress={()=> this.props.navigation.goBack()}style={{width: '90%', borderWidth:1, borderColor:'#ff8040', backgroundColor: 'white', alignSelf:'center', justifyContent:'center'}}>
+              <Text style={{color:'#ff8040'}}>Hapus Alamat Ini</Text>
+            </Button>
+            </View>
+            <View style={{marginTop:'5%'}}>
+            <Button style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}} onPress={()=>this.props.navigation.goBack()}>
               <Text>Simpan</Text>
             </Button>
+            </View>
         </Container>
         )
     }
 }
 
-export default AddAddress
+export default EditAddress

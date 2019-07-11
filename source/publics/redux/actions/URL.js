@@ -1,3 +1,3 @@
-const URL = 'http://192.168.100.22:4000'
+const URL = 'http://192.168.100.67:3000'
 
 export default URL

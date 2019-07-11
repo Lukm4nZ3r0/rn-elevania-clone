@@ -63,7 +63,14 @@ class Home extends Component{
                     feature:'Voucher'
                 }
             ],
-            selectedFeature:0
+            selectedFeature:0,
+            product:[
+                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
+                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
+                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
+                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
+                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
+            ]
         }
     }
     static navigationOptions = ({navigation}) => {
@@ -85,7 +92,7 @@ class Home extends Component{
                     </View>
 
                     {/* stock yg masukin ke cart */}
-                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Cart')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="cart-arrow-down"/>
                         <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>4</Text>
@@ -176,31 +183,18 @@ class Home extends Component{
                         </View>
                     </View>
                     <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
-                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory')} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>Special Corners</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
-                        </View>
+                        </TouchableOpacity>
                         <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
-                            </View>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
-                            </View>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
-                            </View>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
-                            </View>
+                            {this.state.product.map((item,i)=>
+                                <TouchableOpacity key={i} style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}} onPress={()=>this.props.navigation.navigate('DetailProduct')}>
+                                    <Image style={{width:100, height:100}} source={{uri:item.url}} />
+                                    <Text style={{color:'grey'}} numberOfLines={2}>{item.productName}</Text>
+                                    <Text style={{fontSize:15, marginTop:15}}>Rp {item.price}</Text>
+                                </TouchableOpacity>
+                            )}
                         </ScrollView>
                     </View>
                 </ScrollView>

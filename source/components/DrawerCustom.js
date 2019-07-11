@@ -12,7 +12,7 @@ class DrawerCustom extends Component{
             >
                 <ScrollView style={{backgroundColor:'#EEEEEE'}}>
                 <View style={{flex:1, alignItems: 'center',justifyContent: 'center',width:'100%',padding:25, backgroundColor:'#191D28', }}>
-                    <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}} onPress={()=>this.props.navigation.navigate('Profile')}>
                         <View style={{flex:1}}>
                             <Image style={{width:50, height:50, borderRadius:40}} source={{uri:'https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png'}} />
                         </View>
@@ -20,24 +20,24 @@ class DrawerCustom extends Component{
                             <Text style={{color:'white', fontSize:20}}>Your Name</Text>
                             <Text style={{color:'white'}}>your_email@example.com</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', width:'100%', backgroundColor:'#191D28'}}>
-                    <View style={{flex:1,padding:10, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
+                    <TouchableOpacity style={{flex:1,padding:10, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.closeDrawer()}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="home" />
                         <Text style={{fontSize:12, color:'white'}}>Home</Text>
-                    </View>
-                    <View style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Profile')}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="user" />
                         <Text style={{fontSize:12, color:'white'}}>My elevenia</Text>
-                    </View>
-                    <View style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Notifications')}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="bell" />
                         <View style={{position:'absolute', width:25, height:25, borderRadius:15, backgroundColor:'#FD7D1D', alignItems:'center', justifyContent:'center', top:10, right:20}}>
                             <Text style={{fontSize:13, color:'white'}}>6</Text>
                         </View>
                         <Text style={{fontSize:12, color:'white'}}>Notification</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
                     <View style={{flex:1,alignItems:'center', justifyContent:'center'}}><FontAwesome style={{fontSize:20, color:'#777777'}} name="th"/></View>

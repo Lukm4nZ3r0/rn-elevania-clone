@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {View,Text, TextInput, TouchableOpacity, ScrollView, Image} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import DateTimePicker from "react-native-modal-datetime-picker"
+import { connect } from 'react-redux'
+import { register } from '../publics/redux/actions/user'
 
 class Register extends Component{
     constructor(props) {
@@ -125,22 +127,22 @@ class Register extends Component{
                                         </View>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
-                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Name"/>
+                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Name" onChangeText={(text)=>this.setState({nama:text})}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
-                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Email"/>
+                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Email" onChangeText={(text)=>this.setState({email:text})}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
-                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Password"/>
+                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Password" onChangeText={(text)=>this.setState({password:text})}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
-                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Konfirmasi Password"/>
+                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Konfirmasi Password" onChangeText={(text)=>this.setState({confirmPassword:text})}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
                                         <View style={{flex:1, flexDirection:'row', alignItems:'center', justifyContent:'center', width:'90%'}}>
-                                            <TextInput style={{flex:1, width:'100%'}} placeholder="08XX"/>
+                                            <TextInput style={{flex:1, width:'100%'}} placeholder="08XX" onChangeText={(text)=>this.setState({preNumber:text})}/>
                                             <Text style={{flex:1, textAlign:'center'}}>-</Text>
-                                            <TextInput style={{flex:5, width:'100%'}} placeholder="Nomor Ponsel"/>
+                                            <TextInput style={{flex:5, width:'100%'}} placeholder="Nomor Ponsel" onChangeText={(text)=>this.setState({number:text})}/>
                                         </View>
                                         <View style={{width:'88%', height:1, backgroundColor:'#a7a9ab'}} />
                                     </View>
@@ -155,6 +157,7 @@ class Register extends Component{
                                             isVisible={this.state.isDateTimePickerVisible}
                                             onConfirm={this.handleDatePicked}
                                             onCancel={this.hideDateTimePicker}
+                                            onPress
                                         />
                                         <View style={{width:'88%', height:1, backgroundColor:'grey', marginTop:15}} />
                                     </View>

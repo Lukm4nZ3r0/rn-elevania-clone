@@ -93,7 +93,7 @@ class Home extends Component{
                     </TouchableOpacity>
 
                     {/* notifikasi */}
-                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Notifications')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="bell"/>
                         <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>6</Text>
@@ -183,23 +183,23 @@ class Home extends Component{
                         <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
                             <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
                                 <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
+                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
+                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
                             </View>
                             <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
                                 <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
+                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
+                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
                             </View>
                             <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
                                 <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
+                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
+                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
                             </View>
                             <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
                                 <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
+                                <Text style={{color:'grey'}} numberOfLines={2}>Sepatu Supreme Masa Kini</Text>
+                                <Text style={{fontSize:15, marginTop:15}}>Rp 99.000</Text>
                             </View>
                         </ScrollView>
                     </View>

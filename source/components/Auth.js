@@ -7,7 +7,8 @@ class Auth extends Component {
     constructor(props){
         super(props)
         this.state = {
-            login:true
+            login:true,
+            username:''
         }
     }
     static navigationOptions = {
@@ -22,10 +23,13 @@ class Auth extends Component {
     loginEvent = () =>{
         this.setState({login:true})
     }
+    setUsername = (text) =>{
+        this.setState({username:text})
+    }
     render(){
         return(
             <View style={{flex:1}}>
-            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen loginEvent={this.loginEvent} navigation={this.props.navigation} />}
+            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen setUsername={this.setUsername} loginEvent={this.loginEvent} navigation={this.props.navigation} />}
             </View>
         )
     }
@@ -59,7 +63,7 @@ class LoginScreen extends Component{
                             </View>
                         </View>
                         <View style={{ width:'100%', alignItems:'center', justifyContent:'center'}}>
-                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Email" />
+                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Email" onChangeText={this.props.setUsername} />
                             <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Password" />
                             <TouchableOpacity style={{marginTop:20,width:'90%', alignItems:'center', justifyContent: 'center', padding:10, borderRadius:5, backgroundColor:'orange'}} onPress={this.props.loginEvent}>
                                 <Text style={{color:'white', fontSize:20}}>Login</Text>

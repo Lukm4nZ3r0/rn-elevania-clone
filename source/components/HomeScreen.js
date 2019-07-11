@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import Home from './Home'
+import Notifications from './Notifications'
 import DrawerCustom from './DrawerCustom'
 import {
     createDrawerNavigator,
@@ -11,6 +12,9 @@ import {
 const homeStack = createStackNavigator({
     Home:{
         screen: Home
+    },
+    Notifications:{
+        screen: Notifications
     }
 })
 

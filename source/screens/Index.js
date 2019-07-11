@@ -12,11 +12,11 @@ import ChangePassword from '../components/ChangePassword'
 import ProductCategory from '../components/ProductCategory'
 
 const AppNavigator = createStackNavigator({
-    Category: {
-        screen:ProductCategory
-    },
     Auth:{
         screen:Auth
+    },
+    Category: {
+        screen:ProductCategory
     },
     SplashScreen:{
         screen:SplashScreen

@@ -1,14 +1,17 @@
 import React, {Component} from 'react'
-import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} from 'react-native'
+import {View, FlatList, Image, List, TextInput, ScrollView} from 'react-native'
 import { CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, ListItem} from 'native-base';
 // import FontAwesome from 'react-native-vector-icons/FontAwesome'
 // import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import Header from './Header'
 import Bar from './Bar'
-
+import {connect} from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Profile extends Component{
-    static navigationOptions = {
+    
+    componentDidMount = () => {}
+    static navigationOptions = ({ navigation }) => ({
         headerTitle: 'My Elevania',
         headerTitleStyle: { 
             width: '100%',
@@ -29,12 +32,12 @@ class Profile extends Component{
                 <TouchableOpacity >
                     <Icon name='ios-search' style={{fontSize:30, textAlign: 'right', marginRight: 20, fontWeight:'bold', color: 'white'}}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                     <Icon name='ios-cart' style={{fontSize:30, textAlign: 'right', color: 'white', fontWeight:'bold'}}/>
                 </TouchableOpacity>
             </ListItem>
         ),
-    }
+    })
 
     state = {
         dataMenu: [
@@ -48,8 +51,9 @@ class Profile extends Component{
           { id: "05", size: 'small',name: "QnA / Ulasan" , icon: "../assets/icon_qna_my_elevenia.png"},
         ],
       };
-
+    
     render(){
+        // this.props.navigation.navigate('Cart')
         return(
             <Container>
             <View style={{flex:1}}>
@@ -104,7 +108,7 @@ class Profile extends Component{
                                 backgroundColor : 'white' 
                                 }}
                             >
-                                <TouchableOpacity>
+                                <TouchableOpacity >
                                  <ListItem style={{marginLeft:'-2%'}}>
                                     <Image style={{
                                         height: 30,
@@ -126,4 +130,12 @@ class Profile extends Component{
     }
 }
 
-export default Profile
+const mapStateToProps = (state) =>{
+    return {
+        notes : state.notes,
+        categories : state.categories
+    }
+  }
+  
+export default connect(mapStateToProps)(Profile)
+  

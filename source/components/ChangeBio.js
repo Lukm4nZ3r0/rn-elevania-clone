@@ -3,10 +3,10 @@ import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} fr
 import { Tab, Header, Input, Left, Right, Title, Footer, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, ListItem} from 'native-base';
 import SwitchToggle from 'react-native-switch-toggle';
 
-class ChangePassword extends Component{
+class ChangeBio extends Component{
     
     static navigationOptions = {
-        headerTitle: 'Ubah Password',
+        headerTitle: 'Biodata',
         headerTintColor: 'white',
         headerTitleStyle: { 
             width: '100%',
@@ -32,28 +32,29 @@ class ChangePassword extends Component{
     render(){
         return(
           <Container>
+            <Content>
             <Form>
-            <Item floatingLabel>
-              <Label>Nomor Ponsel</Label>
+            <Item stackedLabel>
+                <Label>Nomor Ponsel</Label>
+                <View style={{flexDirection:'row'}}>
                 <TextInput style={{flex:1, width:'100%'}} placeholder="08XX"/>
-                <Text style={{flex:1, textAlign:'center'}}>-</Text>
+                <Text style={{flex:1, textAlign:'center', marginTop:'3%'}}>-</Text>
                 <TextInput style={{flex:5, width:'100%'}} placeholder="Nomor Ponsel"/>
+                </View>
             </Item>
             <Item floatingLabel>
-              <Label>Password Baru</Label>
-              <Input secureTextEntry/>
+              <Label>Jenis Kelamin</Label>
+              <Input value={'Pria'}/>
             </Item>
             <Item floatingLabel >
-              <Label>Konfirm Password Baru</Label>
-              <Input secureTextEntry/>
+              <Label>Tanggal Lahir</Label>
+              <Input value={'7-Juni-2006'}/>
             </Item>
             </Form>
-            <Item>
-              <Text style={{color:'grey', fontSize:12, padding:12}}>*Password harus terdiri dari 6 karakter atau lebih</Text>
-            </Item>
+            </Content>
             <Footer style={{backgroundColor:'white'}}>
             <Button style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}>
-              <Text>Konfirmasi</Text>
+              <Text>Simpan</Text>
             </Button>
             </Footer>
         </Container>
@@ -61,4 +62,4 @@ class ChangePassword extends Component{
     }
 }
 
-export default ChangePassword
+export default ChangeBio

@@ -27,10 +27,12 @@ class DrawerCustom extends Component{
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="home" />
                         <Text style={{fontSize:12, color:'white'}}>Home</Text>
                     </View>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Profile')} >
                     <View style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
-                        <FontAwesome style={{ fontSize:35, color:'white'}} name="user" />
+                       <FontAwesome style={{ fontSize:35, color:'white'}} name="user" />
                         <Text style={{fontSize:12, color:'white'}}>My elevenia</Text>
                     </View>
+                    </TouchableOpacity>
                     <View style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="bell" />
                         <View style={{position:'absolute', width:25, height:25, borderRadius:15, backgroundColor:'#FD7D1D', alignItems:'center', justifyContent:'center', top:10, right:20}}>

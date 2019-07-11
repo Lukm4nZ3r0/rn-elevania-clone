@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import Home from './Home'
+import Profile from './Profile'
+
 import DrawerCustom from './DrawerCustom'
 import {
     createDrawerNavigator,
@@ -11,6 +13,9 @@ import {
 const homeStack = createStackNavigator({
     Home:{
         screen: Home
+    },
+    Profile:{
+        screen: Profile
     }
 })
 

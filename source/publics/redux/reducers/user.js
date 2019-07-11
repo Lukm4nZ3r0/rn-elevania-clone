@@ -18,7 +18,7 @@ export default user = (state = initialState, action)=>{
             return{
                 ...state,
                 isLoading:false,
-                user: action.payload.data.data
+                user: action.payload.data.user
             }
         default:
             return state

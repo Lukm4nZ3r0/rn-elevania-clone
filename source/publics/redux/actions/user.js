@@ -20,3 +20,9 @@ export const register = (data) => {
         })
     }
 }
+export const profile = (id) => {
+    return{
+        type: 'GET_PROFILE',
+        payload: axios.post(`http://192.168.100.67:3000/users/${id}`)
+    }
+}

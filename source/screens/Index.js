@@ -10,19 +10,17 @@ import Header from '../components/Header'
 import AddAddress from '../components/AddAddress'
 import EditAddress from '../components/EditAddress'
 import ChangePassword from '../components/ChangePassword'
-
 import ChangeBio from '../components/ChangeBio'
 import Cart from '../components/Cart'
 import CheckOut from '../components/CheckOut'
-
-import SplashScreen from '../components/SplashScreen'
 import ProductCategory from '../components/ProductCategory'
-import DetailProduct from '../components/DetailProduct'
-
 
 const AppNavigator = createStackNavigator({
     Auth:{
         screen:Auth
+    },
+    Profile:{
+        screen:Profile
     },
     Category: {
         screen:ProductCategory
@@ -31,9 +29,7 @@ const AppNavigator = createStackNavigator({
     SplashScreen:{
         screen:SplashScreen
     },
-    Profile:{
-        screen:Profile
-    },
+    
     CheckOut:{
         screen:CheckOut
     },

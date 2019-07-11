@@ -89,10 +89,10 @@ const styles = StyleSheet.create({
 })
 
 const images = [
-    "https://drive.google.com/open?id=1zW1WdZjo28P0ZHaumZ10BTUH9spQ_l8y",
-    "https://drive.google.com/open?id=1sDl1_1N1sGwTCI6IMhk1bsuphPD50lOf",
-    "https://drive.google.com/open?id=1-Vy5BCPizXlqolxcFeIcoDntfYuTZNST",
-    "https://drive.google.com/open?id=1laONWJUZpGTeKKrmSv5VjdWXWa86jcxT",
+    "https://i.pinimg.com/originals/25/84/7d/25847db8a94a95e9b55afd48ae058a57.png",
+    "https://i.pinimg.com/originals/d3/55/38/d355383ba034ce7239215e90ebe36cc0.png",
+    "https://i.pinimg.com/originals/91/7f/f7/917ff7d3cf52a4dab49bca92aa7aed85.png",
+    "https://i.pinimg.com/originals/2d/d7/3b/2dd73b9b386917fbdff694537521fd57.png",
     ];
 
 class SplashScreen extends React.Component{

@@ -57,7 +57,7 @@ class Profile extends Component{
         return(
             <Container>
             <View style={{flex:1}}>
-                <Header navigation={this.props.navigation} />
+                <Header profile={this.props.user.user[0]} navigation={this.props.navigation} />
                 <Bar/>
             </View>
             <View style={{
@@ -132,8 +132,7 @@ class Profile extends Component{
 
 const mapStateToProps = (state) =>{
     return {
-        notes : state.notes,
-        categories : state.categories
+        user : state.user
     }
   }
   

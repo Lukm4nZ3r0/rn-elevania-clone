@@ -14,6 +14,7 @@ import Profile from './Profile'
 import ChangePassword from './ChangePassword'
 import ChangeBio from './ChangeBio'
 import SplashScreen from './SplashScreen'
+import SellProduct from './SellProduct'
 
 import {
     createDrawerNavigator,
@@ -62,6 +63,9 @@ const homeStack = createStackNavigator({
     ChangeBio:{
         screen: ChangeBio
     },
+    SellProduct:{
+        screen: SellProduct
+    }
 })
 
 const homeNavigator = createDrawerNavigator(

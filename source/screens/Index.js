@@ -10,6 +10,7 @@ import CheckOut from '../components/CheckOut'
 import DetailProduct from '../components/DetailProduct'
 import EditProfile from '../components/EditProfile'
 import EditAddress from '../components/EditAddress'
+import ForgotPassword from '../components/ForgotPassword'
 import SplashScreen from '../components/SplashScreen'
 import Header from '../components/Header'
 import Profile from '../components/Profile'
@@ -26,6 +27,9 @@ const AppNavigator = createStackNavigator({
     },
     Category: {
         screen:ProductCategory
+    },
+    ForgotPassword: {
+        screen: ForgotPassword
     },
     SplashScreen:{
         screen:SplashScreen

@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView} from 'react-native'
+import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView, AsyncStorage} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
+//redux
+import {getAllCategories} from '../publics/redux/actions/user'
+import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
 
@@ -11,21 +14,11 @@ class Home extends Component{
         this.state = {
             activeIndex:0,
             carouselItems:[
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/05/7710/201907051809053819_9793652_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070810520808500_9791761_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/10/8263/2019071009451038170_9111919_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070809500840930_9111919_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070811000838746_9793495_1.jpg'
-                }
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/05/7710/201907051809053819_9793652_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070810520808500_9791761_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/10/8263/2019071009451038170_9111919_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070809500840930_9111919_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070811000838746_9793495_1.jpg'
             ],
             categoryHeader:[
                 {
@@ -112,13 +105,17 @@ class Home extends Component{
     }
     _renderItem({item,index}){
         return (                
-            <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item.imageLink}} />
+            <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item}} />
         )
     }
     componentDidMount(){
-        setInterval(()=>{
+        this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
-        },2000)
+        },5000)
+        this.props.dispatch(getAllCategories())
+    }
+    componentWillUnmount(){
+        clearInterval(this.intervalCarousel)
     }
     prevCarouselImage = () =>{
         this.state.activeIndex>0?
@@ -129,6 +126,7 @@ class Home extends Component{
         this.carousel._snapToItem(this.state.activeIndex+1) : this.carousel._snapToItem(0)
     }
     render(){
+        console.log('ini adalah kategori',this.props.user.categories)
         return(
             <View style={{flex:1}}>
                 <View style={{flexDirection:'row', backgroundColor:'#ff8040', padding:15}}>
@@ -182,9 +180,10 @@ class Home extends Component{
                             </TouchableOpacity>
                         </View>
                     </View>
+                    {this.props.user.categories.map((item,i)=>
                     <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
                         <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory')} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                            <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>Special Corners</Text></View>
+                            <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
                         </TouchableOpacity>
                         <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
@@ -197,10 +196,18 @@ class Home extends Component{
                             )}
                         </ScrollView>
                     </View>
+                    )}
                 </ScrollView>
             </View>
         )
     }
 }
 
-export default Home
+const mapStateToProps = (state) =>{
+    return {
+        user : state.user,
+        categories : state.categories
+    }
+  }
+  
+export default connect(mapStateToProps)(Home)

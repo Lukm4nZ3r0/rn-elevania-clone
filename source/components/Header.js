@@ -21,8 +21,8 @@ class Header extends Component {
             <TouchableOpacity onPress={() => {this.props.navigation.navigate('EditProfile')}} style={{alignSelf:'flex-end', marginRight:'5%'}}>
               <Image style={{height: 20, width: 20,}} source={require('../assets/icon_edit.png')}/>
             </TouchableOpacity>
-            <Text style={styles.name}>Haji Dito</Text>
-            <Text style={styles.pos}>ditoarya@gmail.com</Text>
+            <Text style={styles.name}>{this.props.profile.name}</Text>
+            <Text style={styles.pos}>{this.props.profile.email}</Text>
 
         </View>
       </ImageBackground>

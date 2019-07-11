@@ -6,6 +6,10 @@ import InfoAccount from './InfoAccount'
 
 
 class EditProfile extends Component{
+    goCart = () => {
+        const { navigation } = this.props;
+        navigation.navigate('Cart')
+    }
     static navigationOptions = {
         headerTitle: 'Ubah Akun',
         headerTintColor: 'white',
@@ -28,7 +32,7 @@ class EditProfile extends Component{
                 <TouchableOpacity >
                     <Icon name='ios-search' style={{fontSize:30, textAlign: 'right', marginRight: 20, fontWeight:'bold', color: 'white'}}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.goCart}>
                     <Icon name='ios-cart' style={{fontSize:30, textAlign: 'right', color: 'white', fontWeight:'bold'}}/>
                 </TouchableOpacity>
             </ListItem>
@@ -45,7 +49,7 @@ class EditProfile extends Component{
                 <Text style={{fontSize: 12, color:'grey'}} >ditoarya@gmail.com</Text>
               </Body>
             </Header>
-          <Tabs >
+          <Tabs>
             <Tab 
               heading={ 
                 <TabHeading style={{backgroundColor:'white'}}>

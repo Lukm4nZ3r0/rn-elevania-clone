@@ -42,16 +42,17 @@ class InfoAccount extends Component {
       <Container>
         <Content>
         <Separator style={{height:5}} bordered/>
+            <TouchableOpacity  onPress={() => {this.props.navigation.navigate('ChangePassword')}}>
             <ListItem>
                 <Left>
                     <Text>Ubah Password</Text>
                 </Left>
                 <Right>
-                    <TouchableOpacity  onPress={() => {this.props.navigation.navigate('ChangePassword')}}>
                     <Icon name="ios-arrow-forward" />
-                    </TouchableOpacity>
                 </Right>
             </ListItem>
+            </TouchableOpacity>
+            <TouchableOpacity  onPress={() => {this.props.navigation.navigate('ChangeBio')}}>
             <ListItem last>
                 <Left>
                     <Text>Biodata</Text>
@@ -60,6 +61,7 @@ class InfoAccount extends Component {
                     <Icon name="ios-arrow-forward" />
                 </Right>
             </ListItem>
+            </TouchableOpacity>
         <Separator style={{height:5}} bordered/>
           <ListItem>
                 <Left>

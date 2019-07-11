@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {View,Text, TextInput, TouchableOpacity, ScrollView} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import HomeScreen from './HomeScreen'
+import {AsyncStorage} from 'react-native';
 import { connect } from 'react-redux'
 import { login } from '../publics/redux/actions/user'
 
@@ -25,7 +26,7 @@ class Auth extends Component {
     }
     loginEvent = () =>{
         this.props.dispatch( login ( this.state.email,this.state.password ));
-        if(this.props.user.data) this.setState({login:'true'})   
+        if(this.props.user.user) this.setState({login:'true'})   
     }
     setEmail = (text) => this.setState({email: text})
     setPassword = (text)=> this.setState({password: text})

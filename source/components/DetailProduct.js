@@ -37,11 +37,6 @@ class DetailProduct extends Component{
             <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item.imageLink}} />
         )
     }
-    componentDidMount(){
-        setInterval(()=>{
-            this.nextCarouselImage()
-        },2000)
-    }
     prevCarouselImage = () =>{
         this.state.activeIndex>0?
         this.carousel._snapToItem(this.state.activeIndex-1) : this.carousel._snapToItem(this.state.carouselItems.length-1)
@@ -55,7 +50,7 @@ class DetailProduct extends Component{
             <View style={{flex:1}}>
                 <Header androidStatusBarColor="#ff8040" style={{backgroundColor : '#ff8040'}}>
                     <Left>
-                        <Button transparent>
+                        <Button transparent onPress={()=>this.props.navigation.goBack()}>
                         <Icon name='arrow-back' />
                         </Button>
                     </Left>
@@ -87,10 +82,10 @@ class DetailProduct extends Component{
                                 index=>this.setState({activeIndex:index})
                             }
                         />
-                        <View style={{position:'absolute', flexDirection:'row', bottom:20, left:10}}>
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
+                        <View style={{position:'absolute', flexDirection:'row', bottom:20, left:0, right:0, justifyContent: 'center'}}>
+                            {this.state.carouselItems.map((item,i)=>
+                                <View key={i} style={{width:8, height:8, borderRadius:25, backgroundColor: this.state.activeIndex == i ? 'orange' : 'grey', margin:3}} />
+                            )}
                         </View>
 
                     </View>

@@ -42,7 +42,7 @@ class InfoAccount extends Component {
       <Container>
         <Content>
         <Separator style={{height:5}} bordered/>
-            <TouchableOpacity  onPress={() => {this.props.navigation.navigate('ChangePassword')}}>
+            <TouchableOpacity onPress={() => {this.props.navigation.navigate('ChangePassword')}}>
             <ListItem>
                 <Left>
                     <Text>Ubah Password</Text>
@@ -52,7 +52,7 @@ class InfoAccount extends Component {
                 </Right>
             </ListItem>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={() => {this.props.navigation.navigate('ChangeBio')}}>
+            <TouchableOpacity onPress={() => {this.props.navigation.navigate('ChangeBio')}}>
             <ListItem last>
                 <Left>
                     <Text>Biodata</Text>

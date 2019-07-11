@@ -22,11 +22,6 @@ class EditProfile extends Component{
         headerStyle: {
             backgroundColor : '#ff8040'
         },
-        // headerLeft:(
-        //     <TouchableOpacity style={{marginLeft: 20}}>
-        //         <Icon name='ios-menu' style={{textAlign: 'left', fontSize:30, fontWeight:'bold', color: 'white'}}/>
-        //     </TouchableOpacity>
-        // ),
         headerRight: (
             <ListItem>
                 <TouchableOpacity >
@@ -55,13 +50,13 @@ class EditProfile extends Component{
                 <TabHeading style={{backgroundColor:'white'}}>
                   <Text style={{color:'#ff8040'}}>Alamat</Text>
                 </TabHeading>}>
-                <Address/>
+                <Address navigation={this.props.navigation}/>
             </Tab>
             <Tab heading={ 
               <TabHeading style={{backgroundColor:'white'}}>
                 <Text style={{color:'#ff8040'}}>Informasi Akun</Text>
               </TabHeading>}>
-              <InfoAccount/>
+              <InfoAccount navigation={this.props.navigation}/>
             </Tab>
           </Tabs>
         </Container>

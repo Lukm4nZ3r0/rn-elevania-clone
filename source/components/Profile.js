@@ -57,8 +57,7 @@ class Profile extends Component{
         return(
             <Container>
             <View style={{flex:1}}>
-                <Header profile={this.props.user.user[0]}/>
-                <Text>{this.props.user.user[0]}</Text>
+                <Header navigation={this.props.navigation} />
                 <Bar/>
             </View>
             <View style={{

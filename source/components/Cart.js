@@ -74,7 +74,7 @@ class Cart extends Component{
           {(this.state.dataCart).map((item, index) => {
             this.state.total = this.state.total + (item.price * item.amount)
             return (
-            <ListItem>
+            <ListItem key={index}>
             <RoundCheckbox
                 size={24}
                 backgroundColor={'#ff8040'}

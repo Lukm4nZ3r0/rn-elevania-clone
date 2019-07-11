@@ -73,7 +73,7 @@ class CheckOut extends Component{
             {(this.state.dataCart).map((item, index) => {
             this.state.total = this.state.total + (item.price * item.amount)
             return (
-            <ListItem>
+            <ListItem key={index}>
             <Image style={{width:100, height:100}} source={{uri:item.image}}/>
             <Body>
               <Text>{item.name}</Text>
@@ -92,7 +92,7 @@ class CheckOut extends Component{
             </Right>
           </ListItem>
           <Footer style={{backgroundColor:'white'}}>
-           <Button onPress={() => {this.props.navigation.navigate('AddAddress')}} style={{width: '90%', backgroundColor: '#ff8040', justifyContent:'center'}}>
+           <Button onPress={() => {this.props.navigation.navigate('Home')}} style={{width: '90%', backgroundColor: '#ff8040', justifyContent:'center'}}>
               <Text >Beli</Text>
             </Button>
           </Footer>

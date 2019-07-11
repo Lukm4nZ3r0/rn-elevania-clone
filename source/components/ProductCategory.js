@@ -4,24 +4,29 @@ import { Container, Header, Left, Body, Right, Button, Icon, Title, Content } fr
 import { ScrollView } from 'react-native-gesture-handler';
 
 class ProductCategory extends Component {
-    
+    constructor(props){
+        super(props)
+        this.state = {
+            product:[
+                {id:0, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:1, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:2, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:3, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:4, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+            ]
+        }
+    }
     static navigationOptions = {
         header: null
     }
     
     render(){
-    const data = [
-        'satu',
-        'dua',
-        'tiga',
-        'empat',
-        'lima'
-    ]
+    const {product} = this.state
         return(
             <Container>
                 <Header androidStatusBarColor="#ff8040" style={{backgroundColor : '#ff8040'}}>
                     <Left>
-                        <Button transparent>
+                        <Button transparent onPress={()=>this.props.navigation.goBack()}>
                         <Icon name='arrow-back' />
                         </Button>
                     </Left>
@@ -43,21 +48,21 @@ class ProductCategory extends Component {
 
                 <Content style={{ backgroundColor: '#eaeaea' }}>
                     <FlatList
-                        data={data}
+                        data={product}
                         numColumns={2}
                         // keyExtractor={(item, index) => item.id.toString()}
-                        renderItem={(data) => (
-                        <TouchableOpacity activeOpacity={0.9} style={styles.bottomItem} >
+                        renderItem={({item}) => (
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('DetailProduct')} key={item.id} activeOpacity={0.9} style={styles.bottomItem} >
                             <View style={{flex: 1, padding: 10, backgroundColor: 'white', borderColor: '#eaeaea', borderWidth: 0.5,}}>
                                 
                                 <View style={{flex:7, padding: 5}}>
-                                    <Image source={{uri: 'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg'}} style={{flex: 1, width: '100%', height: '100%', resizeMode: 'contain'}}/>
+                                    <Image source={{uri: item.productImg}} style={{flex: 1, width: '100%', height: '100%', resizeMode: 'contain'}}/>
                                 </View>
                                 <View style={{justifyContent: 'center', flex:1, marginBottom: 5}}>
-                                    <Text style={{fontSize: 16}} numberOfLines={2}>ERIKA TOP - Atasan Wanita Blouse Wanita</Text>
+                                    <Text style={{fontSize: 16}} numberOfLines={2}>{item.productName}</Text>
                                 </View>
                                 <View style={{justifyContent: 'center', flex:1}}>
-                                    <Text style={{fontSize: 14, color: 'red', fontWeight: 'bold'}}>Rp 79.000</Text>
+                                    <Text style={{fontSize: 14, color: 'red', fontWeight: 'bold'}}>Rp {item.price}</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>

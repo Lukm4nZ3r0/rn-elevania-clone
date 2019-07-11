@@ -13,12 +13,6 @@ import ProductCategory from '../components/ProductCategory'
 import DetailProduct from '../components/DetailProduct'
 
 const AppNavigator = createStackNavigator({
-<<<<<<< HEAD
-=======
-    Category: {
-        screen:DetailProduct
-    },
->>>>>>> origin/master
     Auth:{
         screen:Auth
     },

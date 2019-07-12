@@ -59,13 +59,13 @@ class DetailProduct extends Component{
                     </Body>
                     <Right>
                         <Button transparent>
-                        <Icon name='ios-search' />
+                        <Icon name='ios-search' style={{fontSize:25}} />
+                        </Button>
+                        <Button transparent onPress={()=>this.props.navigation.navigate('Cart')}>
+                        <Icon name='ios-cart' style={{fontSize:25}} />
                         </Button>
                         <Button transparent>
-                        <Icon name='ios-cart' />
-                        </Button>
-                        <Button transparent>
-                        <Icon name='more' />
+                        <Icon name='more' style={{fontSize:25}} />
                         </Button>
                     </Right>
                 </Header>
@@ -197,7 +197,7 @@ class DetailProduct extends Component{
                 </ScrollView>
                 <Footer >
                     <FooterTab>
-                    <Button full style={{backgroundColor: '#ff8040'}}>
+                    <Button full style={{backgroundColor: '#ff8040'}} onPress={()=>this.props.navigation.navigate('AddToCart')}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Beli Sekarang</Text>
                     </Button>
                     </FooterTab>

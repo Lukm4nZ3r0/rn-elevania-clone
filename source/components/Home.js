@@ -58,11 +58,11 @@ class Home extends Component{
             ],
             selectedFeature:0,
             product:[
-                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
-                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
-                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
-                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
-                {url: 'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg', productName:'Sepatu', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
             ]
         }
     }
@@ -109,10 +109,10 @@ class Home extends Component{
         )
     }
     componentDidMount(){
+        this.props.dispatch(getAllCategories())
         this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
         },5000)
-        this.props.dispatch(getAllCategories())
     }
     componentWillUnmount(){
         clearInterval(this.intervalCarousel)
@@ -126,7 +126,6 @@ class Home extends Component{
         this.carousel._snapToItem(this.state.activeIndex+1) : this.carousel._snapToItem(0)
     }
     render(){
-        console.log('ini adalah kategori',this.props.user.categories)
         return(
             <View style={{flex:1}}>
                 <View style={{flexDirection:'row', backgroundColor:'#ff8040', padding:15}}>
@@ -181,7 +180,7 @@ class Home extends Component{
                         </View>
                     </View>
                     {this.props.user.categories.map((item,i)=>
-                    <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
+                    <View key={i} style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
                         <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory')} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>

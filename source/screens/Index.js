@@ -25,47 +25,14 @@ const AppNavigator = createStackNavigator({
     Auth:{
         screen:Auth
     },
-    Category: {
-        screen:ProductCategory
-    },
     ForgotPassword: {
         screen: ForgotPassword
     },
     SplashScreen:{
         screen:SplashScreen
     },
-    Profile:{
-        screen:Profile
-    },
-    CheckOut:{
-        screen:CheckOut
-    },
-    EditProfile:{
-        screen:EditProfile
-    },
-    AddAddress:{
-        screen:AddAddress
-    },
-    EditAddress:{
-        screen:EditAddress
-    },
-    ChangePassword:{
-        screen:ChangePassword
-    },
-    ChangeBio:{
-        screen:ChangeBio
-    },
-    Cart:{
-        screen:Cart
-    },
-    SplashScreen:{
-        screen:SplashScreen
-    },
     Register:{
         screen:Register
-    },
-    Notifications:{
-        screen: Notifications
     },
     Home:{
         screen:Home

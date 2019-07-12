@@ -4,15 +4,23 @@ import { Tab, Header,NumberInput, Input, Left, Right, Title, TabHeading, Tabs, C
 import SwitchToggle from 'react-native-switch-toggle';
 import ImagePicker from 'react-native-image-picker';
 import NumericInput from 'react-native-numeric-input';
+import {connect} from 'react-redux';
+import {postProduct} from '../publics/redux/actions/user';
+// import {getAllCategories} from '../publics/redux/actions/user'
 
 class SellProduct extends Component{
     state = {
-        province : '',
+        product_name: '',
+        product_price: '',
         city : '',
-        condition:'',
-        madeIn : '',
-        tax:'',
+        stock: '',
+        weight: '',
+        category: '',
+        madeIn : 'Dalam Negri',
+        condition:'Baru',
+        warranty: 'Not Available',
         filePath: {},
+        sellerID: '5d26b629bd4fdb0ab0e4ba13'
       };
       
       chooseFile = () => {
@@ -49,24 +57,38 @@ class SellProduct extends Component{
         headerStyle: {
             backgroundColor : '#ff8040'
         },
-        // headerLeft:(
-        //     <TouchableOpacity style={{marginLeft: 20}}>
-        //         <Icon name='ios-menu' style={{textAlign: 'left', fontSize:30, fontWeight:'bold', color: 'white'}}/>
-        //     </TouchableOpacity>
-        // ),
-        // headerRight: (
-        //     <ListItem>
-        //         <TouchableOpacity >
-        //             <Icon name='ios-search' style={{fontSize:30, textAlign: 'right', marginRight: 20, fontWeight:'bold', color: 'white'}}/>
-        //         </TouchableOpacity>
-        //         <TouchableOpacity>
-        //             <Icon name='ios-cart' style={{fontSize:30, textAlign: 'right', color: 'white', fontWeight:'bold'}}/>
-        //         </TouchableOpacity>
-        //     </ListItem>
-        // ),
+    }
+
+    postProduct(){
+      const data = {
+        name: this.state.product_name,
+        price: this.state.product_price,
+        location: this.state.city,
+        pCategory: this.state.category,
+        stock: this.state.stock,
+        pSID : this.state.sellerID,
+        condition: this.state.condition,
+        productWeight: this.state.weight,
+        countryOfOrigin: this.state.madeIn,
+        warranty: this.state.warranty,
+        image: this.state.filePath
+      }
+    
+      console.log('lempar props', data);
+      this.props.dispatch(postProduct(data));
+      
+    }
+
+    navigateToData(){
+      this.props.navigation.navigate('DetailProduct', { productId: this.props.insertedProduct.product._id })
     }
 
     render(){
+      console.log('cek sudah masuk apa belum', );
+      if (this.props.inserted) {
+        this.navigateToData();
+      }
+      
         return(
           <Container>
             <ScrollView>
@@ -80,28 +102,69 @@ class SellProduct extends Component{
               onPress={this.chooseFile.bind(this)}>
             <Text style={{color:'#ff8040'}}>Pilih Gambar Produk</Text>
           </Button>
-            <Item style={{flex:1, flexDirection:'row', alignItems:'center', justifyContent:'center', width:'100%'}}>
-              <Label style={{flex:1}}>Nomor Produk :</Label>
-              <Input style={{flex:1}} />
-            </Item>
+            
             <Item >
               <Label>Nama Produk :</Label>
-              <Input />
+              <Input 
+                value={this.state.product_name}
+                onChangeText={(value) => this.setState({product_name: value})}
+              />
             </Item>
+
+            <Item >
+              <Label>Harga :</Label>
+              <Input 
+                value={this.state.product_price}
+                onChangeText={(value) => this.setState({product_price: value})}
+              />
+            </Item>
+
+            <Item >
+              <Label>Dikirim Dari :</Label>
+              <Input 
+                value={this.state.city}
+                onChangeText={(value) => this.setState({city: value})}
+              />
+            </Item>
+
+            <Item >
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="md-arrow-dropdown"/>}
+                placeholder="Kategori"
+                selectedValue={this.state.category}
+                onValueChange={(itemValue) =>
+                  this.setState({category: itemValue})
+                }
+              >
+                <Picker.Item label={'Category'} value="default" />
+                {this.props.categories.map((item, key) =>
+                  (<Picker.Item label={item.category_name} value={item._id} key={key} />)
+                )}
+              </Picker>
+            </Item>
+
             <Item>
               <Label style={{flex:1}}>Stok :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput style={{flex:1}} /></View>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                <NumericInput 
+                  style={{flex:1}}
+                  value={this.state.stock} 
+                  onChange={value => this.setState({stock: value})}
+                />
+                </View>
               <Text style={{flex:1}}>Buah</Text>
             </Item>
             <Item >
               <Label style={{flex:1}}>Berat  :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput /></View>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                <NumericInput 
+                  style={{flex:1}}
+                  value={this.state.weight} 
+                  onChange={value => this.setState({weight: value+" Kg"})}
+                />
+              </View>
               <Text style={{flex:1}}>Kg</Text>
-            </Item>
-            <Item >
-              <Label style={{flex:1}}>Garansi  :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput /></View>
-              <Text style={{flex:1}}>Tahun</Text>
             </Item>
             <Item >
               <Picker
@@ -113,8 +176,8 @@ class SellProduct extends Component{
                   this.setState({condition: itemValue})
                 }
               >
-                <Picker.Item label={'Produk Baru'} value={'Produk Baru'} />
-                <Picker.Item label={'Produk Bekas'} value={'Produk Bekas'} />
+                <Picker.Item label={'Produk Baru'} value={'Baru'} />
+                <Picker.Item label={'Produk Bekas'} value={'Bekas'} />
               </Picker>
             </Item>
             <Item >
@@ -131,7 +194,23 @@ class SellProduct extends Component{
                 <Picker.Item label={'Luar Negeri'} value={'Luar Negeri'} />
               </Picker>
             </Item>
+
             <Item >
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="md-arrow-dropdown"/>}
+                placeholder="Garansi"
+                selectedValue={this.state.warranty}
+                onValueChange={(itemValue) =>
+                  this.setState({warranty: itemValue})
+                }
+              >
+                <Picker.Item label={'Garansi'} value={'Not Available'} />
+                <Picker.Item label={'Available'} value={'Available'} />
+                <Picker.Item label={'Not Available'} value={'Not Available'} />
+              </Picker>
+            </Item>
+            {/* <Item >
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="md-arrow-dropdown"/>}
@@ -144,8 +223,11 @@ class SellProduct extends Component{
                 <Picker.Item label={'Kena Pajak'} value={'Kena Pajak'} />
                 <Picker.Item label={'Tanpa Pajak'} value={'Tanpa Pajak'} />
               </Picker>
-            </Item>
-          <Button style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}>
+            </Item> */}
+          <Button 
+            style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}
+            onPress={() => this.postProduct()}
+          >
               <Text>Simpan</Text>
           </Button>
           </Form>
@@ -155,4 +237,13 @@ class SellProduct extends Component{
     }
 }
 
-export default SellProduct
+const mapStateToProps = (state) =>{
+  return {
+      user : state.user,
+      categories : state.user.categories,
+      inserted : state.user.inserted,
+      insertedProduct : state.user.insertedProduct
+  }
+}
+
+export default connect(mapStateToProps)(SellProduct)

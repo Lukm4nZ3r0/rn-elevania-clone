@@ -5,11 +5,8 @@ import Header from './Header'
 import Bar from './Bar'
 import {connect} from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
 class Profile extends Component{
-    // loginEvent = () =>{
-    //     this.props.dispatch( login ( 'eko@gmail.com','admin123' ));
-    // }
-    // componentDidMount = () => {this.loginEvent}
     static navigationOptions = ({ navigation }) => ({
         headerTitle: 'My Elevania',
         headerTitleStyle: { 
@@ -83,7 +80,7 @@ class Profile extends Component{
                                 backgroundColor : 'white' 
                                 }}
                             >
-                                <TouchableOpacity>
+                                <TouchableOpacity >
                                     <Image source={require('../assets/icon_ecoupon_myelevenia.png')}></Image>   
                                     <Text style={{fontSize : 12}}>
                                         {item.name}

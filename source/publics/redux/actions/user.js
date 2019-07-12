@@ -44,9 +44,38 @@ export const getProductByCategory = (idCategory) =>{
         payload: axios.get(`${URL}/products/${idCategory}`)
     }
 }
+<<<<<<< HEAD
+
+export const postProduct = (data) => {
+
+    const { name, price, location, pCategory, stock, pSID, condition, productWeight, countryOfOrigin, warranty, image } = data;
+    let upload = new FormData();
+    console.log('bisa di state 1', upload);
+    // upload.set('name', name);
+    upload.append('name', name);
+    upload.append('price', price);
+    upload.append('location', location);
+    upload.append('pCategory', pCategory);
+    upload.append('stock', stock);
+    upload.append('pSID', pSID);
+    upload.append('condition', condition);
+    upload.append('productWeight', productWeight);
+    upload.append('countryOfOrigin', countryOfOrigin);
+    upload.append('warranty', warranty);
+    upload.append('image', {
+        uri: image.uri,
+        name: image.fileName,
+        type: 'image/jpg'
+    });
+    
+    return {
+        type: 'POST_NEW_PRODUCT',
+        payload: axios.post(`${URL}/products/`, upload)
+=======
 export const profile = (id) => {
     return{
         type: 'GET_PROFILE',
         payload: axios.post(`http://192.168.100.67:3000/users/${id}`)
+>>>>>>> origin/master
     }
 }

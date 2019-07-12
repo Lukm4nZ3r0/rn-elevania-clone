@@ -20,7 +20,6 @@ import Register from '../components/Register'
 import Home from '../components/Home'
 import Notifications from '../components/Notifications'
 
-
 const AppNavigator = createStackNavigator({
     Auth:{
         screen:Auth
@@ -34,7 +33,6 @@ const AppNavigator = createStackNavigator({
     SplashScreen:{
         screen:SplashScreen
     },
-    
     CheckOut:{
         screen:CheckOut
     },

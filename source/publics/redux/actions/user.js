@@ -10,6 +10,18 @@ export const login = (dataLogin) => {
         })
     }
 }
+export const autoLogin = () =>{
+    return{
+        type: 'LOGIN_WITH_ASYNCSTORAGE',
+        payload: true
+    }
+}
+export const setUserDataWithAsyncStorage = () =>{
+    return{
+        type: 'SETUP_USERDATA_WITH_ASYNCSTORAGE',
+        payload: true
+    }
+}
 export const register = (data) => {
     return{
         type: 'POST_REGISTER',
@@ -29,6 +41,12 @@ export const getAllCategories = () => {
     return{
         type: 'GET_CATEGORIES',
         payload: axios.get(`${URL}/categories`)
+    }
+}
+export const getWishList = (id) => {
+    return{
+        type: 'GET_WISHLIST',
+        payload: axios.get(`${URL}/wishlist/${id}`)
     }
 }
 
@@ -70,6 +88,13 @@ export const postProduct = (data) => {
 export const profile = (id) => {
     return{
         type: 'GET_PROFILE',
-        payload: axios.post(`http://192.168.100.67:3000/users/${id}`)
+        payload: axios.post(`${URL}/users/${id}`)
     }
+}
+
+export const logout = () =>{
+    return {
+        type: 'LOGOUT',
+        payload: false
+   }
 }

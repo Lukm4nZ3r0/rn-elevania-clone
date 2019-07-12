@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { FlatList, Image, List, TextInput, TouchableOpacity, ScrollView, AppRegistry, StyleSheet, View, Text } from 'react-native'
 import { Tab, CheckBox, Header, Title, Footer, TabHeading, Tabs, CardItem, Layout, Body, Button, Container, Picker, Content, Form, Item, Icon, Label, Card, Right, ListItem, Left} from 'native-base';
 import { ViewPager } from 'rn-viewpager'
+import { getAllCartItems } from '../publics/redux/actions/products'
+import {connect} from 'react-redux'
 
 import StepIndicator from 'react-native-step-indicator'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
@@ -34,38 +36,34 @@ const secondIndicatorStyles = {
   currentStepLabelColor: '#fe7013'
 }
 
-export default class App extends Component {
+class CheckOut extends Component {
   constructor () {
     super()
     this.state = {
       currentPage: 0,
       total : 0,
-      date: '',
-      dataCart: [
-        { checked: false, id: "06", name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, price:10000 },
-        { checked: false, id: "07", name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, price:20000},
-        { checked: false, id: "00", name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, price:50000},
-        { checked: false, id: "06", name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, price:10000 },
-        { checked: false, id: "07", name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, price:20000},
-        { checked: false, id: "00", name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, price:50000},
-      ],
+      date  : '',
+      dataCart: []
     }
   }
   
-  componentDidMount() {
-    let that = this;
-    let date = new Date().getDate(); //Current Date
-    let month = new Date().getMonth() + 1; //Current Month
-    let year = new Date().getFullYear(); //Current Year
-    let hours = new Date().getHours(); //Current Hours
-    let min = new Date().getMinutes(); //Current Minutes
-    let sec = new Date().getSeconds(); //Current Seconds
-    that.setState({
-      //Setting the value of the date time
-      date:
-        date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
-    });
-}
+  // componentDidMount() {
+  //   this.props.dispatch(getAllCartItems(this.props.user.user[0]._id)).then(()=>{
+  //     this.setState({dataCart:this.props.products.cartItem})
+  //   })
+    // let that = this;
+    // let date = new Date().getDate(); //Current Date
+    // let month = new Date().getMonth() + 1; //Current Month
+    // let year = new Date().getFullYear(); //Current Year
+    // let hours = new Date().getHours(); //Current Hours
+    // let min = new Date().getMinutes(); //Current Minutes
+    // let sec = new Date().getSeconds(); //Current Seconds
+    // that.setState({
+    //   //Setting the value of the date time
+    //   date:
+    //     date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+    // });
+// }
 
   componentWillReceiveProps (nextProps, nextState) {
     if (nextState.currentPage != this.state.currentPage) {
@@ -164,15 +162,17 @@ render () {
                     </CardItem>
                     <View style={{height: '82%'}}>
                     <ScrollView >
-                    {(this.state.dataCart).map((item, index) => {
-                    this.state.total = this.state.total + (item.price * item.amount)
+                    {(this.props.products.cartItem).map((item, index) => {
+                    // this.state.total = this.state.total + (item.price * item.amount)
+                    this.state.total = this.state.total + (item.product_price)
                     return (
                     <ListItem>
                     <Image style={{width:100, height:100}} source={{uri:item.image}}/>
                     <Body>
-                      <Text>{item.name}</Text>
-                      <Text>{item.amount}</Text>
-                      <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text>
+                      <Text>{item.product_name}</Text>
+                      {/* <Text>{item.amount}</Text> */}
+                      {/* <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text> */}
+                      <Text style={{fontWeight:'bold'}}>Rp {item.product_price}</Text>
                     </Body>
                   </ListItem>)
                   })}
@@ -199,7 +199,7 @@ render () {
                     </Right>
                     </View>
                     </CardItem>
-                    <View style={{height: '72%'}}>
+                    {/* <View style={{height: '72%'}}>
                     {(this.state.dataCart).map((item, index) => {
                     this.state.total = this.state.total + (item.price * item.amount)
                     return (
@@ -210,7 +210,7 @@ render () {
                       </View>
                     )
                   })}
-                  </View>
+                  </View> */}
                    <ListItem>
             <Left>
             <Text style={{fontWeight:'bold'}}>Total Pesanan</Text>
@@ -293,3 +293,13 @@ const styles = StyleSheet.create({
     color: '#4aae4f'
   }
 })
+
+const mapStateToProps = (state) =>{
+    
+  return {
+      products : state.products,
+      user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(CheckOut)

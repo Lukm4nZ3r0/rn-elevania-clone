@@ -20,7 +20,11 @@ class SellProduct extends Component{
         condition:'Baru',
         warranty: 'Not Available',
         filePath: {},
+        stock:0,
+        weight:0,
+        warranty:0,
         sellerID: '5d26b629bd4fdb0ab0e4ba13'
+
       };
       
       chooseFile = () => {
@@ -146,6 +150,7 @@ class SellProduct extends Component{
 
             <Item>
               <Label style={{flex:1}}>Stok :</Label>
+
               <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
                 <NumericInput 
                   style={{flex:1}}
@@ -153,20 +158,23 @@ class SellProduct extends Component{
                   onChange={value => this.setState({stock: value})}
                 />
                 </View>
+
               <Text style={{flex:1}}>Buah</Text>
             </Item>
+            
             <Item >
               <Label style={{flex:1}}>Berat  :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                <NumericInput 
-                  style={{flex:1}}
-                  value={this.state.weight} 
-                  onChange={value => this.setState({weight: value+" Kg"})}
-                />
-              </View>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput value={this.state.weight} onChange={(value)=>this.setState({weight:value})}/></View>
               <Text style={{flex:1}}>Kg</Text>
             </Item>
+
             <Item >
+              <Label style={{flex:1}}>Garansi  :</Label>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput value={this.state.warranty} onChange={(value)=>this.setState({warranty:value})}/></View>
+              <Text style={{flex:1}}>Tahun</Text>
+            </Item>
+            <Item >
+
               <Picker
                 mode="dropdown"
                 iosIcon={<Icon name="md-arrow-dropdown"/>}

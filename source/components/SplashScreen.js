@@ -45,7 +45,7 @@ class BackgroundCarousel extends React.Component{
                 {this.state.selectedIndex == this.props.images.length-1 &&
                 <TouchableOpacity 
                     onPress={()=>this.props.navigation.goBack()} 
-                    style={{position:'absolute', padding:10, bottom:'10%', marginLeft:'30%', marginRight:'30%', backgroundColor:'green', alignItems:'center', justifyContent:'center'}}
+                    style={{position:'absolute', padding:10, bottom:'10%', marginLeft:'30%', marginRight:'30%', backgroundColor:'#FFA500', alignItems:'center', justifyContent:'center'}}
                 >
                     <Text style={{color:'white', fontWeight:'bold'}}>GETTING STARTED</Text>
                 </TouchableOpacity>

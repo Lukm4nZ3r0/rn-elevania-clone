@@ -16,6 +16,14 @@ class AddToCart extends Component{
             profileImage: props.navigation.state.params.productId.profileImage
         }
     }
+
+    addCart = () => {
+        this.props.dispatch(
+          addToCart([this.props.productById.product_id], this.props.user.user[0]._id, this.state.stock),
+        )
+        const { navigation } = this.props;
+        navigation.navigate('Home')
+    }
     static navigationOptions = ({navigation}) => {
         return {
             headerStyle: {
@@ -42,6 +50,8 @@ class AddToCart extends Component{
         this.props.dispatch(addToCart(dataCart))
     }
     render(){
+        // console.log('idproduct'+this.props.productById.product_id)
+        // console.log('idproduct'+this.props.user.user[0]._id)
         return(
             <View style={{flex:1, alignItems:'center',  backgroundColor:'#F4F4F4'}}>
                 <View style={{flex:1, padding:20, justifyContent:'center', width:'100%'}}>
@@ -59,7 +69,9 @@ class AddToCart extends Component{
                     </View>
                 </View>
                 <View style={{flex:5, width:'100%', padding:20}}>
-                    <TouchableOpacity style={{backgroundColor:'#ff8040', padding:15, borderRadius:5, alignItems:'center', justifyContent:'center', width:'100%'}} onPress={this.addToCart}>
+                    <TouchableOpacity style={{backgroundColor:'#ff8040', padding:15, borderRadius:5, alignItems:'center', justifyContent:'center', width:'100%'}} 
+                        onPress={() => {this.addCart()}}
+                        >
                         <Text style={{color:'white', fontSize:18}}>Simpan</Text>
                     </TouchableOpacity>
                 </View>

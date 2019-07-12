@@ -26,23 +26,12 @@ class DrawerCustom extends Component{
                     <TouchableOpacity style={{flex:1,padding:10, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.closeDrawer()}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="home" />
                         <Text style={{fontSize:12, color:'white'}}>Home</Text>
-<<<<<<< HEAD
-                    </View>
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Profile')} >
-                    <View style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
-                       <FontAwesome style={{ fontSize:35, color:'white'}} name="user" />
-                        <Text style={{fontSize:12, color:'white'}}>My elevenia</Text>
-                    </View>
-                    </TouchableOpacity>
-                    <View style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
-=======
                     </TouchableOpacity>
                     <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Profile')}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="user" />
                         <Text style={{fontSize:12, color:'white'}}>My elevenia</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Notifications')}>
->>>>>>> 72ceff2a4e7bcb21d1a1faee5dfd0741efd0b2ce
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="bell" />
                         <View style={{position:'absolute', width:25, height:25, borderRadius:15, backgroundColor:'#FD7D1D', alignItems:'center', justifyContent:'center', top:10, right:20}}>
                             <Text style={{fontSize:13, color:'white'}}>6</Text>
@@ -76,7 +65,8 @@ class DrawerCustom extends Component{
                     <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Toko Favorit</Text></View>
                     <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}></Text></View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
+                <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}
+                    onPress={()=>this.props.navigation.navigate('Wishlist')}>
                     <View style={{flex:1,alignItems:'center', justifyContent:'center'}}><FontAwesome style={{fontSize:20, color:'#777777'}} name="heart"/></View>
                     <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Wish List</Text></View>
                     <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}></Text></View>

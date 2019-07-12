@@ -5,8 +5,6 @@ import Header from './Header'
 import Bar from './Bar'
 import {connect} from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { login } from '../publics/redux/actions/user'
-
 class Profile extends Component{
     // loginEvent = () =>{
     //     this.props.dispatch( login ( 'eko@gmail.com','admin123' ));

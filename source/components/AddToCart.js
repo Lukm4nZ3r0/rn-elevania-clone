@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import NumericInput from 'react-native-numeric-input';
+import {connect} from 'react-redux';
 
 class AddToCart extends Component{
     static navigationOptions = ({navigation}) => {
@@ -22,7 +23,7 @@ class AddToCart extends Component{
                 <View style={{flex:1, padding:20, justifyContent:'center', width:'100%'}}>
                     <View style={{alignItems:'center', flexDirection:'row', alignItems:'center', backgroundColor:'white', alignItems:'center', justifyContent:'center', height:'100%'}}>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                            <Text style={{color:'#ff8040'}}>Rp 11.000</Text>
+                            <Text style={{color:'#ff8040'}}>{this.props.productById.products_price}</Text>
                         </View>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
                             <NumericInput />
@@ -39,4 +40,11 @@ class AddToCart extends Component{
     }
 }
 
-export default AddToCart
+const mapStateToProps = (state) =>{
+    return {
+        user : state.user,
+        productById : state.products.productById
+    }
+}
+
+export default connect(mapStateToProps)(AddToCart)

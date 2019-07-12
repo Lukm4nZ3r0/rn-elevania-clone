@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 //redux
-import {getAllCategories} from '../publics/redux/actions/user'
+import {getAllCategories,profile} from '../publics/redux/actions/user'
 import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
@@ -108,16 +108,23 @@ class Home extends Component{
             <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item}} />
         )
     }
-    componentDidMount(){
+    componentWillMount(){
         this.props.dispatch(getAllCategories())
 
         this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
         },5000)
-        console.log('data user:',this.props.user.user)
-        AsyncStorage.getItem('userId', (err, result) => {
-            console.log(result);
+        AsyncStorage.getItem('token').then((keyValue) => {
+            console.log(keyValue)
+            console.log('panjang asyncstorage ',keyValue.length)
+        },(error) => {
+            console.log(error)
         });
+
+        AsyncStorage.getItem('user').then((userData)=>{
+            this.props.dispatch(profile(userData))
+            console.log('ini adalah nilai asyncstorage dari userDataaaaa:', userData)
+        })
     }
     componentWillUnmount(){
         clearInterval(this.intervalCarousel)
@@ -193,7 +200,7 @@ class Home extends Component{
                         </TouchableOpacity>
                         <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
                             {item.productId.map((item,i)=>
-                                <TouchableOpacity key={i} style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}} onPress={()=>this.props.navigation.navigate('DetailProduct')}>
+                                <TouchableOpacity key={i} style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}} onPress={()=>this.props.navigation.navigate('DetailProduct', { productId: item._id })}>
                                     <Image style={{width:100, height:100}} source={{uri: item.photo[0]}} />
                                     <Text style={{color:'grey'}} numberOfLines={2}>{item.product_name}</Text>
                                     <Text style={{fontSize:15, marginTop:15}}>Rp {item.product_price}</Text>

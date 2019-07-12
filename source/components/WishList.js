@@ -2,8 +2,10 @@ import React, {Component} from 'react'
 import {StyleSheet,Image,View,ScrollView,Text,TouchableOpacity,FlatList, ActivityIndicator} from 'react-native'
 import { Icon, ListItem} from 'native-base';
 import {connect} from 'react-redux';
+
 import {getWishList} from '../publics/redux/actions/user';
 class WishLists extends Component{
+
     constructor(props){
         super(props)
         this.state = {

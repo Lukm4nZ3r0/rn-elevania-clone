@@ -10,6 +10,18 @@ export const login = (dataLogin) => {
         })
     }
 }
+export const autoLogin = () =>{
+    return{
+        type: 'LOGIN_WITH_ASYNCSTORAGE',
+        payload: true
+    }
+}
+export const setUserDataWithAsyncStorage = () =>{
+    return{
+        type: 'SETUP_USERDATA_WITH_ASYNCSTORAGE',
+        payload: true
+    }
+}
 export const register = (data) => {
     return{
         type: 'POST_REGISTER',
@@ -70,5 +82,22 @@ export const postProduct = (data) => {
     return {
         type: 'POST_NEW_PRODUCT',
         payload: axios.post(`${URL}/products/`, upload)
+<<<<<<< HEAD
+=======
     }
+}
+
+export const profile = (id) => {
+    return{
+        type: 'GET_PROFILE',
+        payload: axios.get(`${URL}/users/${id}`)
+>>>>>>> origin/v2
+    }
+}
+
+export const logout = () =>{
+    return {
+        type: 'LOGOUT',
+        payload: false
+   }
 }

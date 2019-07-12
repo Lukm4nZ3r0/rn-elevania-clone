@@ -1,6 +1,8 @@
+import {AsyncStorage} from 'react-native'
 
 const initialState = {
-    user: [{name:'Default', email:'default@gmail.com'}],
+    isLogin:false,
+    user: [],
     token: '',
     categories: [],
     categoriesById: [],
@@ -15,6 +17,7 @@ export default user = (state = initialState, action)=>{
         case 'GET_CATEGORIES_PENDING':
         case 'GET_PRODUCT_BY_CATEGORY_PENDING':
         case 'POST_NEW_PRODUCT_PENDING':
+        case 'GET_PROFILE_PENDING':
             return{
                 ...state,
                 isLoading:true,
@@ -25,6 +28,7 @@ export default user = (state = initialState, action)=>{
         case 'GET_CATEGORIES_REJECTED':
         case 'GET_PRODUCT_BY_CATEGORY_REJECTED':
         case 'POST_NEW_PRODUCT_REJECTED':
+        case 'GET_PROFILE_REJECTED':
             return{
                 ...state,
                 isLoading:false,
@@ -33,8 +37,16 @@ export default user = (state = initialState, action)=>{
             return{
                 ...state,
                 isLoading:false,
+                isLogin:true,
                 user: action.payload.data.user,
                 token: action.payload.data.token
+            }
+        case 'GET_PROFILE_FULFILLED':
+            console.log('ini adalah get_profile',action.payload.data.user[0])
+            return{
+                ...state,
+                isLoading:false,
+                user: action.payload.data.user
             }
         case 'GET_WISHLIST_FULFILLED':
             return{
@@ -60,11 +72,32 @@ export default user = (state = initialState, action)=>{
                 isLoading:false,
                 categoriesById: action.payload.data.data
             }
+        case 'LOGIN_WITH_ASYNCSTORAGE':
+            return{
+                ...state,
+                isLogin:true
+            }
+        case 'SETUP_USERDATA_WITH_ASYNCSTORAGE':
+        AsyncStorage.getItem('user').then((userData)=>{
+            console.log('dari reducer cuy',userData)
+            return{
+                    ...state,
+                    user: userData
+                }
+        })    
+        case 'LOGOUT':
+            AsyncStorage.removeItem('token')
+            AsyncStorage.removeItem('user')
+            return{
+                ...state,
+                isLogin: false
+            }
         case 'POST_NEW_PRODUCT_FULFILLED':
             return{
                 ...state,
                 inserted: true,
                 insertedProduct: action.payload.data.data
+
             }
         default:
             return state

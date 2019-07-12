@@ -28,7 +28,7 @@ class EditAddress extends Component{
             { id: "05",  name:'Serang'},
           ],
       };
-    static navigationOptions = {
+    static navigationOptions = ({ navigation }) => ({
         headerTitle: 'Ubah Alamat Pengiriman',
         headerTintColor: 'white',
         headerTitleStyle: { 
@@ -50,12 +50,12 @@ class EditAddress extends Component{
                 <TouchableOpacity >
                     <Icon name='ios-search' style={{fontSize:30, textAlign: 'right', marginRight: 20, fontWeight:'bold', color: 'white'}}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                     <Icon name='ios-cart' style={{fontSize:30, textAlign: 'right', color: 'white', fontWeight:'bold'}}/>
                 </TouchableOpacity>
             </ListItem>
         ),
-    }
+    })
     onPress1 = () => {
         this.setState({ switchOn1: !this.state.switchOn1 });
     }

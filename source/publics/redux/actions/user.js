@@ -82,6 +82,7 @@ export const postProduct = (data) => {
     return {
         type: 'POST_NEW_PRODUCT',
         payload: axios.post(`${URL}/products/`, upload)
+
     }
 }
 
@@ -89,6 +90,7 @@ export const profile = (id) => {
     return{
         type: 'GET_PROFILE',
         payload: axios.get(`${URL}/users/${id}`)
+
     }
 }
 

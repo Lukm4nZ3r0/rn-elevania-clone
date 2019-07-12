@@ -13,20 +13,7 @@ class DetailProduct extends Component{
         super(props)
         this.state = {
             activeIndex:0,
-            carouselItems:[
-                {
-                    imageLink:'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg'
-                },
-                {
-                    imageLink:'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_A1.jpg'
-                },
-                {
-                    imageLink:'http://image.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_A2.jpg'
-                },
-                {
-                    imageLink:'http://image.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_A3.jpg'
-                }
-            ]
+            carouselItems:[]
         }
     }
     static navigationOptions = ({navigation}) => {
@@ -51,11 +38,11 @@ class DetailProduct extends Component{
     componentDidMount(){
         const { navigation } = this.props;
         const productId = navigation.getParam('productId', '');
-        this.props.dispatch(getProductById(productId))
+        this.props.dispatch(getProductById(productId)).then(()=>this.setState({carouselItems:this.props.productById.Photo}))
     }
 
     render(){
-        console.log(this.props.productById);
+        console.log(this.props.productById)
         data = this.props.productById.numberOfProduct;
         let productNo = data;
         return(
@@ -110,19 +97,19 @@ class DetailProduct extends Component{
                                 <Text style={{color: '#ff8040'}}>Rp {this.props.productById.product_price}</Text>
                             </View>
                             <View style={{flex:1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                                <FontAwesome style={{fontSize:20, color:'rowblack'}} name="share-alt"/>
-                                <FontAwesome style={{marginLeft: 10, fontSize:20, color:'black'}} name="heart"/>
+                                <FontAwesome style={{fontSize:20, color:'#000000'}} name="share-alt"/>
+                                <FontAwesome style={{marginLeft: 10, fontSize:20, color:'#d9d9d9'}} name="heart"/>
                             </View>
                         </View>
                     </View>
 
                     <View style={{marginTop: 20, backgroundColor:'white', width:'100%', flex: 1, padding: 20, alignContent: 'space-around'}}>
                        <View style={{flex:1, flexDirection: 'row'}}>
-                           <FontAwesome style={{fontSize:20, color:'rowblack', marginRight: 15}} name="map-marker"/> 
+                           <FontAwesome style={{fontSize:20, color:'#000000', marginRight: 15}} name="map-marker"/> 
                            <Text>Dikirim dari : {this.props.productById.location} </Text>
                         </View> 
                        <View style={{flex:1, flexDirection: 'row'}}>
-                           <FontAwesome style={{fontSize:20, color:'rowblack', marginRight: 15}} name="user"/> 
+                           <FontAwesome style={{fontSize:20, color:'#000000', marginRight: 15}} name="user"/> 
                            <Text>Kurir Pribadi</Text>
                         </View> 
                     </View>
@@ -209,7 +196,7 @@ class DetailProduct extends Component{
                 </ScrollView>
                 <Footer >
                     <FooterTab>
-                    <Button full style={{backgroundColor: '#ff8040'}} onPress={()=>this.props.navigation.navigate('AddToCart')}>
+                    <Button full style={{backgroundColor: '#ff8040'}} onPress={()=>this.props.navigation.navigate('AddToCart', {productId:this.props.productById})}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Beli Sekarang</Text>
                     </Button>
                     </FooterTab>

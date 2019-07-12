@@ -15,3 +15,17 @@ export const getProductById = (id) => {
     payload: axios.get(`${URL}/products/getById/${id}`)
   }
 }
+
+export const getAllCartItems = (id) =>{
+  return{
+    type: 'GET_CART_ITEMS',
+    payload: axios.get(`${URL}/tmpCart/users/${id})`)
+  }
+}
+
+export const addToCart = (dataCart) =>{
+  return{
+    type: 'ADD_TO_CART',
+    payload: dataCart
+  }
+}

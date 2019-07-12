@@ -1,3 +1,2 @@
-const URL = 'http://192.168.100.51:3000'
-
+const URL = 'https://elevenia.herokuapp.com'
 export default URL

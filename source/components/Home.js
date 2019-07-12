@@ -110,6 +110,7 @@ class Home extends Component{
     }
     componentDidMount(){
         this.props.dispatch(getAllCategories())
+
         this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
         },5000)
@@ -194,11 +195,11 @@ class Home extends Component{
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
                         </TouchableOpacity>
                         <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
-                            {this.state.product.map((item,i)=>
-                                <TouchableOpacity key={i} style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}} onPress={()=>this.props.navigation.navigate('DetailProduct')}>
-                                    <Image style={{width:100, height:100}} source={{uri:item.url}} />
-                                    <Text style={{color:'grey'}} numberOfLines={2}>{item.productName}</Text>
-                                    <Text style={{fontSize:15, marginTop:15}}>Rp {item.price}</Text>
+                            {item.productId.map((item,i)=>
+                                <TouchableOpacity key={i} style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}} onPress={()=>this.props.navigation.navigate('DetailProduct', { productId: item._id })}>
+                                    <Image style={{width:100, height:100}} source={{uri: item.photo[0]}} />
+                                    <Text style={{color:'grey'}} numberOfLines={2}>{item.product_name}</Text>
+                                    <Text style={{fontSize:15, marginTop:15}}>Rp {item.product_price}</Text>
                                 </TouchableOpacity>
                             )}
                         </ScrollView>

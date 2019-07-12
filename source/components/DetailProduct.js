@@ -3,6 +3,8 @@ import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
+import { getProductById } from '../publics/redux/actions/products'
+import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
 
@@ -11,20 +13,7 @@ class DetailProduct extends Component{
         super(props)
         this.state = {
             activeIndex:0,
-            carouselItems:[
-                {
-                    imageLink:'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg'
-                },
-                {
-                    imageLink:'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_A1.jpg'
-                },
-                {
-                    imageLink:'http://image.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_A2.jpg'
-                },
-                {
-                    imageLink:'http://image.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_A3.jpg'
-                }
-            ]
+            carouselItems:[]
         }
     }
     static navigationOptions = ({navigation}) => {
@@ -34,13 +23,8 @@ class DetailProduct extends Component{
     }
     _renderItem({item,index}){
         return (                
-            <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item.imageLink}} />
+            <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item}} />
         )
-    }
-    componentDidMount(){
-        setInterval(()=>{
-            this.nextCarouselImage()
-        },2000)
     }
     prevCarouselImage = () =>{
         this.state.activeIndex>0?
@@ -50,27 +34,37 @@ class DetailProduct extends Component{
         this.state.activeIndex<this.state.carouselItems.length-1?
         this.carousel._snapToItem(this.state.activeIndex+1) : this.carousel._snapToItem(0)
     }
+
+    componentDidMount(){
+        const { navigation } = this.props;
+        const productId = navigation.getParam('productId', '');
+        this.props.dispatch(getProductById(productId)).then(()=>this.setState({carouselItems:this.props.productById.Photo}))
+    }
+
     render(){
+        console.log(this.props.productById)
+        data = this.props.productById.numberOfProduct;
+        let productNo = data;
         return(
             <View style={{flex:1}}>
                 <Header androidStatusBarColor="#ff8040" style={{backgroundColor : '#ff8040'}}>
                     <Left>
-                        <Button transparent>
+                        <Button transparent onPress={()=>this.props.navigation.goBack()}>
                         <Icon name='arrow-back' />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Pakaian Wanita</Title>
+                        <Title>{this.props.productById.Category}</Title>
                     </Body>
                     <Right>
                         <Button transparent>
-                        <Icon name='ios-search' />
+                        <Icon name='ios-search' style={{fontSize:25}} />
+                        </Button>
+                        <Button transparent onPress={()=>this.props.navigation.navigate('Cart')}>
+                        <Icon name='ios-cart' style={{fontSize:25}} />
                         </Button>
                         <Button transparent>
-                        <Icon name='ios-cart' />
-                        </Button>
-                        <Button transparent>
-                        <Icon name='more' />
+                        <Icon name='more' style={{fontSize:25}} />
                         </Button>
                     </Right>
                 </Header>
@@ -79,7 +73,7 @@ class DetailProduct extends Component{
                     <View style={{height:500, flex: 5}}>
                         <Carousel
                             ref={ref=>this.carousel = ref}
-                            data={this.state.carouselItems}
+                            data={this.props.productById.Photo}
                             sliderWidth={width}
                             itemWidth={width}
                             renderItem={this._renderItem}
@@ -87,35 +81,35 @@ class DetailProduct extends Component{
                                 index=>this.setState({activeIndex:index})
                             }
                         />
-                        <View style={{position:'absolute', flexDirection:'row', bottom:20, left:10}}>
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
-                            <View style={{width:8, height:8, borderRadius:25, backgroundColor:'black', margin:3}} />
+                        <View style={{position:'absolute', flexDirection:'row', bottom:20, left:0, right:0, justifyContent: 'center'}}>
+                            {this.state.carouselItems.map((item,i)=>
+                                <View key={i} style={{width:8, height:8, borderRadius:25, backgroundColor: this.state.activeIndex == i ? 'orange' : 'grey', margin:3}} />
+                            )}
                         </View>
 
                     </View>
                     <View style={{backgroundColor:'white', width:'100%', flex: 1, padding: 20, justifyContent: 'space-evenly'}}>
                         <View style={{flex: 2}}>
-                            <Text style={{fontSize: 16}}>Erika TOP - Atasan Wanita Blouse Wanita</Text>
+                            <Text style={{fontSize: 16}}>{this.props.productById.product_name}</Text>
                         </View>
                         <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'}}>
                             <View style={{flex:1}}>
-                                <Text style={{color: '#ff8040'}}>Rp 79.000</Text>
+                                <Text style={{color: '#ff8040'}}>Rp {this.props.productById.product_price}</Text>
                             </View>
                             <View style={{flex:1, flexDirection: 'row', justifyContent: 'flex-end'}}>
-                                <FontAwesome style={{fontSize:20, color:'rowblack'}} name="share-alt"/>
-                                <FontAwesome style={{marginLeft: 10, fontSize:20, color:'black'}} name="heart"/>
+                                <FontAwesome style={{fontSize:20, color:'#000000'}} name="share-alt"/>
+                                <FontAwesome style={{marginLeft: 10, fontSize:20, color:'#d9d9d9'}} name="heart"/>
                             </View>
                         </View>
                     </View>
 
                     <View style={{marginTop: 20, backgroundColor:'white', width:'100%', flex: 1, padding: 20, alignContent: 'space-around'}}>
                        <View style={{flex:1, flexDirection: 'row'}}>
-                           <FontAwesome style={{fontSize:20, color:'rowblack', marginRight: 15}} name="map-marker"/> 
-                           <Text>Dikirim dari : Tangerang Selatan</Text>
+                           <FontAwesome style={{fontSize:20, color:'#000000', marginRight: 15}} name="map-marker"/> 
+                           <Text>Dikirim dari : {this.props.productById.location} </Text>
                         </View> 
                        <View style={{flex:1, flexDirection: 'row'}}>
-                           <FontAwesome style={{fontSize:20, color:'rowblack', marginRight: 15}} name="user"/> 
+                           <FontAwesome style={{fontSize:20, color:'#000000', marginRight: 15}} name="user"/> 
                            <Text>Kurir Pribadi</Text>
                         </View> 
                     </View>
@@ -128,10 +122,10 @@ class DetailProduct extends Component{
 
                         <View style={{flex: 2, flexDirection: 'row', alignContent: 'center', paddingBottom: 10, paddingTop: 10}}>
                             <View>
-                                <Thumbnail source={{uri: 'http://3.bp.blogspot.com/-PJlaUnScRP4/V0rlQs7AWgI/AAAAAAAAYus/A2nd02DUsgYhIiwEqexnRozZ0NFQsV83ACHM/s1600/cute-girl-face-image-important-wallpapers.jpg'}} />
+                                <Thumbnail source={{uri: this.props.productById.profileImage}} />
                             </View>
                             <View style={{flex:1, justifyContent: 'center', marginLeft: 10}}>
-                                <Text style={{fontWeight: 'bold'}}>EVERCLOTH_ID</Text>
+                                <Text style={{fontWeight: 'bold'}}>{this.props.productById.seller}</Text>
                                 <Text>Premium Seller</Text>
                             </View>
                         </View>
@@ -148,7 +142,7 @@ class DetailProduct extends Component{
                                 <Text>Stok</Text>
                             </View>
                             <View style={{flex:1}}>
-                                <Text>Tersedia</Text>
+                                <Text>{this.props.productById.stock}</Text>
                             </View>
                         </View>
 
@@ -157,7 +151,7 @@ class DetailProduct extends Component{
                                 <Text>Kondisi Produk</Text>
                             </View>
                             <View style={{flex:1}}>
-                                <Text>Baru</Text>
+                                <Text>{this.props.productById.condition}</Text>
                             </View>
                         </View>
 
@@ -166,7 +160,7 @@ class DetailProduct extends Component{
                                 <Text>Nomor Produk</Text>
                             </View>
                             <View style={{flex:1}}>
-                                <Text>2232323</Text>
+                                <Text>{productNo}</Text>
                             </View>
                         </View>
 
@@ -175,7 +169,7 @@ class DetailProduct extends Component{
                                 <Text>Berat Produk</Text>
                             </View>
                             <View style={{flex:1}}>
-                                <Text>0,2 Kg</Text>
+                                <Text>{this.props.productById.productWeight}</Text>
                             </View>
                         </View>
 
@@ -184,7 +178,7 @@ class DetailProduct extends Component{
                                 <Text>Negara Asal</Text>
                             </View>
                             <View style={{flex:1}}>
-                                <Text>Indonesia</Text>
+                                <Text>{this.props.productById.countryOfOrigin}</Text>
                             </View>
                         </View>
 
@@ -193,7 +187,7 @@ class DetailProduct extends Component{
                                 <Text>Status Garansi</Text>
                             </View>
                             <View style={{flex:1}}>
-                                <Text>-</Text>
+                                <Text>{this.props.productById.warranty ? this.props.productById.warranty : '-'}</Text>
                             </View>
                         </View>
 
@@ -202,7 +196,7 @@ class DetailProduct extends Component{
                 </ScrollView>
                 <Footer >
                     <FooterTab>
-                    <Button full style={{backgroundColor: '#ff8040'}}>
+                    <Button full style={{backgroundColor: '#ff8040'}} onPress={()=>this.props.navigation.navigate('AddToCart', {productId:this.props.productById})}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Beli Sekarang</Text>
                     </Button>
                     </FooterTab>
@@ -212,4 +206,11 @@ class DetailProduct extends Component{
     }
 }
 
-export default DetailProduct
+const mapStateToProps = (state) =>{
+    
+    return {
+        productById : state.products.productById
+    }
+  }
+  
+export default connect(mapStateToProps)(DetailProduct)

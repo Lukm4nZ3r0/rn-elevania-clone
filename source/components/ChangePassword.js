@@ -59,7 +59,7 @@ class ChangePassword extends Component{
             </Item>
             </Content>
             <Footer style={{backgroundColor:'white'}}>
-            <Button style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}>
+            <Button onPress={()=> this.props.navigation.goBack()}style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}>
               <Text>Konfirmasi</Text>
             </Button>
             </Footer>

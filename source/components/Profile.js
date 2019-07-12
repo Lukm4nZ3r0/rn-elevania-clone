@@ -1,16 +1,12 @@
 import React, {Component} from 'react'
 import {View, FlatList, Image, List, TextInput, ScrollView} from 'react-native'
 import { CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, ListItem} from 'native-base';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome'
-// import DrawerLayout from 'react-native-gesture-handler/DrawerLayout';
 import Header from './Header'
 import Bar from './Bar'
 import {connect} from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Profile extends Component{
-    
-    componentDidMount = () => {}
     static navigationOptions = ({ navigation }) => ({
         headerTitle: 'My Elevania',
         headerTitleStyle: { 
@@ -53,12 +49,10 @@ class Profile extends Component{
       };
     
     render(){
-        this.props.navigation.navigate('SellProduct')
-        // this.props.navigation.navigate('Cart')
         return(
             <Container>
             <View style={{flex:1}}>
-                <Header/>
+                <Header profile={this.props.user.user[0]} navigation={this.props.navigation} />
                 <Bar/>
             </View>
             <View style={{
@@ -133,8 +127,7 @@ class Profile extends Component{
 
 const mapStateToProps = (state) =>{
     return {
-        notes : state.notes,
-        categories : state.categories
+        user : state.user
     }
   }
   

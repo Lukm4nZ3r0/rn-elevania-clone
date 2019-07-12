@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView} from 'react-native'
+import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView, AsyncStorage} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
+//redux
+import {getAllCategories} from '../publics/redux/actions/user'
+import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
 
@@ -11,21 +14,11 @@ class Home extends Component{
         this.state = {
             activeIndex:0,
             carouselItems:[
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/05/7710/201907051809053819_9793652_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070810520808500_9791761_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/10/8263/2019071009451038170_9111919_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070809500840930_9111919_1.jpg'
-                },
-                {
-                    imageLink:'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070811000838746_9793495_1.jpg'
-                }
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/05/7710/201907051809053819_9793652_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070810520808500_9791761_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/10/8263/2019071009451038170_9111919_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070809500840930_9111919_1.jpg',
+                'https://cdn.elevenia.co.id/browsing/banner/2019/07/08/8263/2019070811000838746_9793495_1.jpg'
             ],
             categoryHeader:[
                 {
@@ -63,7 +56,14 @@ class Home extends Component{
                     feature:'Voucher'
                 }
             ],
-            selectedFeature:0
+            selectedFeature:0,
+            product:[
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+                {url: 'http://cdn.elevenia.co.id/ex_t/R/348x348/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'Erika TOP - Atasan Wanita Blouse Wanita', price: '99.000'},
+            ]
         }
     }
     static navigationOptions = ({navigation}) => {
@@ -85,7 +85,7 @@ class Home extends Component{
                     </View>
 
                     {/* stock yg masukin ke cart */}
-                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Cart')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="cart-arrow-down"/>
                         <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>4</Text>
@@ -93,7 +93,7 @@ class Home extends Component{
                     </TouchableOpacity>
 
                     {/* notifikasi */}
-                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                    <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Notifications')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="bell"/>
                         <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>6</Text>
@@ -105,13 +105,21 @@ class Home extends Component{
     }
     _renderItem({item,index}){
         return (                
-            <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item.imageLink}} />
+            <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item}} />
         )
     }
     componentDidMount(){
-        setInterval(()=>{
+        this.props.dispatch(getAllCategories())
+        this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
-        },2000)
+        },5000)
+        console.log('data user:',this.props.user.user)
+        AsyncStorage.getItem('userId', (err, result) => {
+            console.log(result);
+        });
+    }
+    componentWillUnmount(){
+        clearInterval(this.intervalCarousel)
     }
     prevCarouselImage = () =>{
         this.state.activeIndex>0?
@@ -175,38 +183,35 @@ class Home extends Component{
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
-                        <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                            <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>Special Corners</Text></View>
+                    {this.props.user.categories.map((item,i)=>
+
+                    <View key={i} style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                            <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
-                        </View>
+                        </TouchableOpacity>
                         <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
-                            </View>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
-                            </View>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
-                            </View>
-                            <View style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}}>
-                                <Image style={{width:100, height:100}} source={{uri:'https://cdn.elevenia.co.id/ex_t/R/170x170/1/85/1/src/g/6/7/1/2/6/5/27671265_B_V1.jpg'}} />
-                                <Text style={{color:'grey'}}>Sepatu Supreme Masa Kini</Text>
-                                <Text style={{fontSize:25, marginTop:15}}>Rp 99.000</Text>
-                            </View>
+                            {this.state.product.map((item,i)=>
+                                <TouchableOpacity key={i} style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}} onPress={()=>this.props.navigation.navigate('DetailProduct')}>
+                                    <Image style={{width:100, height:100}} source={{uri:item.url}} />
+                                    <Text style={{color:'grey'}} numberOfLines={2}>{item.productName}</Text>
+                                    <Text style={{fontSize:15, marginTop:15}}>Rp {item.price}</Text>
+                                </TouchableOpacity>
+                            )}
                         </ScrollView>
                     </View>
+                    )}
                 </ScrollView>
             </View>
         )
     }
 }
 
-export default Home
+const mapStateToProps = (state) =>{
+    return {
+        user : state.user,
+        categories : state.categories
+    }
+  }
+  
+export default connect(mapStateToProps)(Home)

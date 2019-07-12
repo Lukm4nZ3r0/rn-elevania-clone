@@ -90,6 +90,7 @@ class AddAddress extends Component{
                   this.setState({province: itemValue})
                 }
               >
+                <Picker.Item label={'Provinsi'} />
               {(this.state.dataProvince).map((item, index) => {
                   return (<Picker.Item label={item.name} value={item.id} key={item.id}/>)
               })}
@@ -105,6 +106,7 @@ class AddAddress extends Component{
                   this.setState({city: itemValue})
                 }
               >
+                <Picker.Item label={'Kota'} />
                 {(this.state.dataCity).map((item, index) => {
                     return (<Picker.Item label={item.name} value={item.id} key={item.id}/>)
                 })}
@@ -152,7 +154,9 @@ class AddAddress extends Component{
                 />
                 </Right>
             </ListItem>
-          <Button style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}>
+          <Button
+            onPress={()=> this.props.navigation.goBack()} 
+            style={{width: '90%', backgroundColor: '#ff8040', alignSelf:'center', justifyContent:'center'}}>
               <Text>Simpan</Text>
             </Button>
         </Container>

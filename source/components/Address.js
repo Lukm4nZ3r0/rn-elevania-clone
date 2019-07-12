@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Card, CardItem, Body, Right, Header, View, Content, Footer, FooterTab, Button, Text } from 'native-base';
 import { withNavigation } from 'react-navigation';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 
 class Address extends Component {
   render() {

@@ -16,7 +16,7 @@ class SellProduct extends Component{
       };
       
       chooseFile = () => {
-        var options = {
+        let options = {
           title: 'Pilih Gambar',
           storageOptions: {
             skipBackup: true,
@@ -65,25 +65,28 @@ class SellProduct extends Component{
               onPress={this.chooseFile.bind(this)}>
             <Text style={{color:'#ff8040'}}>Pilih Gambar Produk</Text>
           </Button>
-            <Item >
-              <Label>Nomor Produk :</Label>
-              <Input />
+            <Item style={{flex:1, flexDirection:'row', alignItems:'center', justifyContent:'center', width:'100%'}}>
+              <Label style={{flex:1}}>Nomor Produk :</Label>
+              <Input style={{flex:1}} />
             </Item>
             <Item >
               <Label>Nama Produk :</Label>
               <Input />
             </Item>
-            <Item >
-              <Label>Stok :</Label>
-              <NumericInput />
+            <Item>
+              <Label style={{flex:1}}>Stok :</Label>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput style={{flex:1}} /></View>
+              <Text style={{flex:1}}>Buah</Text>
             </Item>
             <Item >
-              <Label>Berat  :</Label>
-              <NumericInput />
+              <Label style={{flex:1}}>Berat  :</Label>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput /></View>
+              <Text style={{flex:1}}>Kg</Text>
             </Item>
             <Item >
-              <Label>Garansi  :</Label>
-              <NumericInput />
+              <Label style={{flex:1}}>Garansi  :</Label>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput /></View>
+              <Text style={{flex:1}}>Tahun</Text>
             </Item>
             <Item >
               <Picker

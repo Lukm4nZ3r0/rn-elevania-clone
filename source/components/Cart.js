@@ -5,6 +5,8 @@ import Address from './Address.js'
 import InfoAccount from './InfoAccount'
 import RoundCheckbox from 'rn-round-checkbox';
 import NumericInput from 'react-native-numeric-input';
+import { getAllCartItems } from '../publics/redux/actions/products'
+import {connect} from 'react-redux'
 
 class Cart extends Component{
     state = {
@@ -17,6 +19,10 @@ class Cart extends Component{
         { checked: false, id: "07", name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, price:20000},
         { checked: false, id: "00", name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, price:50000},
       ],
+    }
+
+    componentDidMount(){
+      this.props.dispatch(getAllCartItems(this.props.user.user[0]._id))
     }
 
     toggleCheckbox(id) {
@@ -169,4 +175,12 @@ class Cart extends Component{
     }
 }
 
-export default Cart
+const mapStateToProps = (state) =>{
+    
+    return {
+        products : state.products,
+        user: state.user
+    }
+  }
+  
+export default connect(mapStateToProps)(Cart)

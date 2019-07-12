@@ -15,17 +15,26 @@ import ChangeBio from '../components/ChangeBio'
 import Cart from '../components/Cart'
 import CheckOut from '../components/CheckOut'
 
-import SplashScreen from '../components/SplashScreen'
 import ProductCategory from '../components/ProductCategory'
 import DetailProduct from '../components/DetailProduct'
-
+import SellProduct from '../components/SellProduct'
+import CheckOut from '../components/CheckOut'
 
 const AppNavigator = createStackNavigator({
-    Category: {
-        screen:DetailProduct
-    },
     Auth:{
         screen:Auth
+    },
+    CheckOut:{
+        screen:CheckOut
+    },
+    Cart:{
+        screen:Cart
+    },
+    SellProduct:{
+        screen:SellProduct
+    },
+    Category: {
+        screen:DetailProduct
     },
     SplashScreen:{
         screen:SplashScreen
@@ -51,16 +60,9 @@ const AppNavigator = createStackNavigator({
     ChangeBio:{
         screen:ChangeBio
     },
-    Cart:{
-        screen:Cart
-    },
-    Auth:{
-        screen:Auth
-    },
     SplashScreen:{
         screen:SplashScreen
     },
-
     Register:{
         screen:Register
     }

@@ -53,6 +53,7 @@ class Profile extends Component{
       };
     
     render(){
+        this.props.navigation.navigate('SellProduct')
         // this.props.navigation.navigate('Cart')
         return(
             <Container>
@@ -85,7 +86,7 @@ class Profile extends Component{
                                 backgroundColor : 'white' 
                                 }}
                             >
-                                <TouchableOpacity>
+                                <TouchableOpacity >
                                     <Image source={require('../assets/icon_ecoupon_myelevenia.png')}></Image>   
                                     <Text style={{fontSize : 12}}>
                                         {item.name}

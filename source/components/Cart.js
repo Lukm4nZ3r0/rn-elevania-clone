@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} from 'react-native'
-import { Tab, CheckBox, Header, Title, Footer, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, Card, Right, ListItem, Left} from 'native-base';
+import { Tab, CheckBox, Header, Input,Title, Footer, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, Card, Right, ListItem, Left} from 'native-base';
 import Address from './Address.js'
 import InfoAccount from './InfoAccount'
 import RoundCheckbox from 'rn-round-checkbox';
-import SelectMultiple from 'react-native-select-multiple'
+import NumericInput from 'react-native-numeric-input';
 
 class Cart extends Component{
     state = {
       isSelected:false,
       total : 0,
       selectedCarts: [],
+      change: false,
       dataCart: [
         { checked: false, id: "06", name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, price:10000 },
         { checked: false, id: "07", name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, price:20000},
@@ -57,22 +58,81 @@ class Cart extends Component{
         ),
     }
     
+    renderElementButton(){
+      if (this.state.change == true){
+        return(
+          <View style={{flexDirection:'row'}}>
+          <TouchableOpacity>
+            <Icon style={{fontSize:22,fontWeight:'bold',color:'#ff8040'}} name='ios-close-circle-outline'/>
+          </TouchableOpacity>
+          <Text style={{marginLeft:'5%'}}>Hapus Semua</Text>
+          </View>
+        )}
+      else{
+        return(
+          <View style={{flexDirection:'row'}}>
+          <RoundCheckbox
+          backgroundColor={'#ff8040'}
+          size={24}
+          checked={this.state.isSelected}
+          onValueChange={() => this.toggleCheckboxAll()}
+          >
+          </RoundCheckbox>
+          <Text style={{marginLeft:'5%'}}>Pilih Semua</Text>
+          </View>
+        )}
+    }
+
+    renderElementChange(){
+      if (this.state.change == true){
+        return(
+          <TouchableOpacity onPress={()=> this.setState({change : !this.state.change})}>
+            <Text style={{color:'#ff8040'}}>simpan</Text>
+          </TouchableOpacity>
+        )
+      }
+      else{
+        return(
+          <TouchableOpacity onPress={()=> this.setState({change : !this.state.change})}>
+          <Text style={{color:'#ff8040'}}>ubah</Text>
+         </TouchableOpacity>
+        )
+      }
+    }
+
     render(){
         return(
           <Container>
             <ScrollView>
             <ListItem>
-              <Left>    
-              <RoundCheckbox
-                backgroundColor={'#ff8040'}
-                size={24}
-                checked={this.state.isSelected}
-                onValueChange={() => this.toggleCheckboxAll()}
-                />
+              <Left >
+                { this.renderElementButton() }
               </Left>
+              <Right>
+              { this.renderElementChange() }
+            </Right>
             </ListItem>
           {(this.state.dataCart).map((item, index) => {
-            this.state.total = this.state.total + (item.price * item.amount)
+            if (item.checked == true){
+              this.state.total = this.state.total + (item.price * item.amount)
+            }
+            if (this.state.change == true){
+              return(
+              <ListItem>
+            <TouchableOpacity>
+              <Icon style={{fontSize:30,color:'#ff8040'}} name='ios-close-circle-outline' />
+            </TouchableOpacity>
+            <Image style={{width:100, height:100}} source={{uri:item.image}}/>
+            <Body>
+              <Text>{item.name}</Text>
+              <NumericInput style={{color:'grey', fontSize:15}} 
+              onChange={value => item.amount= value }
+              value={item.amount}/>
+              <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text>
+            </Body> 
+            </ListItem>
+            )}
+            else{
             return (
             <ListItem>
             <RoundCheckbox
@@ -85,15 +145,10 @@ class Cart extends Component{
             <Image style={{width:100, height:100}} source={{uri:item.image}}/>
             <Body>
               <Text>{item.name}</Text>
-              <Text>{item.amount}</Text>
+              <Text style={{color:'grey', fontSize:15}}>x{item.amount}</Text>
               <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text>
             </Body>
-            <Right>
-                <TouchableOpacity>
-                  <Text style={{color:'#ff8040'}}>hapus</Text>
-                </TouchableOpacity>
-            </Right>
-          </ListItem>)
+          </ListItem>)}
           })}
           </ScrollView>
           <ListItem>

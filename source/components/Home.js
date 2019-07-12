@@ -180,8 +180,9 @@ class Home extends Component{
                         </View>
                     </View>
                     {this.props.user.categories.map((item,i)=>
-                    <View key={i} style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory')} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+
+                    <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
                         </TouchableOpacity>

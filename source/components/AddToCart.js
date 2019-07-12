@@ -13,6 +13,9 @@ class AddToCart extends Component{
             headerTitle: <Text style={{color:'white', fontWeight:'bold', fontSize:20}}>Add To Cart</Text>
         }
     }
+    componentDidMount(){
+        console.warn(this.props)
+    }
     render(){
         return(
             <View style={{flex:1, alignItems:'center',  backgroundColor:'#F4F4F4'}}>

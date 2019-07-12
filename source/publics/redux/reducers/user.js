@@ -2,6 +2,7 @@ const initialState = {
     user: [{name:'Default', email:'default@gmail.com'}],
     token: '',
     categories: [],
+    categoriesById: [],
     isLoading:false,
 }
 export default user = (state = initialState, action)=>{
@@ -41,7 +42,7 @@ export default user = (state = initialState, action)=>{
                 isLoading:false,
                 categories: action.payload.data.data
             }
-        case 'GET_PRODUCT_BY_CATEGORY_FULFILED':
+        case 'GET_PRODUCT_BY_CATEGORY_FULFILLED':
             return{
                 ...state,
                 isLoading:false,

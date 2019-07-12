@@ -3,13 +3,13 @@ import {View,Text, TextInput, TouchableOpacity, ScrollView, AsyncStorage} from '
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import HomeScreen from './HomeScreen'
 import { connect } from 'react-redux'
-import { login } from '../publics/redux/actions/user'
+import { login,autoLogin } from '../publics/redux/actions/user'
 
 class Auth extends Component {
     constructor(props){
         super(props)
         this.state = {
-            login:false,
+            login: props.user.isLogin,
             email:'',
             password:'',
             errorMessage:false
@@ -19,7 +19,15 @@ class Auth extends Component {
         header:null
     }
     componentDidMount(){
-        this.state.login == false && this.props.navigation.navigate('SplashScreen', {navigation:this.props.navigation})
+        this.props.user.isLogin == false && this.props.navigation.navigate('SplashScreen', {navigation:this.props.navigation})
+        
+        AsyncStorage.getItem('token').then((keyValue) => {
+            console.log(keyValue)
+            console.log('panjang asyncstorage ',keyValue.length)
+            this.props.dispatch(autoLogin())
+        }).catch((error)=>{
+            console.log('async not found')
+        })
     }
     logoutEvent = () =>{
         this.setState({login:false})
@@ -37,7 +45,7 @@ class Auth extends Component {
             let {user} = this.props
             let dataStorage = {
                 token: user.token,
-                id: user[0]
+                data: user.user[0]
             }
             this.setAsyncStorageItem(dataStorage)
             
@@ -48,7 +56,7 @@ class Auth extends Component {
     setAsyncStorageItem = async (dataStorage) => {
         try{
             await AsyncStorage.setItem('token',dataStorage.token)
-            await AsyncStorage.setItem('user',dataStorage.id)
+            await AsyncStorage.setItem('user',dataStorage.data)
         }catch(error){
             console.log(error)
         }
@@ -62,7 +70,7 @@ class Auth extends Component {
     render(){
         return(
             <View style={{flex:1}}>
-            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen errorMessage={this.state.errorMessage} setEmail={this.setEmail} loginEvent={this.loginEvent} setPassword={this.setPassword} navigation={this.props.navigation} />}
+            {this.props.user.isLogin ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen errorMessage={this.state.errorMessage} setEmail={this.setEmail} loginEvent={this.loginEvent} setPassword={this.setPassword} navigation={this.props.navigation} />}
             </View>
         )
     }

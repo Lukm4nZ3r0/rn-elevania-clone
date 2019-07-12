@@ -1,5 +1,7 @@
+import {AsyncStorage} from 'react-native'
 
 const initialState = {
+    isLogin:false,
     user: [{name:'Default', email:'default@gmail.com'}],
     token: '',
     categories: [],
@@ -28,6 +30,7 @@ export default user = (state = initialState, action)=>{
             return{
                 ...state,
                 isLoading:false,
+                isLogin:true,
                 user: action.payload.data.user,
                 token: action.payload.data.token
             }
@@ -48,6 +51,26 @@ export default user = (state = initialState, action)=>{
                 ...state,
                 isLoading:false,
                 categoriesById: action.payload.data.data
+            }
+        case 'LOGIN_WITH_ASYNCSTORAGE':
+            return{
+                ...state,
+                isLogin:true
+            }
+        case 'SETUP_USERDATA_WITH_ASYNCSTORAGE':
+        AsyncStorage.getItem('user').then((userData)=>{
+            console.log('dari reducer cuy',userData)
+            return{
+                    ...state,
+                    user: userData
+                }
+        })    
+        case 'LOGOUT':
+            AsyncStorage.removeItem('token')
+            AsyncStorage.removeItem('user')
+            return{
+                ...state,
+                isLogin: false
             }
         default:
             return state

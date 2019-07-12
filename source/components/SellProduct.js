@@ -13,6 +13,9 @@ class SellProduct extends Component{
         madeIn : '',
         tax:'',
         filePath: {},
+        stock:0,
+        weight:0,
+        warranty:0
       };
       
       chooseFile = () => {
@@ -90,17 +93,17 @@ class SellProduct extends Component{
             </Item>
             <Item>
               <Label style={{flex:1}}>Stok :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput style={{flex:1}} /></View>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput style={{flex:1}} value={this.state.stock} onChange={(value)=>this.setState({stock:value})}/></View>
               <Text style={{flex:1}}>Buah</Text>
             </Item>
             <Item >
               <Label style={{flex:1}}>Berat  :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput /></View>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput value={this.state.weight} onChange={(value)=>this.setState({weight:value})}/></View>
               <Text style={{flex:1}}>Kg</Text>
             </Item>
             <Item >
               <Label style={{flex:1}}>Garansi  :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput /></View>
+              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput value={this.state.warranty} onChange={(value)=>this.setState({warranty:value})}/></View>
               <Text style={{flex:1}}>Tahun</Text>
             </Item>
             <Item >

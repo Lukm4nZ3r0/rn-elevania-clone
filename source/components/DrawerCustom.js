@@ -2,9 +2,13 @@ import React, {Component} from 'react'
 import {SafeAreaView} from 'react-navigation'
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {logout} from '../publics/redux/actions/user'
 import {connect} from 'react-redux';
 
 class DrawerCustom extends Component{
+    logoutEvent = () =>{
+        this.props.dispatch(logout())
+    }
     render(){
         return(
             <SafeAreaView
@@ -86,6 +90,11 @@ class DrawerCustom extends Component{
                 <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
                     <View style={{flex:1,alignItems:'center', justifyContent:'center'}}><FontAwesome style={{fontSize:20, color:'#777777'}} name="heart"/></View>
                     <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Atur Alamat Pengiriman</Text></View>
+                    <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}></Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.logoutEvent} style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
+                    <View style={{flex:1,alignItems:'center', justifyContent:'center'}}><FontAwesome style={{fontSize:20, color:'#777777'}} name="power-off"/></View>
+                    <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Logout</Text></View>
                     <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}></Text></View>
                 </TouchableOpacity>
                 </ScrollView>

@@ -38,6 +38,7 @@ export const getProductByCategory = (idCategory) =>{
         payload: axios.get(`${URL}/products/${idCategory}`)
     }
 }
+<<<<<<< HEAD
 
 export const postProduct = (data) => {
 
@@ -64,5 +65,11 @@ export const postProduct = (data) => {
     return {
         type: 'POST_NEW_PRODUCT',
         payload: axios.post(`${URL}/products/`, upload)
+=======
+export const profile = (id) => {
+    return{
+        type: 'GET_PROFILE',
+        payload: axios.post(`http://192.168.100.67:3000/users/${id}`)
+>>>>>>> origin/master
     }
 }

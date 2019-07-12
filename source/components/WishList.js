@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View,ScrollView,Text,TouchableOpacity} from 'react-native'
+import {StyleSheet,Image,View,ScrollView,Text,TouchableOpacity,FlatList} from 'react-native'
 import { Icon, ListItem} from 'native-base';
 import {connect} from 'react-redux';
 class WishLists extends Component{
@@ -70,27 +70,45 @@ class WishLists extends Component{
     }
 }
 class Wishlist extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            product:[
+                {id:0, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:1, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:2, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:3, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+                {id:4, productImg:'https://cdn.elevenia.co.id/ex_t/R/200x200/1/85/1/src/g/6/8/2/0/5/5/28682055_B.jpg', productName:'ERIKA TOP - Atasan Wanita Blouse Wanita', price:'79.000'},
+            ]
+        }
+    }
     render(){
+        const {product} = this.state
         return(
             <ScrollView style={{flex:1, width:'100%', padding:10}}>
-                <TouchableOpacity style={{flex:1, backgroundColor:'white', marginBottom:10, borderRadius:10, padding:10, width:'100%'}}>
-                    <View style={{flex:1, position:'absolute', right:10, top:10}}>
-                        <Text style={{color:'orange', fontSize:11}}>2 Juni 2019</Text>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Order ID : 3AJB240</Text>
-                        <Text>Anda memesan 'Kuaci' di Toko Cahaya Abadi</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={{flex:1, backgroundColor:'white', marginBottom:10, borderRadius:10, padding:10, width:'100%'}}>
-                    <View style={{flex:1, position:'absolute', right:10, top:10}}>
-                        <Text style={{color:'orange', fontSize:11}}>2 Juni 2019</Text>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Order ID : 3AJB240</Text>
-                        <Text>Anda memesan 'Kuaci' di Toko Cahaya Abadi</Text>
-                    </View>
-                </TouchableOpacity>
+                <FlatList
+                        data={product}
+                        renderItem={({item}) => (
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('DetailProduct')} key={item.id} activeOpacity={0.9} style={styles.bottomItem} >
+                            <View style={{flex: 1, padding: 10, backgroundColor: 'white', borderColor: '#eaeaea', borderWidth: 0.5, flexDirection:'row'}}>
+                                <View style={{flex:1, padding: 5}}>
+                                    <Image source={{uri: item.productImg}} style={{flex: 1, width: '100%', height: '100%', resizeMode: 'contain'}}/>
+                                </View>
+                                <View style={{justifyContent: 'center', flex:2, marginBottom: 5}}>
+                                    <Text style={{fontSize: 16}} numberOfLines={2}>{item.productName}</Text>
+                                    <Text style={{fontSize: 14, color: 'red', fontWeight: 'bold'}}>Rp {item.price}</Text><View style={{flexDirection:'row'}}>
+                                    <Icon name='star' style={{color: 'white'}}/>
+                                    <Icon name='star' style={{color: 'green'}}/>
+                                    <Icon name='star' style={{color: 'red'}}/>
+                                    <Icon name='star' style={{color: 'yellow'}}/>
+                                    <Icon name='star' style={{color: 'yellow'}}/>
+                                    </View>
+                                    
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                        )}
+                    />
             </ScrollView>
         )
     }
@@ -99,24 +117,11 @@ class MyView extends Component{
     render(){
         return(
             <ScrollView style={{flex:1, width:'100%', padding:10}}>
+                <View style={{justifyContent:'center',alignItems:'center'}}>
                 <TouchableOpacity style={{flex:1, backgroundColor:'white', marginBottom:10, borderRadius:10, padding:10, width:'100%'}}>
-                    <View style={{flex:1, position:'absolute', right:10, top:10}}>
-                        <Text style={{color:'orange', fontSize:11}}>2 Juni 2019</Text>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Order ID : 3AJB240</Text>
-                        <Text>Pesanan 'Kuaci' anda sudah sampai.</Text>
-                    </View>
+                    <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Fitur sedang dikembangkan</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex:1, backgroundColor:'white', marginBottom:10, borderRadius:10, padding:10, width:'100%'}}>
-                    <View style={{flex:1, position:'absolute', right:10, top:10}}>
-                        <Text style={{color:'orange', fontSize:11}}>2 Juni 2019</Text>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Order ID : 3AJB240</Text>
-                        <Text>Pesanan 'Kuaci' anda sudah sampai.</Text>
-                    </View>
-                </TouchableOpacity>
+                </View>
             </ScrollView>
         )
     }
@@ -125,24 +130,11 @@ class MyStore extends Component{
     render(){
         return(
             <ScrollView style={{flex:1, width:'100%', padding:10}}>
+                <View style={{justifyContent:'center',alignItems:'center'}}>
                 <TouchableOpacity style={{flex:1, backgroundColor:'white', marginBottom:10, borderRadius:10, padding:10, width:'100%'}}>
-                    <View style={{flex:1, position:'absolute', right:10, top:10}}>
-                        <Text style={{color:'orange', fontSize:11}}>2 Juni 2019</Text>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Order ID : 3AJB240</Text>
-                        <Text>Pesanan 'Kuaci' anda sudah sampai.</Text>
-                    </View>
+                    <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Fitur sedang dikembangkan</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flex:1, backgroundColor:'white', marginBottom:10, borderRadius:10, padding:10, width:'100%'}}>
-                    <View style={{flex:1, position:'absolute', right:10, top:10}}>
-                        <Text style={{color:'orange', fontSize:11}}>2 Juni 2019</Text>
-                    </View>
-                    <View style={{flex:1}}>
-                        <Text style={{color:'orange', fontWeight:'bold', fontSize:17}}>Order ID : 3AJB240</Text>
-                        <Text>Pesanan 'Kuaci' anda sudah sampai.</Text>
-                    </View>
-                </TouchableOpacity>
+                </View>
             </ScrollView>
         )
     }
@@ -155,3 +147,9 @@ const mapStateToProps = (state) =>{
   }
   
 export default connect(mapStateToProps)(WishLists)
+const styles = StyleSheet.create({
+    bottomItem: {
+      width: '100%',
+      height: 100,
+    },
+  })

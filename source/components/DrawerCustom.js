@@ -71,7 +71,8 @@ class DrawerCustom extends Component{
                     <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Toko Favorit</Text></View>
                     <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}></Text></View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate('WishList')} style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
+                <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}
+                    onPress={()=>this.props.navigation.navigate('Wishlist')}>
                     <View style={{flex:1,alignItems:'center', justifyContent:'center'}}><FontAwesome style={{fontSize:20, color:'#777777'}} name="heart"/></View>
                     <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Wish List</Text></View>
                     <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}></Text></View>

@@ -13,6 +13,10 @@ class Notifications extends Component{
                 {
                     key:1,
                     label:'History'
+                },
+                {
+                    key:2,
+                    label:'Favorite Store'
                 }
             ],
             currentScreen:0

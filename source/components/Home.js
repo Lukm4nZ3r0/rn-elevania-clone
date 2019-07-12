@@ -113,6 +113,10 @@ class Home extends Component{
         this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
         },5000)
+        console.log('data user:',this.props.user.user)
+        AsyncStorage.getItem('userId', (err, result) => {
+            console.log(result);
+        });
     }
     componentWillUnmount(){
         clearInterval(this.intervalCarousel)
@@ -181,7 +185,7 @@ class Home extends Component{
                     </View>
                     {this.props.user.categories.map((item,i)=>
 
-                    <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
+                    <View key={i} style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
                         <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>

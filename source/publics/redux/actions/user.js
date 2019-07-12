@@ -96,5 +96,5 @@ export const logout = () =>{
     return {
         type: 'LOGOUT',
         payload: false
-    }
+   }
 }

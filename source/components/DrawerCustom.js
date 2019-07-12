@@ -1,15 +1,36 @@
 import React, {Component} from 'react'
 import {SafeAreaView} from 'react-navigation'
-import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native'
+import {View, Text, Image, ScrollView, TouchableOpacity, AsyncStorage} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {logout} from '../publics/redux/actions/user'
+import {logout, profile} from '../publics/redux/actions/user'
 import {connect} from 'react-redux';
 
 class DrawerCustom extends Component{
+
+    state = {
+        name: '',
+        email: ''
+    }
+
     logoutEvent = () =>{
         this.props.dispatch(logout())
     }
+    
+    componentDidMount(){
+
+        AsyncStorage.getItem('user').then((userData)=>{
+            this.props.dispatch(profile(userData))
+            console.log('ini adalah nilai asyncstorage dari userDataaaaa:', userData)
+        })
+
+        console.log("SESUATU", this.props.user.user);
+        
+    }
+
+
     render(){
+
+
         return(
             <SafeAreaView
                 style={{backgroundColor:'white', flex:1}}
@@ -22,8 +43,8 @@ class DrawerCustom extends Component{
                             <Image style={{width:50, height:50, borderRadius:40}} source={{uri:'https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png'}} />
                         </View>
                         <View style={{flex:3}}>
-                            <Text style={{color:'white', fontSize:20}}>{this.props.user.user[0].name}</Text>
-                            <Text style={{color:'white'}}>{this.props.user.user[0].email}</Text>
+                            <Text style={{color:'white', fontSize:20}}>{this.state.name}</Text>
+                            <Text style={{color:'white'}}>{this.state.email}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

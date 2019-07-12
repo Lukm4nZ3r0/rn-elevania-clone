@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 //redux
-import {getAllCategories} from '../publics/redux/actions/user'
+import {getAllCategories,profile} from '../publics/redux/actions/user'
 import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
@@ -108,19 +108,23 @@ class Home extends Component{
             <Image style={{flex:1, resizeMode:'contain',}} source={{uri:item}} />
         )
     }
-    componentDidMount(){
+    componentWillMount(){
         this.props.dispatch(getAllCategories())
 
         this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
         },5000)
-        console.log('data user:',this.props.user.user)
         AsyncStorage.getItem('token').then((keyValue) => {
             console.log(keyValue)
             console.log('panjang asyncstorage ',keyValue.length)
         },(error) => {
             console.log(error)
         });
+
+        AsyncStorage.getItem('user').then((userData)=>{
+            this.props.dispatch(profile(userData))
+            console.log('ini adalah nilai asyncstorage dari userDataaaaa:', userData)
+        })
     }
     componentWillUnmount(){
         clearInterval(this.intervalCarousel)

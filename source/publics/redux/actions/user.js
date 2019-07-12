@@ -88,7 +88,7 @@ export const postProduct = (data) => {
 export const profile = (id) => {
     return{
         type: 'GET_PROFILE',
-        payload: axios.post(`${URL}/users/${id}`)
+        payload: axios.get(`${URL}/users/${id}`)
     }
 }
 

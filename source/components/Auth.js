@@ -3,7 +3,7 @@ import {View,Text, TextInput, TouchableOpacity, ScrollView, AsyncStorage} from '
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import HomeScreen from './HomeScreen'
 import { connect } from 'react-redux'
-import { login,autoLogin } from '../publics/redux/actions/user'
+import { login,autoLogin, profile } from '../publics/redux/actions/user'
 
 class Auth extends Component {
     constructor(props){
@@ -28,6 +28,8 @@ class Auth extends Component {
         }).catch((error)=>{
             console.log('async not found')
         })
+
+        
     }
     logoutEvent = () =>{
         this.setState({login:false})
@@ -41,11 +43,11 @@ class Auth extends Component {
         this.props.dispatch(login(dataLogin)).then(()=>{
             this.setState({login:true})
             console.log('ini adalah user token :', this.props.user.token)
-            console.log('ini adalah user :', this.props.user.user[0])
+            console.log('ini adalah user id :', this.props.user.user[0]._id)
             let {user} = this.props
             let dataStorage = {
                 token: user.token,
-                data: user.user[0]
+                data: user.user[0]._id
             }
             this.setAsyncStorageItem(dataStorage)
             

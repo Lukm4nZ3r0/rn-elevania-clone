@@ -28,6 +28,7 @@ class Notifications extends Component{
                 backgroundColor : '#ff8040',
                 elevation:0
             },
+            headerTintColor: 'white',
             headerTitle: <Text style={{color:'white', fontWeight:'bold', fontSize:20}}>Notifications</Text>
             
         }

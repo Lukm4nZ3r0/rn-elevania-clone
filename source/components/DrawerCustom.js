@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {SafeAreaView} from 'react-navigation'
 import {View, Text, Image, ScrollView, TouchableOpacity} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
 
 class DrawerCustom extends Component{
     render(){
@@ -17,8 +18,8 @@ class DrawerCustom extends Component{
                             <Image style={{width:50, height:50, borderRadius:40}} source={{uri:'https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png'}} />
                         </View>
                         <View style={{flex:3}}>
-                            <Text style={{color:'white', fontSize:20}}>Your Name</Text>
-                            <Text style={{color:'white'}}>your_email@example.com</Text>
+                            <Text style={{color:'white', fontSize:20}}>{this.props.user.user[0].name}</Text>
+                            <Text style={{color:'white'}}>{this.props.user.user[0].email}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -48,6 +49,11 @@ class DrawerCustom extends Component{
                 <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
                     <View style={{flex:1,alignItems:'center', justifyContent:'center'}}><FontAwesome style={{fontSize:20, color:'#777777'}} name="gift"/></View>
                     <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Pesanan</Text></View>
+                    <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}>0</Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('SellProduct')} style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
+                    <View style={{flex:1,alignItems:'center', justifyContent:'center'}}><FontAwesome style={{fontSize:20, color:'#777777'}} name="gift"/></View>
+                    <View style={{flex:4, justifyContent:'center'}}><Text style={{fontSize:16, color:'#777777'}}>Jual</Text></View>
                     <View style={{flex:1,alignItems:'flex-end', justifyContent:'center'}}><Text style={{fontSize:10, color:'#777777'}}>0</Text></View>
                 </TouchableOpacity>
                 <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10, backgroundColor:'white'}}>
@@ -88,5 +94,10 @@ class DrawerCustom extends Component{
         )
     }
 }
+const mapStateToProps = (state) =>{
+    return {
+        user : state.user
+    }
+}
 
-export default DrawerCustom
+export default connect(mapStateToProps)(DrawerCustom)

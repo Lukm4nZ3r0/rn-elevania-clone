@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity} from 'react-native'
 import Home from './Home'
 import Profile from './Profile'
 import AddAddress from './AddAddress'
+import AddToCart from './AddToCart'
 import Cart from './Cart'
 import CheckOut from './CheckOut'
 import DetailProduct from './DetailProduct'
@@ -14,7 +15,8 @@ import ProductCategory from './ProductCategory'
 import ChangePassword from './ChangePassword'
 import ChangeBio from './ChangeBio'
 import SplashScreen from './SplashScreen'
-import Wishlist from './Wishlist'
+import SellProduct from './SellProduct'
+import WishList from './WishList'
 
 import {
     createDrawerNavigator,
@@ -69,6 +71,15 @@ const homeStack = createStackNavigator({
     ChangeBio:{
         screen: ChangeBio
     },
+    SellProduct:{
+        screen: SellProduct
+    },
+    WishList: {
+        screen: WishList
+    },
+    AddToCart:{
+        screen: AddToCart
+    }
 })
 
 const homeNavigator = createDrawerNavigator(

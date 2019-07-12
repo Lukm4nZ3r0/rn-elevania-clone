@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import {View,Text, TextInput, TouchableOpacity, ScrollView} from 'react-native'
+import {View,Text, TextInput, TouchableOpacity, ScrollView, AsyncStorage} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import HomeScreen from './HomeScreen'
-import {AsyncStorage} from 'react-native';
 import { connect } from 'react-redux'
 import { login } from '../publics/redux/actions/user'
 
@@ -10,9 +9,10 @@ class Auth extends Component {
     constructor(props){
         super(props)
         this.state = {
-            login:false,
+            login:true,
             email:'',
-            password:''
+            password:'',
+            errorMessage:false
         }
     }
     static navigationOptions = {
@@ -25,16 +25,28 @@ class Auth extends Component {
         this.setState({login:false})
     }
     loginEvent = () =>{
-        this.props.dispatch( login ( this.state.email,this.state.password ));
-        if(this.props.user.user) this.setState({login:'true'})   
+        let {email, password} = this.state
+        let dataLogin = {
+            email: email,
+            password: password
+        }
+        this.props.dispatch(login(dataLogin)).then(()=>{
+            this.setState({login:true})
+            AsyncStorage.setItem('token',this.props.user.token)
+        }).catch(()=>{
+            this.setState({errorMessage:true})
+        })
     }
-    setUsername = (text) =>{
-        this.setState({username:text})
+    setEmail = (text) =>{
+        this.setState({email:text})
+    }
+    setPassword = (text) =>{
+        this.setState({password:text})
     }
     render(){
         return(
             <View style={{flex:1}}>
-            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen setUsername={this.setUsername} loginEvent={this.loginEvent} navigation={this.props.navigation} />}
+            {this.state.login ? <HomeScreen logoutEvent={this.logoutEvent} /> : <LoginScreen errorMessage={this.state.errorMessage} setEmail={this.setEmail} loginEvent={this.loginEvent} setPassword={this.setPassword} navigation={this.props.navigation} />}
             </View>
         )
     }
@@ -68,13 +80,17 @@ class LoginScreen extends Component{
                             </View>
                         </View>
                         <View style={{ width:'100%', alignItems:'center', justifyContent:'center'}}>
+                            {this.props.errorMessage && <Text style={{marginTop:20, color:'red'}}>Email atau Password tidak ditemukan.</Text>}
+                            
                             <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Email" onChangeText ={this.props.setEmail}/>
-                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Password" onChangeText={this.props.setPassword} />
+                            <TextInput style={{width:'90%', height:60}} underlineColorAndroid="#a7a9ab" placeholder="Password" onChangeText={this.props.setPassword} secureTextEntry={true}/>
 
                             <TouchableOpacity style={{marginTop:20,width:'90%', alignItems:'center', justifyContent: 'center', padding:10, borderRadius:5, backgroundColor:'orange'}} onPress={this.props.loginEvent}>
                                 <Text style={{color:'white', fontSize:20}}>Login</Text>
                             </TouchableOpacity>
-                            <Text style={{fontSize:17, color:'orange', marginTop:15, marginBottom:20, fontWeight:'bold'}}>Lupa Password?</Text>
+                            <TouchableOpacity onPress={()=>this.props.navigation.navigate('ForgotPassword')}>
+                                <Text style={{fontSize:17, color:'orange', marginTop:15, marginBottom:20, fontWeight:'bold'}}>Lupa Password?</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </ScrollView>

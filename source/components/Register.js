@@ -10,9 +10,18 @@ class Register extends Component{
         super(props);
         this.state = {
           isDateTimePickerVisible: false,
-          birthDate:'',
+          email:'',
+          password:'',
+          confirmPassword:'',
+          name:'',
           gender:'',
-          defaultRole:'buyer'
+          preNumber:'',
+          number:'',
+          birthDate:'',
+          defaultRole:'buyer',
+          errorMessage:false,
+          successMessage:false,
+          errorPasswordConfirmation:false
         }
     }
     showDateTimePicker = () => {
@@ -29,6 +38,25 @@ class Register extends Component{
             birthDate: date
         })
         this.hideDateTimePicker();
+    }
+    registerUser = () => {
+        let {email,password,confirmPassword,name,gender,preNumber,number,birthDate, defaultRole} = this.state
+        if(email !== '' && password !== '' && confirmPassword !== '' && name !== '' && gender !== '' && preNumber !== '' && number !== '' && birthDate !== ''){
+            let data = {
+                email: email,
+                password: password,
+                name: name,
+                gender: gender,
+                phone: preNumber+number,
+                birthDate: birthDate,
+                role: defaultRole,
+            }
+            this.props.dispatch(register(data)).then(()=>{
+                this.setState({successMessage:true})
+            }).catch(()=>{
+                this.setState({errorMessage:true})
+            })
+        }
     }
     
     static navigationOptions = {
@@ -126,17 +154,21 @@ class Register extends Component{
                                             <Text style={{fontSize:15, color:'#adb1b8'}}>atau gunakan email</Text>
                                         </View>
                                     </View>
+                                    <View style={{flex:1, alignItems:'center', justifyContent:'center', width:'100%', marginTop:10}}>
+                                        {this.state.successMessage && <Text style={{color:'green'}}>Your account was successfully created.</Text>}
+                                        {this.state.errorMessage && <Text style={{color:'red'}}>Email has been registered.</Text>}
+                                    </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
-                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Name" onChangeText={(text)=>this.setState({nama:text})}/>
+                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Name" onChangeText={(text)=>this.setState({name:text})}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
                                         <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Email" onChangeText={(text)=>this.setState({email:text})}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
-                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Password" onChangeText={(text)=>this.setState({password:text})}/>
+                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Password" onChangeText={(text)=>this.setState({password:text})} secureTextEntry={true}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
-                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Konfirmasi Password" onChangeText={(text)=>this.setState({confirmPassword:text})}/>
+                                        <TextInput style={{width:'90%', height:60}} underlineColorAndroid="grey" placeholder="Konfirmasi Password" onChangeText={(text)=>this.setState({confirmPassword:text})} secureTextEntry={true}/>
                                     </View>
                                     <View style={{flex:1, marginTop:15, width:'100%', alignItems:'center', justifyContent:'center'}}>
                                         <View style={{flex:1, flexDirection:'row', alignItems:'center', justifyContent:'center', width:'90%'}}>
@@ -179,7 +211,7 @@ class Register extends Component{
                                             </View>
                                         </View>
                                     </View>
-                                    <TouchableOpacity style={{padding:15, backgroundColor:'grey', borderRadius:5, alignItems: 'center', justifyContent:'center', margin:15}}>
+                                    <TouchableOpacity style={{padding:15, backgroundColor:'grey', borderRadius:5, alignItems: 'center', justifyContent:'center', margin:15}} onPress={this.registerUser}>
                                         <Text style={{color:'white', fontSize:18}}>Daftar</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -217,4 +249,9 @@ class Register extends Component{
     }
 }
 
-export default Register
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+  }
+export default connect(mapStateToProps)(Register)

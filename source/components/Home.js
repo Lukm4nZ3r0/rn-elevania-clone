@@ -114,9 +114,6 @@ class Home extends Component{
             this.nextCarouselImage()
         },5000)
         console.log('data user:',this.props.user.user)
-        AsyncStorage.getItem('userId', (err, result) => {
-            console.log(result);
-        });
     }
     componentWillUnmount(){
         clearInterval(this.intervalCarousel)
@@ -130,6 +127,7 @@ class Home extends Component{
         this.carousel._snapToItem(this.state.activeIndex+1) : this.carousel._snapToItem(0)
     }
     render(){
+        console.log(AsyncStorage.getItem('user'))
         return(
             <View style={{flex:1}}>
                 <View style={{flexDirection:'row', backgroundColor:'#ff8040', padding:15}}>

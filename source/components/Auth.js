@@ -19,7 +19,6 @@ class Auth extends Component {
         header:null
     }
     componentDidMount(){
-        console.log('Async Storage:',AsyncStorage.getItem('userId'))
         this.state.login == false && this.props.navigation.navigate('SplashScreen', {navigation:this.props.navigation})
     }
     logoutEvent = () =>{
@@ -33,11 +32,26 @@ class Auth extends Component {
         }
         this.props.dispatch(login(dataLogin)).then(()=>{
             this.setState({login:true})
-            AsyncStorage.setItem('token',this.props.user.token)
-            AsyncStorage.setItem('userId',this.props.user.user._id)
+            console.log('ini adalah user token :', this.props.user.token)
+            console.log('ini adalah user :', this.props.user.user[0])
+            let {user} = this.props
+            let dataStorage = {
+                token: user.token,
+                id: user[0]
+            }
+            this.setAsyncStorageItem(dataStorage)
+            
         }).catch(()=>{
             this.setState({errorMessage:true})
         })
+    }
+    setAsyncStorageItem = async (dataStorage) => {
+        try{
+            await AsyncStorage.setItem('token',dataStorage.token)
+            await AsyncStorage.setItem('user',dataStorage.id)
+        }catch(error){
+            console.log(error)
+        }
     }
     setEmail = (text) =>{
         this.setState({email:text})

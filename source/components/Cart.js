@@ -15,14 +15,16 @@ class Cart extends Component{
       selectedCarts: [],
       change: false,
       dataCart: [
-        { checked: false, id: "06", name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, price:10000 },
-        { checked: false, id: "07", name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, price:20000},
-        { checked: false, id: "00", name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, price:50000},
+        { checked: false, id: "06", product_name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, product_price:10000 },
+        { checked: false, id: "07", product_name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, product_price:20000},
+        { checked: false, id: "00", product_name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, product_price:50000},
       ],
     }
 
     componentDidMount(){
-      this.props.dispatch(getAllCartItems(this.props.user.user[0]._id))
+      this.props.dispatch(getAllCartItems(this.props.user.user[0]._id)).then(()=>{
+        this.setState({dataCart:this.props.products.cartItem})
+      })
     }
 
     toggleCheckbox(id) {
@@ -120,7 +122,7 @@ class Cart extends Component{
             </ListItem>
           {(this.state.dataCart).map((item, index) => {
             if (item.checked == true){
-              this.state.total = this.state.total + (item.price * item.amount)
+              this.state.total = this.state.total + (item.product_price * item.amount)
             }
             if (this.state.change == true){
               return(
@@ -130,11 +132,11 @@ class Cart extends Component{
             </TouchableOpacity>
             <Image style={{width:100, height:100}} source={{uri:item.image}}/>
             <Body>
-              <Text>{item.name}</Text>
+              <Text>{item.product_name}</Text>
               <NumericInput style={{color:'grey', fontSize:15}} 
               onChange={value => item.amount= value }
               value={item.amount}/>
-              <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text>
+              <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.product_price}</Text>
             </Body> 
             </ListItem>
             )}
@@ -150,9 +152,9 @@ class Cart extends Component{
             />
             <Image style={{width:100, height:100}} source={{uri:item.image}}/>
             <Body>
-              <Text>{item.name}</Text>
+              <Text>{item.product_name}</Text>
               <Text style={{color:'grey', fontSize:15}}>x{item.amount}</Text>
-              <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text>
+              <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.product_price}</Text>
             </Body>
           </ListItem>)}
           })}

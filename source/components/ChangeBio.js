@@ -5,7 +5,7 @@ import SwitchToggle from 'react-native-switch-toggle';
 
 class ChangeBio extends Component{
     
-    static navigationOptions = {
+    static navigationOptions = ({ navigation }) => ({
         headerTitle: 'Biodata',
         headerTintColor: 'white',
         headerTitleStyle: { 
@@ -22,12 +22,12 @@ class ChangeBio extends Component{
                 <TouchableOpacity >
                     <Icon name='ios-search' style={{fontSize:30, textAlign: 'right', marginRight: 20, fontWeight:'bold', color: 'white'}}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
                     <Icon name='ios-cart' style={{fontSize:30, textAlign: 'right', color: 'white', fontWeight:'bold'}}/>
                 </TouchableOpacity>
             </ListItem>
         ),
-    }
+    })
     
     render(){
         return(

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {StyleSheet,Image,View,ScrollView,Text,TouchableOpacity,FlatList} from 'react-native'
 import { Icon, ListItem} from 'native-base';
 import {connect} from 'react-redux';
-class WishLists extends Component{
+class WishList extends Component{
     constructor(props){
         super(props)
         this.state = {
@@ -146,7 +146,7 @@ const mapStateToProps = (state) =>{
     }
   }
   
-export default connect(mapStateToProps)(WishLists)
+export default connect(mapStateToProps)(WishList)
 const styles = StyleSheet.create({
     bottomItem: {
       width: '100%',

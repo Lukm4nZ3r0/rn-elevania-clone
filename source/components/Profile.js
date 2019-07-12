@@ -22,7 +22,7 @@ class Profile extends Component{
             backgroundColor : '#ff8040'
         },
         headerLeft:(
-            <TouchableOpacity style={{marginLeft: 20}}>
+            <TouchableOpacity style={{marginLeft: 20}} onPress={()=> navigation.openDrawer()}>
                 <Icon name='ios-menu' style={{textAlign: 'left', fontSize:30, fontWeight:'bold', color: 'white'}}/>
             </TouchableOpacity>
         ),

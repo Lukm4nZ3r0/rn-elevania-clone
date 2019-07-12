@@ -16,7 +16,7 @@ class Header extends Component {
         <View style={styles.header}>
 
             <View style={styles.profileicWrap}>
-                <Image style={styles.profileic} source={require('../assets/profile.jpg')} />
+                <Image style={styles.profileic} source={{uri:this.props.profile.profileImage}} />
             </View>
             <TouchableOpacity onPress={() => {this.props.navigation.navigate('EditProfile')}} style={{alignSelf:'flex-end', marginRight:'5%'}}>
               <Image style={{height: 20, width: 20,}} source={require('../assets/icon_edit.png')}/>

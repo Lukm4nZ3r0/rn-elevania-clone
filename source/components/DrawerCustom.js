@@ -24,7 +24,7 @@ class DrawerCustom extends Component{
                     </TouchableOpacity>
                 </View>
                 <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center', width:'100%', backgroundColor:'#191D28'}}>
-                    <TouchableOpacity style={{flex:1,padding:10, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.closeDrawer()}>
+                    <TouchableOpacity onPress={() => {this.props.navigation.navigate('Home'); this.props.navigation.closeDrawer()}} style={{flex:1,padding:10, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="home" />
                         <Text style={{fontSize:12, color:'white'}}>Home</Text>
                     </TouchableOpacity>

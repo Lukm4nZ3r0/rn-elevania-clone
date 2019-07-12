@@ -3,14 +3,14 @@ import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} fr
 import { Tab, Header, Title, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, ListItem} from 'native-base';
 import Address from './Address.js'
 import InfoAccount from './InfoAccount'
-
+import {connect} from 'react-redux';
 
 class EditProfile extends Component{
     goCart = () => {
         const { navigation } = this.props;
         navigation.navigate('Cart')
     }
-    static navigationOptions = {
+    static navigationOptions = ({ navigation }) => ({
         headerTitle: 'Ubah Akun',
         headerTintColor: 'white',
         headerTitleStyle: { 
@@ -27,12 +27,12 @@ class EditProfile extends Component{
                 <TouchableOpacity >
                     <Icon name='ios-search' style={{fontSize:30, textAlign: 'right', marginRight: 20, fontWeight:'bold', color: 'white'}}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.goCart}>
+                <TouchableOpacity onPress={this.goCart} onPress={() => navigation.navigate('Cart')}>
                     <Icon name='ios-cart' style={{fontSize:30, textAlign: 'right', color: 'white', fontWeight:'bold'}}/>
                 </TouchableOpacity>
             </ListItem>
         ),
-    }
+    })
 
     render(){
         return(
@@ -40,8 +40,8 @@ class EditProfile extends Component{
             <Header style={{backgroundColor:'white'}} span>
               <Body style={{alignItems:'center'}}>
                 <Title style={{fontSize: 14, color:'#ff8040'}}>Informasi Anggota</Title>
-                <Text style={{fontSize: 12, marginTop:'5%', fontWeight:'bold'}}>Haji Dito</Text>
-                <Text style={{fontSize: 12, color:'grey'}} >ditoarya@gmail.com</Text>
+                <Text style={{fontSize: 12, marginTop:'5%', fontWeight:'bold'}}>{this.props.user.user[0].name}</Text>
+                <Text style={{fontSize: 12, color:'grey'}} >{this.props.user.user[0].email}</Text>
               </Body>
             </Header>
           <Tabs>
@@ -64,4 +64,10 @@ class EditProfile extends Component{
     }
 }
 
-export default EditProfile
+const mapStateToProps = (state) =>{
+  return {
+      user : state.user
+  }
+}
+
+export default connect(mapStateToProps)(EditProfile)

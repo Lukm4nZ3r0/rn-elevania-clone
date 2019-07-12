@@ -31,6 +31,12 @@ export const getAllCategories = () => {
         payload: axios.get(`${URL}/categories`)
     }
 }
+export const getWishList = (id) => {
+    return{
+        type: 'GET_WISHLIST',
+        payload: axios.get(`${URL}/wishlist/${id}`)
+    }
+}
 
 export const getProductByCategory = (idCategory) =>{
     return{

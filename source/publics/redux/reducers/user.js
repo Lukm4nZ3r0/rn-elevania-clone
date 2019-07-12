@@ -8,6 +8,7 @@ const initialState = {
 export default user = (state = initialState, action)=>{
     switch(action.type){
         case 'POST_USER_PENDING':
+        case 'GET_WISHLIST_PENDING':
         case 'POST_REGISTER_PENDING':
         case 'GET_CATEGORIES_PENDING':
         case 'GET_PRODUCT_BY_CATEGORY_PENDING':
@@ -16,6 +17,7 @@ export default user = (state = initialState, action)=>{
                 isLoading:true,
             }
         case 'POST_USER_REJECTED':
+        case 'GET_WISHLIST_PENDING':
         case 'POST_REGISTER_REJECTED':
         case 'GET_CATEGORIES_REJECTED':
         case 'GET_PRODUCT_BY_CATEGORY_REJECTED':
@@ -29,6 +31,12 @@ export default user = (state = initialState, action)=>{
                 isLoading:false,
                 user: action.payload.data.user,
                 token: action.payload.data.token
+            }
+        case 'GET_WISHLIST_FULFILLED':
+            return{
+                ...state,
+                isLoading:false,
+                wishlist: action.payload.data.data
             }
         case 'POST_REGISTER_FULFILLED':
             return{

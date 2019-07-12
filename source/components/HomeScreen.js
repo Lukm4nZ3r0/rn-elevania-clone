@@ -29,8 +29,8 @@ const homeStack = createStackNavigator({
     Home:{
         screen: Home
     },
-    Wishlist: {
-        screen: Wishlist
+    WishList: {
+        screen: WishList
     },
     Profile:{
         screen: Profile

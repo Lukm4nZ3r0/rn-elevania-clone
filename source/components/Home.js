@@ -121,10 +121,10 @@ class Home extends Component{
             console.log(error)
         });
 
-        AsyncStorage.getItem('user').then((userData)=>{
-            this.props.dispatch(profile(userData))
-            console.log('ini adalah nilai asyncstorage dari userDataaaaa:', userData)
-        })
+        // AsyncStorage.getItem('user').then((userData)=>{
+        //     this.props.dispatch(profile(userData))
+        //     console.log('ini adalah nilai asyncstorage dari userDataaaaa:', userData)
+        // })
     }
     componentWillUnmount(){
         clearInterval(this.intervalCarousel)

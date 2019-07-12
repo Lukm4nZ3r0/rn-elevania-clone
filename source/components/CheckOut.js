@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { FlatList, Image, List, TextInput, TouchableOpacity, ScrollView, AppRegistry, StyleSheet, View, Text } from 'react-native'
+import { FlatList, Image, List, TextInput,Alert,TouchableOpacity, ScrollView, AppRegistry, StyleSheet, View, Text } from 'react-native'
 import { Tab, CheckBox, Header, Title, Footer, TabHeading, Tabs, CardItem, Layout, Body, Button, Container, Picker, Content, Form, Item, Icon, Label, Card, Right, ListItem, Left} from 'native-base';
 import { ViewPager } from 'rn-viewpager'
+import { getAllCartItems, checkoutPembelian } from '../publics/redux/actions/products'
+import {connect} from 'react-redux'
 
 import StepIndicator from 'react-native-step-indicator'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
@@ -34,38 +36,34 @@ const secondIndicatorStyles = {
   currentStepLabelColor: '#fe7013'
 }
 
-export default class App extends Component {
+class CheckOut extends Component {
   constructor () {
     super()
     this.state = {
       currentPage: 0,
       total : 0,
-      date: '',
-      dataCart: [
-        { checked: false, id: "06", name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, price:10000 },
-        { checked: false, id: "07", name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, price:20000},
-        { checked: false, id: "00", name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, price:50000},
-        { checked: false, id: "06", name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, price:10000 },
-        { checked: false, id: "07", name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, price:20000},
-        { checked: false, id: "00", name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, price:50000},
-      ],
+      date  : '',
+      dataCart: []
     }
   }
   
-  componentDidMount() {
-    let that = this;
-    let date = new Date().getDate(); //Current Date
-    let month = new Date().getMonth() + 1; //Current Month
-    let year = new Date().getFullYear(); //Current Year
-    let hours = new Date().getHours(); //Current Hours
-    let min = new Date().getMinutes(); //Current Minutes
-    let sec = new Date().getSeconds(); //Current Seconds
-    that.setState({
-      //Setting the value of the date time
-      date:
-        date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
-    });
-}
+  // componentDidMount() {
+  //   this.props.dispatch(getAllCartItems(this.props.user.user[0]._id)).then(()=>{
+  //     this.setState({dataCart:this.props.products.cartItem})
+  //   })
+    // let that = this;
+    // let date = new Date().getDate(); //Current Date
+    // let month = new Date().getMonth() + 1; //Current Month
+    // let year = new Date().getFullYear(); //Current Year
+    // let hours = new Date().getHours(); //Current Hours
+    // let min = new Date().getMinutes(); //Current Minutes
+    // let sec = new Date().getSeconds(); //Current Seconds
+    // that.setState({
+    //   //Setting the value of the date time
+    //   date:
+    //     date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+    // });
+// }
 
   componentWillReceiveProps (nextProps, nextState) {
     if (nextState.currentPage != this.state.currentPage) {
@@ -92,6 +90,40 @@ export default class App extends Component {
                 <Icon name='ios-information-circle' style={{ fontSize:20, color: 'white', fontWeight:'bold'}}/>
         </TouchableOpacity>
     ),
+}
+
+onCheckoutButton(){
+  
+  // console.log('cart item', this.props.products.cartItem);
+  console.log('user_id', this.props.user.user[0]._id);
+  // console.log('total', this.state.total);
+
+  
+  Alert.alert(
+    'Peringatan',
+    'Apakah akan melakukan Transaksi ini ?',
+    [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => {
+        const data = {
+          cartItem: [this.props.products.cartItem[0]._id],
+          userId: this.props.user.user[0]._id,
+          total: this.state.total
+        }
+
+        this.props.dispatch(checkoutPembelian(data));
+        this.props.navigation.navigate('Home')
+      }},
+    ],
+    {cancelable: true},
+  );
+  
+  
+  // this.props.dispatch(checkoutPembelian(this.props.products.cartItem, this.props.user._id, this.state.total));
 }
 
 render () {
@@ -164,15 +196,17 @@ render () {
                     </CardItem>
                     <View style={{height: '82%'}}>
                     <ScrollView >
-                    {(this.state.dataCart).map((item, index) => {
-                    this.state.total = this.state.total + (item.price * item.amount)
+                    {(this.props.products.cartItem).map((item, index) => {
+                    // this.state.total = this.state.total + (item.price * item.amount)
+                    this.state.total = this.state.total + (item.product_price)
                     return (
                     <ListItem>
-                    <Image style={{width:100, height:100}} source={{uri:item.image}}/>
+                    <Image style={{width:100, height:100}} source={{uri:item.photo[0]}}/>
                     <Body>
-                      <Text>{item.name}</Text>
-                      <Text>{item.amount}</Text>
-                      <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text>
+                      <Text>{item.product_name}</Text>
+                      {/* <Text>{item.amount}</Text> */}
+                      {/* <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text> */}
+                      <Text style={{fontWeight:'bold'}}>Rp {item.product_price}</Text>
                     </Body>
                   </ListItem>)
                   })}
@@ -200,13 +234,13 @@ render () {
                     </View>
                     </CardItem>
                     <View style={{height: '72%'}}>
-                    {(this.state.dataCart).map((item, index) => {
-                    this.state.total = this.state.total + (item.price * item.amount)
+                    {(this.props.products.cartItem).map((item, index) => {
+                   
                     return (
                       <View style={{marginLeft:'5%', flexDirection:'row'}}>
-                      <Text>{item.name}</Text>
-                      <Text> x{item.amount}</Text>
-                      <Text style={{fontWeight:'bold'}}> : Rp {item.amount * item.price}</Text>
+                      <Text>{item.product_name}</Text>
+                      {/* <Text> x{item.amount}</Text> */}
+                      <Text style={{fontWeight:'bold'}}> : Rp { item.product_price}</Text>
                       </View>
                     )
                   })}
@@ -220,7 +254,7 @@ render () {
             </Right>
           </ListItem>
                 <Footer style={{backgroundColor:'white'}}>
-                <Button onPress={()=>{this.onStepPressButton()}} style={{width: '90%', backgroundColor: '#ff8040', justifyContent:'center'}}>
+                <Button onPress={()=>{this.onCheckoutButton()}} style={{width: '90%', backgroundColor: '#ff8040', justifyContent:'center'}}>
                    <Text style={{fontWeight:'bold', fontSize:17,color:'white'}}>Bayar</Text>
                  </Button>
                </Footer>
@@ -237,9 +271,11 @@ render () {
   onStepPress = position => {
     this.setState({ currentPage: position })
     this.viewPager.setPage(position)
+    this.setState({ total: 0 })
   }
 
   onStepPressButton = () => {
+    this.setState({ total: 0 })
     this.viewPager.setPage(this.state.currentPage+1)
   }
 
@@ -293,3 +329,13 @@ const styles = StyleSheet.create({
     color: '#4aae4f'
   }
 })
+
+const mapStateToProps = (state) =>{
+    
+  return {
+      products : state.products,
+      user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(CheckOut)

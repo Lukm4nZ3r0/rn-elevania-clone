@@ -2,7 +2,9 @@ const initialState = {
   isLoading:false,
   productsByCategory: [],
   productById: [],
-  cartItem:[]
+  totalPrice:0,
+  cartItem:[],
+  dataCheckOut: []
 }
 export default products = (state = initialState, action)=>{
   switch(action.type){
@@ -17,6 +19,7 @@ export default products = (state = initialState, action)=>{
       case 'GET_PRODUCT_BY_ID_REJECTED':
       case 'GET_PRODUCT_BY_CATEGORY_REJECTED':
       case 'GET_CART_ITEMS_REJECTED':
+          console.log('cart reject')
       case 'ADD_TO_CART_REJECTED':
           return{
               ...state,
@@ -35,14 +38,15 @@ export default products = (state = initialState, action)=>{
               productsByCategory: action.payload.data.data
           }
       case 'GET_CART_ITEMS_FULFILLED':
+        //   console.log('cart fulfil')
           return{
               ...state,
-              cartItem: action.payload.data.products
+              cartItem: action.payload.data.data.products,
           }
       case 'ADD_TO_CART_FULFILLED':
           return{
               ...state,
-              cartItem: [...state.cartItem, ...action.payload.product_price]
+            //   cartItem: [...state.cartItem, ...action.payload.data]
           }
       default:
           return state

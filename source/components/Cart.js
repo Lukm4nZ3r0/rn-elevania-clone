@@ -14,11 +14,7 @@ class Cart extends Component{
       total : 0,
       selectedCarts: [],
       change: false,
-      dataCart: [
-        { checked: false, id: "06", product_name: "Sabun" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:1, product_price:10000 },
-        { checked: false, id: "07", product_name: "Susu" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:3, product_price:20000},
-        { checked: false, id: "00", product_name: "Ayam" , image: "http://cdn.elevenia.co.id/g/2/3/4/0/7/3/22234073_B.jpg", amount:4, product_price:50000},
-      ],
+      dataCart: [],
     }
 
     componentDidMount(){
@@ -28,7 +24,7 @@ class Cart extends Component{
     }
 
     toggleCheckbox(id) {
-      const changedCheckbox = this.state.dataCart.find((cb) => cb.id === id);
+      const changedCheckbox = this.state.dataCart.find((cb) => cb._id === id);
     
       changedCheckbox.checked = !changedCheckbox.checked;
     
@@ -109,6 +105,7 @@ class Cart extends Component{
     }
 
     render(){
+      console.log('datacart'+this.props.products.cartItem)
         return(
           <Container>
             <ScrollView>
@@ -120,9 +117,15 @@ class Cart extends Component{
               { this.renderElementChange() }
             </Right>
             </ListItem>
-          {(this.state.dataCart).map((item, index) => {
+          {this.state.dataCart.map((item, index) => {
             if (item.checked == true){
-              this.state.total = this.state.total + (item.product_price * item.amount)
+              // this.state.total = this.state.total + (item.product_price * item.amount)
+              this.state.total = this.state.total + item.product_price
+              this.props.products.dataCheckOut.concat(this.state.dataCart[index])
+            }
+            if (item.checked == false){
+              // this.state.total = this.state.total + (item.product_price * item.amount)
+              this.props.products.dataCheckOut.filter(({_id}) => _id !== item._id)            
             }
             if (this.state.change == true){
               return(
@@ -130,13 +133,14 @@ class Cart extends Component{
             <TouchableOpacity>
               <Icon style={{fontSize:30,color:'#ff8040'}} name='ios-close-circle-outline' />
             </TouchableOpacity>
-            <Image style={{width:100, height:100}} source={{uri:item.image}}/>
+            <Image style={{width:100, height:100}} source={{uri:item.photo[0]}}/>
             <Body>
               <Text>{item.product_name}</Text>
-              <NumericInput style={{color:'grey', fontSize:15}} 
-              onChange={value => item.amount= value }
-              value={item.amount}/>
-              <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.product_price}</Text>
+              {/* <NumericInput style={{color:'grey', fontSize:15}} 
+                onChange={value => item.amount= value }
+                value={item.amount}/> */}
+              {/* <Text style={{fontWeight:'bold'}}>Rp {item.product_price * item.amount}</Text> */}
+              <Text style={{fontWeight:'bold'}}>Rp {parseInt(item.product_price)}</Text>
             </Body> 
             </ListItem>
             )}
@@ -146,15 +150,16 @@ class Cart extends Component{
             <RoundCheckbox
                 size={24}
                 backgroundColor={'#ff8040'}
-                key={item.id}
+                key={item._id}
                 checked={item.checked}
-                onValueChange={() => this.toggleCheckbox(item.id)}
+                onValueChange={() => this.toggleCheckbox(item._id)}
             />
-            <Image style={{width:100, height:100}} source={{uri:item.image}}/>
+            <Image style={{width:100, height:100}} source={{uri:item.photo[0]}}/>
             <Body>
               <Text>{item.product_name}</Text>
-              <Text style={{color:'grey', fontSize:15}}>x{item.amount}</Text>
-              <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.product_price}</Text>
+              {/* <Text style={{color:'grey', fontSize:15}}>x{item.amount}</Text> */}
+              {/* <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.product_price}</Text> */}
+              <Text style={{fontWeight:'bold'}}>Rp {item.product_price}</Text>
             </Body>
           </ListItem>)}
           })}

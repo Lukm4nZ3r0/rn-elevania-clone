@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
-import { getProductById } from '../publics/redux/actions/products'
+import { getProductById,addToCart } from '../publics/redux/actions/products'
 import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
@@ -41,8 +41,19 @@ class DetailProduct extends Component{
         this.props.dispatch(getProductById(productId)).then(()=>this.setState({carouselItems:this.props.productById.Photo}))
     }
 
+    addCart = () => {
+        this.props.dispatch(
+          addToCart(this.props.productById.product_id, this.props.user.user[0]._id),
+        )
+        console.log('sukses pro : '+this.props.productById.product_id);
+        console.log('sukses user : '+this.props.user.user[0]._id);
+        
+        const { navigation } = this.props;
+        navigation.navigate('Home')
+    }
+
     render(){
-        console.log(this.props.productById)
+        console.log(this.props.productById.productId)
         data = this.props.productById.numberOfProduct;
         let productNo = data;
         return(
@@ -196,7 +207,8 @@ class DetailProduct extends Component{
                 </ScrollView>
                 <Footer >
                     <FooterTab>
-                    <Button full style={{backgroundColor: '#ff8040'}} onPress={()=>this.props.navigation.navigate('AddToCart', {productId:this.props.productById})}>
+                    <Button full style={{backgroundColor: '#ff8040'}} 
+                    onPress={() => {this.addCart()}}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Beli Sekarang</Text>
                     </Button>
                     </FooterTab>
@@ -209,7 +221,8 @@ class DetailProduct extends Component{
 const mapStateToProps = (state) =>{
     
     return {
-        productById : state.products.productById
+        productById : state.products.productById,
+        user : state.user
     }
   }
   

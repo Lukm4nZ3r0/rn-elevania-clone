@@ -96,14 +96,16 @@ export const logout = () =>{
     return {
         type: 'LOGOUT',
         payload: false
+
     }
 }
 
 export const editAlamat = (data, id) => {
     console.log(data);
-    
+ 
     return {
         type: 'PATCH_EDIT_ALAMAT',
         payload: axios.patch(`${URL}/users/${id}`, {alamat: data})
     }
+
 }

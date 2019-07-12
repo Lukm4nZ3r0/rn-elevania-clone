@@ -126,7 +126,7 @@ class Home extends Component{
         this.carousel._snapToItem(this.state.activeIndex+1) : this.carousel._snapToItem(0)
     }
     render(){
-        console.log('ini adalah kategori',this.props.user.categories)
+        // console.log('ini adalah kategori',this.props.user.categories)
         return(
             <View style={{flex:1}}>
                 <View style={{flexDirection:'row', backgroundColor:'#ff8040', padding:15}}>
@@ -182,7 +182,7 @@ class Home extends Component{
                     </View>
                     {this.props.user.categories.map((item,i)=>
                     <View style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory')} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
                             <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
                         </TouchableOpacity>

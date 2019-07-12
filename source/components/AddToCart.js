@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, Text, TouchableOpacity} from 'react-native'
 import NumericInput from 'react-native-numeric-input';
+
 import {connect} from 'react-redux'
 import {addToCart} from '../publics/redux/actions/products'
 
@@ -66,6 +67,7 @@ class AddToCart extends Component{
         )
     }
 }
+
 const mapStateToProps = (state) =>{
     
     return {
@@ -74,5 +76,5 @@ const mapStateToProps = (state) =>{
         user : state.user
     }
   }
-  
+
 export default connect(mapStateToProps)(AddToCart)

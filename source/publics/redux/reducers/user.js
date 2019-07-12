@@ -5,6 +5,7 @@ const initialState = {
     categories: [],
     categoriesById: [],
     isLoading:false,
+    inserted: false,
 }
 export default user = (state = initialState, action)=>{
     switch(action.type){
@@ -12,6 +13,7 @@ export default user = (state = initialState, action)=>{
         case 'POST_REGISTER_PENDING':
         case 'GET_CATEGORIES_PENDING':
         case 'GET_PRODUCT_BY_CATEGORY_PENDING':
+        case 'POST_NEW_PRODUCT_PENDING':
             return{
                 ...state,
                 isLoading:true,
@@ -20,6 +22,7 @@ export default user = (state = initialState, action)=>{
         case 'POST_REGISTER_REJECTED':
         case 'GET_CATEGORIES_REJECTED':
         case 'GET_PRODUCT_BY_CATEGORY_REJECTED':
+        case 'POST_NEW_PRODUCT_REJECTED':
             return{
                 ...state,
                 isLoading:false,
@@ -48,6 +51,12 @@ export default user = (state = initialState, action)=>{
                 ...state,
                 isLoading:false,
                 categoriesById: action.payload.data.data
+            }
+        case 'POST_NEW_PRODUCT_FULFILLED':
+            return{
+                ...state,
+                inserted: true,
+                insertedProduct: action.payload.data.data
             }
         default:
             return state

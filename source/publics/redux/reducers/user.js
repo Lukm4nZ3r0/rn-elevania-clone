@@ -18,6 +18,7 @@ export default user = (state = initialState, action)=>{
         case 'GET_PRODUCT_BY_CATEGORY_PENDING':
         case 'POST_NEW_PRODUCT_PENDING':
         case 'GET_PROFILE_PENDING':
+        case 'PATCH_EDIT_ALAMAT_PENDING':
             return{
                 ...state,
                 isLoading:true,
@@ -29,6 +30,7 @@ export default user = (state = initialState, action)=>{
         case 'GET_PRODUCT_BY_CATEGORY_REJECTED':
         case 'POST_NEW_PRODUCT_REJECTED':
         case 'GET_PROFILE_REJECTED':
+        case 'PATCH_EDIT_ALAMAT_REJECTED' :
             return{
                 ...state,
                 isLoading:false,
@@ -99,6 +101,12 @@ export default user = (state = initialState, action)=>{
                 insertedProduct: action.payload.data.data
 
             }
+            
+        case 'PATCH_EDIT_ALAMAT_FULFILLED':
+                return{
+                    ...state,
+                    // inserted: true,
+                }
         default:
             return state
     }

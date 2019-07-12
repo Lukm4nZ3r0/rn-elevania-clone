@@ -4,8 +4,13 @@ import { Tab, Header, Title, TabHeading, Tabs, CardItem, Layout, Body, Text, But
 import Address from './Address.js'
 import InfoAccount from './InfoAccount'
 import {connect} from 'react-redux';
-
+import { editAlamat } from '../publics/redux/actions/user';
 class EditProfile extends Component{
+
+    state = {
+      alamat : ''
+    }
+
     goCart = () => {
         const { navigation } = this.props;
         navigation.navigate('Cart')
@@ -34,7 +39,19 @@ class EditProfile extends Component{
         ),
     })
 
+    
+    componentWillMount(){
+      this.setState({alamat: this.props.user.user[0].alamat})
+    }
+
+    editAlamat(){
+      this.props.dispatch(editAlamat(this.state.alamat,  this.props.user.user[0]._id));
+      this.props.navigation.navigate('Profile');
+    }
+
     render(){
+     
+      
         return(
           <Container>
             <Header style={{backgroundColor:'white'}} span>
@@ -50,7 +67,13 @@ class EditProfile extends Component{
                 <TabHeading style={{backgroundColor:'white'}}>
                   <Text style={{color:'#ff8040'}}>Alamat</Text>
                 </TabHeading>}>
-                <Address navigation={this.props.navigation}/>
+                <Address 
+                  navigation={this.props.navigation} 
+                  user={this.props.user}
+                  alamat={this.state.alamat}
+                  onChangeText={(value)=> this.setState({alamat: value})}
+                  onPress={() => this.editAlamat()}
+                />
             </Tab>
             <Tab heading={ 
               <TabHeading style={{backgroundColor:'white'}}>

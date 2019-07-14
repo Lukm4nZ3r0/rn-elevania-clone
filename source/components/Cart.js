@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} from 'react-native'
+import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView, AsyncStorage} from 'react-native'
 import { Tab, CheckBox, Header, Input,Title, Footer, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, Card, Right, ListItem, Left} from 'native-base';
 import Address from './Address.js'
 import InfoAccount from './InfoAccount'
@@ -7,6 +7,8 @@ import RoundCheckbox from 'rn-round-checkbox';
 import NumericInput from 'react-native-numeric-input';
 import { getAllCartItems } from '../publics/redux/actions/products'
 import {connect} from 'react-redux'
+import axios from 'axios'
+import URL from '../publics/redux/actions/URL'
 
 class Cart extends Component{
     state = {
@@ -18,9 +20,25 @@ class Cart extends Component{
     }
 
     componentDidMount(){
-      this.props.dispatch(getAllCartItems(this.props.user.user[0]._id)).then(()=>{
-        this.setState({dataCart:this.props.products.cartItem})
-      })
+      
+      if(this.props.user.user[0] !== undefined){
+        this.props.dispatch(getAllCartItems(this.props.user.user[0]._id)).then(()=>{
+          this.setState({dataCart:this.props.products.cartItem})
+        }).catch(()=>{
+          console.log('server bermasalah')
+        })
+      }
+      else{
+        console.warn('props user',this.props.user.user[0])
+        AsyncStorage.getItem('user').then((userData)=>{
+          axios.get(`${URL}/tmpCart/users/${userData}`).then((response)=>{
+            console.log('response di cart: ',response.data.data.products)
+            this.setState({dataCart:response.data.data.products})
+          }).catch(()=>{
+            console.log('response cart tidak diterima')
+          })
+        })
+      }
     }
 
     toggleCheckbox(id) {

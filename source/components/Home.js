@@ -84,20 +84,20 @@ class Home extends Component{
                         <View style={{flex:5, justifyContent:'center'}}><TextInput placeholder="Cari di elevania" placeholderTextColor="white"/></View>
                     </View>
 
-                    {/* stock yg masukin ke cart */}
+                    {/* cart stock */}
                     <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Cart')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="cart-arrow-down"/>
-                        <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
+                        {/* <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>4</Text>
-                        </View>
+                        </View> */}
                     </TouchableOpacity>
 
-                    {/* notifikasi */}
+                    {/* notification */}
                     <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Notifications')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="bell"/>
-                        <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
+                        {/* <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>6</Text>
-                        </View>
+                        </View> */}
                     </TouchableOpacity>
                 </View>
             ),
@@ -192,7 +192,8 @@ class Home extends Component{
                         </View>
                     </View>
                     {this.props.user.categories.map((item,i)=>
-
+                    item.productId.length>0 &&
+                    (
                     <View key={i} style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
                         <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
                             <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
@@ -208,6 +209,7 @@ class Home extends Component{
                             )}
                         </ScrollView>
                     </View>
+                    )
                     )}
                 </ScrollView>
             </View>

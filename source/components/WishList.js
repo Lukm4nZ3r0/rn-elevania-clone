@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {StyleSheet,Image,View,ScrollView,Text,TouchableOpacity,FlatList, ActivityIndicator} from 'react-native'
+import {StyleSheet,Image,View,ScrollView,Text,TouchableOpacity,FlatList, ActivityIndicator, AsyncStorage} from 'react-native'
 import { Icon, ListItem} from 'native-base';
 import {connect} from 'react-redux';
 
-import {getWishList} from '../publics/redux/actions/user';
+import {getWishList} from '../publics/redux/actions/user'
 class WishLists extends Component{
 
     constructor(props){
@@ -27,7 +27,9 @@ class WishLists extends Component{
         }
     }
     componentDidMount(){
-        this.props.dispatch(getWishList(this.props.user.user[0]._id))
+        AsyncStorage.getItem('user').then((userData)=>{
+            this.props.dispatch(getWishList(userData))
+        })
     }
     
     static navigationOptions = ({ navigation }) => ({
@@ -91,39 +93,45 @@ class Wishlist extends Component{
             ]
         }
     }
+    componentDidMount(){
+        AsyncStorage.getItem('user').then((response)=>{
+            console.log('USER ID : ',response)
+        })
+    }
     render(){
         const {product} = this.state
        // const product=this.props.wishlist.productId
        // console.warn(this.props.wishlist)
         return(
             <ScrollView style={{flex:1, width:'100%', padding:10}}>
-                { this.props.wishlist == null ?  <View style={[styles.container, styles.horizontal]}>
-                    <ActivityIndicator size="large" color="#0000ff" />
-                </View> : 
+            { this.props.wishlist == null ?  
+            <View style={[styles.container, styles.horizontal]}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View> 
+            : 
             <FlatList
-            data={this.props.wishlist.productId}
-             renderItem={({item}) => (
-             <TouchableOpacity onPress={()=>this.props.navigation.navigate('DetailProduct',{productId:item._id})} key={item.id} activeOpacity={0.9} style={styles.bottomItem} >
-                 <View style={{flex: 1, padding: 10, backgroundColor: 'white', borderColor: '#eaeaea', borderWidth: 0.5, flexDirection:'row'}}>
-                     <View style={{flex:1, padding: 5}}>
-                         <Image source={{uri: /** item.productImg*/item.photo[0]}} style={{flex: 1, width: '100%', height: '100%', resizeMode: 'contain'}}/>
-                     </View>
-                     <View style={{justifyContent: 'center', flex:2, marginBottom: 5}}>
-                         <Text style={{fontSize: 16}} numberOfLines={2}>{/*item.productName*/item.product_name}</Text>
-                         <Text style={{fontSize: 14, color: 'red', fontWeight: 'bold'}}>Rp {/*item.price*/item.product_price}</Text><View style={{flexDirection:'row'}}>
-                         <Icon name='star' style={{color: 'white'}}/>
-                         <Icon name='star' style={{color: 'green'}}/>
-                         <Icon name='star' style={{color: 'red'}}/>
-                         <Icon name='star' style={{color: 'yellow'}}/>
-                         <Icon name='star' style={{color: 'yellow'}}/>
-                         </View>
-                         
-                     </View>
-                 </View>
-             </TouchableOpacity>
-             )}
-         />
-    }                      
+                data={this.props.wishlist.productId}
+                renderItem={({item}) => (
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('DetailProduct',{productId:item._id})} key={item.id} activeOpacity={0.9} style={styles.bottomItem} >
+                        <View style={{flex: 1, padding: 10, backgroundColor: 'white', borderColor: '#eaeaea', borderWidth: 0.5, flexDirection:'row'}}>
+                            <View style={{flex:1, padding: 5}}>
+                                <Image source={{uri: /** item.productImg*/item.photo[0]}} style={{flex: 1, width: '100%', height: '100%', resizeMode: 'contain'}}/>
+                            </View>
+                            <View style={{justifyContent: 'center', flex:2, marginBottom: 5}}>
+                                <Text style={{fontSize: 16}} numberOfLines={2}>{/*item.productName*/item.product_name}</Text>
+                                <Text style={{fontSize: 14, color: 'red', fontWeight: 'bold'}}>Rp {/*item.price*/item.product_price}</Text><View style={{flexDirection:'row'}}>
+                                <Icon name='star' style={{color: 'white'}}/>
+                                <Icon name='star' style={{color: 'green'}}/>
+                                <Icon name='star' style={{color: 'red'}}/>
+                                <Icon name='star' style={{color: 'yellow'}}/>
+                                <Icon name='star' style={{color: 'yellow'}}/>
+                                </View> 
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />
+            }                      
             </ScrollView>
         )
     }

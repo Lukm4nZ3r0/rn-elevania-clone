@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
-import {View, FlatList, Image, List, TextInput, ScrollView} from 'react-native'
+import {View, FlatList, Image, List, TextInput, ScrollView, AsyncStorage} from 'react-native'
 import { CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, ListItem} from 'native-base';
 import Header from './Header'
 import Bar from './Bar'
 import {connect} from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import axios from 'axios'
+import URL from '../publics/redux/actions/URL'
 
 class Profile extends Component{
     static navigationOptions = ({ navigation }) => ({
@@ -46,13 +48,27 @@ class Profile extends Component{
           { id: "04", size: 'small',name: "Favorit" , icon: "../assets/icon_favorit_my_elevenia.png"},
           { id: "05", size: 'small',name: "QnA / Ulasan" , icon: "../assets/icon_qna_my_elevenia.png"},
         ],
+        profile:[]
       };
+    componentDidMount(){
+        console.log('profile redux:',this.props.user.user[0])
+        if(this.props.user.user[0] == undefined){
+            AsyncStorage.getItem('user').then((userData)=>{
+                axios.get(`${URL}/users/${userData}`).then((response)=>{
+                    this.setState({profile:response.data.user[0]})
+                })
+            })
+        }
+        else{
+            this.setState({profile:this.props.user.user[0]})
+        }
+    }
     
     render(){
         return(
             <Container>
             <View style={{flex:1}}>
-                <Header profile={this.props.user.user[0]} navigation={this.props.navigation} />
+                <Header profile={this.state.profile} navigation={this.props.navigation} />
                 <Bar/>
             </View>
             <View style={{

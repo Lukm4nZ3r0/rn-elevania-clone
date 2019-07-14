@@ -42,15 +42,16 @@ class DetailProduct extends Component{
     }
 
     addCart = () => {
-        AsyncStorage.getItem('user').then((userData)=>{
-            this.props.dispatch(addToCart(this.props.productById.product_id, userData)).then(()=>{
-                console.log('sukses pro : '+this.props.productById.product_id);
-                console.log('sukses user : '+userData);
+        // AsyncStorage.getItem('user').then((userData)=>{
+        //     this.props.dispatch(addToCart(this.props.productById.product_id, userData)).then(()=>{
+        //         console.log('sukses pro : '+this.props.productById.product_id);
+        //         console.log('sukses user : '+userData);
                 
-                const { navigation } = this.props;
-                navigation.navigate('Home')
-            })
-        })
+        //         const { navigation } = this.props;
+        //         navigation.navigate('Home')
+        //     })
+        // })
+        this.props.navigation.navigate('AddToCart',{productId:this.props.productById})
     }
 
     render(){

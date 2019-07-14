@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity, AsyncStorage} from 'react-native'
 import NumericInput from 'react-native-numeric-input';
 
 import {connect} from 'react-redux'
@@ -13,13 +13,14 @@ class AddToCart extends Component{
             product_id: props.navigation.state.params.productId.product_id,
             product_name: props.navigation.state.params.productId.product_name,
             product_price: props.navigation.state.params.productId.product_price,
-            profileImage: props.navigation.state.params.productId.profileImage
+            profileImage: props.navigation.state.params.productId.profileImage,
+            userId:''
         }
     }
 
     addCart = () => {
         this.props.dispatch(
-          addToCart([this.props.productById.product_id], this.props.user.user[0]._id, this.state.stock),
+          addToCart([this.props.productById.product_id], this.state.userId, this.state.stock),
         )
         const { navigation } = this.props;
         navigation.navigate('Home')
@@ -36,6 +37,15 @@ class AddToCart extends Component{
     }
     componentDidMount(){
         console.warn('state global cart: ',this.props.cartItem)
+        console.log('add to cart props user id',this.props.user.user[0])
+        if(this.props.user.user[0]===undefined){
+            AsyncStorage.getItem('user').then((userData)=>{
+                this.setState({userId:userData})
+            })
+        }
+        else{
+            this.setState({userId:this.props.user.user[0]._id})
+        }
     }
     addToCart = () =>{
         const {stock,product_id,product_name,product_price,profileImage} = this.state
@@ -45,7 +55,7 @@ class AddToCart extends Component{
             product_name:product_name,
             product_price:product_price*stock,
             profileImage:profileImage,
-            userId:this.props.user.user[0]._id
+            userId:this.state.userId
         }
         this.props.dispatch(addToCart(dataCart))
     }

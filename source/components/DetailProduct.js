@@ -51,7 +51,6 @@ class DetailProduct extends Component{
             this.setState({ colorFavorite: '#d9d9d9' })
         }
     }
-<<<<<<< HEAD
     setFavorite = (id, color) => {
         if (color == 'red'){
             let newWishlist = this.props.user.wishlist.productId.filter(product => product._id != id )
@@ -71,8 +70,6 @@ class DetailProduct extends Component{
         const { navigation } = this.props;
         navigation.navigate('Home')
     }
-=======
->>>>>>> origin/v2
 
     render(){
         console.log('ini adalah product_id',this.props.productById.product_id)
@@ -132,14 +129,10 @@ class DetailProduct extends Component{
                             </View>
                             <View style={{flex:1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <FontAwesome style={{fontSize:20, color:'#000000'}} name="share-alt"/>
-<<<<<<< HEAD
                                 <TouchableOpacity onPress={()=> this.setFavorite(this.props.productById.product_id, this.state.colorFavorite)}>
                                     <FontAwesome style={{marginLeft: 10, fontSize:20, color:this.state.colorFavorite }} name="heart"/>
                                 </TouchableOpacity>
                                 
-=======
-                                <TouchableOpacity><FontAwesome style={{marginLeft: 10, fontSize:20, color:'#d9d9d9'}} name="heart"/></TouchableOpacity>
->>>>>>> origin/v2
                             </View>
                         </View>
                     </View>

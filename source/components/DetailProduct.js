@@ -41,21 +41,8 @@ class DetailProduct extends Component{
         this.props.dispatch(getProductById(productId)).then(()=>this.setState({carouselItems:this.props.productById.Photo}))
     }
 
-    addCart = () => {
-        // AsyncStorage.getItem('user').then((userData)=>{
-        //     this.props.dispatch(addToCart(this.props.productById.product_id, userData)).then(()=>{
-        //         console.log('sukses pro : '+this.props.productById.product_id);
-        //         console.log('sukses user : '+userData);
-                
-        //         const { navigation } = this.props;
-        //         navigation.navigate('Home')
-        //     })
-        // })
-        this.props.navigation.navigate('AddToCart',{productId:this.props.productById})
-    }
-
     render(){
-        console.log(this.props.productById.productId)
+        console.log('ini adalah product_id',this.props.productById.product_id)
         data = this.props.productById.numberOfProduct;
         let productNo = data;
         return(
@@ -210,7 +197,14 @@ class DetailProduct extends Component{
                 <Footer >
                     <FooterTab>
                     <Button full style={{backgroundColor: '#ff8040'}} 
-                    onPress={() => {this.addCart()}}>
+                    onPress={() => {
+                        this.props.navigation.navigate('AddToCart',
+                        { product_id: this.props.productById.product_id,
+                          product_name: this.props.productById.product_name,
+                          product_price: this.props.productById.product_price,
+                          profileImage: this.props.productById.profileImage  
+                         }
+                        )}}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Beli Sekarang</Text>
                     </Button>
                     </FooterTab>

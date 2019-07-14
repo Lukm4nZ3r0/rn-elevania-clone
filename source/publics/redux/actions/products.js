@@ -25,13 +25,13 @@ export const getAllCartItems = (id) =>{
 
 export const addToCart = (productId,userId) =>{
   console.log('dari action', productId);
-  let a = [];
-  a.push({ field : 'products', value: [productId ] });
-  console.log('sebelum input', a);
+  // let a = [];
+  // a.push({ field : 'products', value: [productId ] });
+  console.log('sebelum input', productId);
   
   return{
     type: 'ADD_TO_CART',
-    payload : axios.patch(`${URL}/tmpCart/${userId}`, a )
+    payload : axios.patch(`${URL}/tmpCart/${userId}`, productId )
   }
 }
 

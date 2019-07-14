@@ -84,20 +84,20 @@ class Home extends Component{
                         <View style={{flex:5, justifyContent:'center'}}><TextInput placeholder="Cari di elevania" placeholderTextColor="white"/></View>
                     </View>
 
-                    {/* stock yg masukin ke cart */}
+                    {/* cart stock */}
                     <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Cart')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="cart-arrow-down"/>
-                        <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
+                        {/* <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>4</Text>
-                        </View>
+                        </View> */}
                     </TouchableOpacity>
 
-                    {/* notifikasi */}
+                    {/* notification */}
                     <TouchableOpacity style={{flex:1, alignItems:'center', justifyContent:'center'}} onPress={()=>navigation.navigate('Notifications')}>
                         <FontAwesome style={{fontSize:25, color:'white'}} name="bell"/>
-                        <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
+                        {/* <View style={{position:'absolute', width:20, height:20, borderRadius:15, backgroundColor:'white', top:0, right:0, alignItems:'center', justifyContent:'center'}}>
                             <Text style={{color:'orange', fontSize:15}}>6</Text>
-                        </View>
+                        </View> */}
                     </TouchableOpacity>
                 </View>
             ),
@@ -172,7 +172,7 @@ class Home extends Component{
                     <View style={{flexDirection:'row', backgroundColor:'white', padding:15}}>
                         {this.state.anotherFeature.map((feature,i)=>
                         <TouchableOpacity onPress={()=>this.setState({selectedFeature:feature.key})} key={feature.key} style={{flex:1,alignItems:'center', justifyContent:'center'}}>
-                            <View style={{height:25}}><Text style={{color: this.state.selectedFeature == i ? 'orange' : 'grey', fontSize:10}}>{feature.feature}</Text></View>
+                            <View style={{height:25}}><Text style={{color: this.state.selectedFeature == i ? 'orange' : 'grey', fontSize:13}}>{feature.feature}</Text></View>
                             <View style={{marginTop:10, width:'100%', height:1, backgroundColor: this.state.selectedFeature == i ? 'orange' : 'white'}} />
                         </TouchableOpacity>
                         )}
@@ -192,22 +192,30 @@ class Home extends Component{
                         </View>
                     </View>
                     {this.props.user.categories.map((item,i)=>
-
+                    item.productId.length>0 &&
+                    (
                     <View key={i} style={{flex:1,marginTop:10, backgroundColor:'white', width:'100%', height:'100%'}}>
-                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
-                            <View style={{flex:1, left:10}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
-                            <View style={{right:10}}><Text style={{color:'grey'}}>More</Text></View>
+                        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} style={{flexDirection:'row', alignItems:'center', justifyContent:'center', padding:10}}>
+                            <View style={{flex:1}}><Text style={{fontSize:20}}>{item.category_name}</Text></View>
+                            <View style={{right:0}}><Text style={{color:'grey'}}>More</Text></View>
                         </TouchableOpacity>
                         <ScrollView style={{padding:10, marginBottom:20}} horizontal={true}>
                             {item.productId.map((item,i)=>
                                 <TouchableOpacity key={i} style={{flex:1, width:150, height:250, backgroundColor:'white', borderWidth:1, borderColor:'#e8eaed', alignItems:'center', justifyContent:'center', padding:10}} onPress={()=>this.props.navigation.navigate('DetailProduct', { productId: item._id })}>
                                     <Image style={{width:100, height:100}} source={{uri: item.photo[0]}} />
-                                    <Text style={{color:'grey'}} numberOfLines={2}>{item.product_name}</Text>
-                                    <Text style={{fontSize:15, marginTop:15}}>Rp {item.product_price}</Text>
+                                    <View style={{width:'100%'}}>
+                                        <Text style={{color:'grey'}} numberOfLines={2}>{item.product_name}</Text>
+                                        <Text style={{color:'#dce1e6', fontSize:15, marginTop:15}}>Rp {Math.ceil(item.product_price*100/(100-30))}</Text>
+                                        <Text style={{fontSize:15, marginTop:5}}>Rp {item.product_price}</Text>
+                                        <View style={{backgroundColor:'orange', padding:3, width:'40%', marginTop:10, alignItems:'center', justifyContent:'center'}}>
+                                            <Text style={{color:'white'}}>30%</Text>
+                                        </View>
+                                    </View>
                                 </TouchableOpacity>
                             )}
                         </ScrollView>
                     </View>
+                    )
                     )}
                 </ScrollView>
             </View>

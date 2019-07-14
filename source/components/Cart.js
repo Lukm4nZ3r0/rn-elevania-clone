@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} from 'react-native'
+import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView, AsyncStorage} from 'react-native'
 import { Tab, CheckBox, Header, Input,Title, Footer, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, Card, Right, ListItem, Left} from 'native-base';
 import Address from './Address.js'
 import InfoAccount from './InfoAccount'
@@ -7,6 +7,8 @@ import RoundCheckbox from 'rn-round-checkbox';
 import NumericInput from 'react-native-numeric-input';
 import { getAllCartItems } from '../publics/redux/actions/products'
 import {connect} from 'react-redux'
+import axios from 'axios'
+import URL from '../publics/redux/actions/URL'
 
 class Cart extends Component{
     state = {
@@ -78,7 +80,7 @@ class Cart extends Component{
       //     }
       // }
       // this.cartLast()
-    }
+}
 
     toggleCheckbox(id) {
       const changedCheckbox = this.state.dataCartUnique.find((cb) => cb._id === id);

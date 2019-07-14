@@ -96,12 +96,27 @@ const images = [
     ];
 
 class SplashScreen extends React.Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            splashScreen: true
+        }
+    }
     static navigationOptions = {
         header:null
     }
+    componentDidMount(){
+        setTimeout(()=>{
+            this.setState({splashScreen:false})
+        },1000)
+    }
     render(){
+        const {width,height} = Dimensions.get('window')
         return(
             <View>
+                {this.state.splashScreen &&
+                <Image style={{width:width, height:height, position:'relative'}} source={{uri:'https://i.pinimg.com/564x/4e/68/0c/4e680ce24700f1b122aad444f09a726f.jpg'}}/>
+                }
                 <BackgroundCarousel images={images} navigation={this.props.navigation}/>
             </View>
         )

@@ -19,7 +19,7 @@ export const getProductById = (id) => {
 export const getAllCartItems = (id) =>{
   return{
     type: 'GET_CART_ITEMS',
-    payload: axios.get(`http://192.168.6.163:3000/tmpCart/users/${id}`)
+    payload: axios.get(`${URL}/tmpCart/users/${id}`)
   }
 }
 
@@ -31,7 +31,7 @@ export const addToCart = (productId,userId) =>{
   
   return{
     type: 'ADD_TO_CART',
-    payload : axios.patch(`http://192.168.6.163:3000/tmpCart/${userId}`, productId )
+    payload : axios.patch(`${URL}/tmpCart/${userId}`, productId )
   }
 }
 
@@ -45,6 +45,6 @@ export const checkoutPembelian = ({cartItem, userId, total}) => {
   }
   return {
     type: 'CHECKOUT_PEMBELIAN',
-    payload: axios.post(`http://192.168.6.163:3000/transactions/`, body)
+    payload: axios.post(`${URL}/transactions/`, body)
   }
 }

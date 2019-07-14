@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView} from 'react-native'
+import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView, AsyncStorage} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
@@ -109,7 +109,7 @@ class DetailProduct extends Component{
                             </View>
                             <View style={{flex:1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <FontAwesome style={{fontSize:20, color:'#000000'}} name="share-alt"/>
-                                <FontAwesome style={{marginLeft: 10, fontSize:20, color:'#d9d9d9'}} name="heart"/>
+                                <TouchableOpacity><FontAwesome style={{marginLeft: 10, fontSize:20, color:'#d9d9d9'}} name="heart"/></TouchableOpacity>
                             </View>
                         </View>
                     </View>

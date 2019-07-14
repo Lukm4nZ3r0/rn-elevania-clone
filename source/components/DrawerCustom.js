@@ -23,7 +23,7 @@ class DrawerCustom extends Component{
     }
     
     componentDidMount(){
-        if(this.props.user.user[0]==undefined){
+        if(this.props.user.user[0]===undefined){
             AsyncStorage.getItem('user').then((userData)=>{
                 axios.get(`${URL}/users/${userData}`).then((response)=>{
                     console.log('drawerCustom data :',response.data.user[0])
@@ -61,7 +61,7 @@ class DrawerCustom extends Component{
                 <View style={{flex:1, alignItems: 'center',justifyContent: 'center',width:'100%',padding:25, backgroundColor:'#374d6b', }}>
                     <TouchableOpacity style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}} onPress={()=>this.props.navigation.navigate('Profile')}>
                         <View style={{flex:1}}>
-                            <Image style={{width:50, height:50, borderRadius:40}} source={{uri:this.state.profileImage !==''? this.state.profileImage : 'https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png'}} />
+                            <Image style={{width:50, height:50, borderRadius:40}} source={{uri:this.state.profileImage !==undefined? this.state.profileImage : 'https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png'}} />
                         </View>
                         <View style={{flex:3}}>
                             <Text style={{color:'white', fontSize:20}}>{this.state.name}</Text>
@@ -74,11 +74,11 @@ class DrawerCustom extends Component{
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="home" />
                         <Text style={{fontSize:12, color:'white'}}>Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Profile')}>
+                    <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:0.5, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Profile')}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="user" />
                         <Text style={{fontSize:12, color:'white'}}>My elevenia</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:1, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Notifications')}>
+                    <TouchableOpacity style={{flex:1,padding:15, alignItems:'center', justifyContent:'center', borderWidth:0.5, borderColor:'#AAAAAA', height:80}} onPress={()=>this.props.navigation.navigate('Notifications')}>
                         <FontAwesome style={{ fontSize:35, color:'white'}} name="bell" />
                         {/* <View style={{position:'absolute', width:25, height:25, borderRadius:15, backgroundColor:'#FD7D1D', alignItems:'center', justifyContent:'center', top:10, right:20}}>
                             <Text style={{fontSize:13, color:'white'}}>6</Text>

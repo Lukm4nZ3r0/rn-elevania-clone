@@ -25,17 +25,17 @@ class Cart extends Component{
         this.props.dispatch(getAllCartItems(this.props.user.user[0]._id)).then(()=>{
           this.setState({dataCart:this.props.products.cartItem})
         }).catch(()=>{
-          console.log('server bermasalah')
+          console.warn('server bermasalah')
         })
       }
       else{
         console.warn('props user',this.props.user.user[0])
         AsyncStorage.getItem('user').then((userData)=>{
           axios.get(`${URL}/tmpCart/users/${userData}`).then((response)=>{
-            console.log('response di cart: ',response.data.data.products)
+            console.warn('response di cart: ',response)
             this.setState({dataCart:response.data.data.products})
           }).catch(()=>{
-            console.log('response cart tidak diterima')
+            console.warn('response cart tidak diterima')
           })
         })
       }

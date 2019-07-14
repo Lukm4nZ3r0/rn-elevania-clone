@@ -106,7 +106,8 @@ class Wishlist extends Component{
             <ScrollView style={{flex:1, width:'100%', padding:10}}>
             { this.props.wishlist == null ?  
             <View style={[styles.container, styles.horizontal]}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                {/* <ActivityIndicator size="large" color="#0000ff" /> */}
+                <Text>Tidak ada Data</Text>
             </View> 
             : 
             <FlatList

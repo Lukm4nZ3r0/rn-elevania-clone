@@ -24,14 +24,13 @@ export const getAllCartItems = (id) =>{
 }
 
 export const addToCart = (productId,userId) =>{
-  console.log('dari action', productId);
-  let a = [ { field : products, value: [productId ] } ]
+  console.log('dari action');
+  
   return{
     type: 'ADD_TO_CART',
-    payload : axios.patch(`http://192.168.6.163:3000/tmpCart/${userId}`,
-    {
-        a
-     }
-     )
+    payload : axios.patch(`http://192.168.6.163:3000/tmpCart/${userId}`,[
+      {field: products, value: [productId]}
+    ]
+    )
   }
 }

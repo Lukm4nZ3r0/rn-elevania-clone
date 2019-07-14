@@ -15,16 +15,73 @@ class Cart extends Component{
       selectedCarts: [],
       change: false,
       dataCart: [],
+      dataCartUnique:[]
     }
+    
+    // onlyUnique(value, index, self) { 
+    //   return self.indexOf(value) === index;
+    // }
+    
+    uniqueCart(){
+      // let unique = new Set (this.state.dataCart)
+      // let uniqueCart = [...unique]
+      // this.setState({dataCartUnique:uniqueCart})
+      const result = [];
+      const map = new Map();
+      for (const item of this.state.dataCart) {
+          if(!map.has(item._id)){
+              map.set(item._id, true);    // set any value to Map
+              result.push({
+                  checked : false,
+                  _id: item._id,
+                  product_name: item.product_name,
+                  photo: item.photo[0],
+                  product_price: item.product_price,
+                  qty : 0
+              });
+          }
+      }
+      this.setState({dataCartUnique:result})
+      let newdataCartUnique = this.state.dataCartUnique.slice() //copy the array
+      for (i = 0; i < this.state.dataCartUnique.length; i++) { 
+        for (j = 0; j < this.state.dataCart.length; j++) { 
+          if (this.state.dataCartUnique[i]._id == this.state.dataCart[j]._id){
+            newdataCartUnique[i].qty = this.state.dataCartUnique[i].qty+1 //execute the manipulations
+            // this.state.dataCartUnique[i].qty = this.state.dataCartUnique[i].qty+1
+          }
+        }
+        this.setState({dataCartUnique: newdataCartUnique})
+      }
+    }
+
+    // cartLast(){
+      
+    // }
 
     componentDidMount(){
       this.props.dispatch(getAllCartItems(this.props.user.user[0]._id)).then(()=>{
         this.setState({dataCart:this.props.products.cartItem})
+        this.uniqueCart()
       })
+      // let unique = this.state.dataCart.filter(this.onlyUnique);
+      // const result = [];
+      // const map = new Map();
+      // for (const item of this.state.dataCart) {
+      //     if(!map.has(item._id)){
+      //         map.set(item._id, true);    // set any value to Map
+      //         result.push({
+      //             _id: item._id,
+      //             product_name: item.product_name,
+      //             product_price: item.product_price,
+      //             photo: item.photo[0]
+      //         });
+      //     }
+      // }
+      // this.cartLast()
     }
 
     toggleCheckbox(id) {
-      const changedCheckbox = this.state.dataCart.find((cb) => cb._id === id);
+      const changedCheckbox = this.state.dataCartUnique.find((cb) => cb._id === id);
     
       changedCheckbox.checked = !changedCheckbox.checked;
     
@@ -35,7 +92,7 @@ class Cart extends Component{
     }
 
     toggleCheckboxAll() {
-      this.state.dataCart.map((item, index) => {
+      this.state.dataCartUnique.map((item, index) => {
         return( item.checked = !item.checked)
       })
       
@@ -105,7 +162,8 @@ class Cart extends Component{
     }
 
     render(){
-      console.log('datacart'+this.props.products.cartItem)
+      console.log('datacart unk',this.state.dataCartUnique)
+      // console.log('datacart'+this.props.products.cartItem)
         return(
           <Container>
             <ScrollView>
@@ -117,11 +175,21 @@ class Cart extends Component{
               { this.renderElementChange() }
             </Right>
             </ListItem>
-          {this.state.dataCart.map((item, index) => {
+            {/* {this.state.items.filter(items => this.state.dataCart.map(item, index)
+                          .indexOf(items._id) !== -1 )
+            .map(item =>{ */}
+          {this.state.dataCartUnique.map((item, index) => {
+            // {this.state.dataCartUnique.map((uniq, indexUnique) => {
+            //   if(item._id === uniq._id) {
+            //     continue;
+            //   }
+            //   console.log(item._id)
+            // }}
             if (item.checked == true){
               // this.state.total = this.state.total + (item.product_price * item.amount)
-              this.state.total = this.state.total + item.product_price
-              this.props.products.dataCheckOut.concat(this.state.dataCart[index])
+              this.state.total = this.state.total + item.product_price * item.qty
+              // this.props.products.dataCheckOut.concat(this.state.dataCart[index])
+              this.props.products.dataCheckOut.concat(this.state.dataCartUnique[index])
             }
             if (item.checked == false){
               // this.state.total = this.state.total + (item.product_price * item.amount)
@@ -133,14 +201,20 @@ class Cart extends Component{
             <TouchableOpacity>
               <Icon style={{fontSize:30,color:'#ff8040'}} name='ios-close-circle-outline' />
             </TouchableOpacity>
-            <Image style={{width:100, height:100}} source={{uri:item.photo[0]}}/>
+            <Image style={{width:100, height:100}} source={{uri:item.photo}}/>
             <Body>
               <Text>{item.product_name}</Text>
-              {/* <NumericInput style={{color:'grey', fontSize:15}} 
-                onChange={value => item.amount= value }
-                value={item.amount}/> */}
-              {/* <Text style={{fontWeight:'bold'}}>Rp {item.product_price * item.amount}</Text> */}
-              <Text style={{fontWeight:'bold'}}>Rp {parseInt(item.product_price)}</Text>
+              <NumericInput style={{color:'grey', fontSize:15}} 
+                // onChange={value => item.qty= value }
+                value={item.qty}
+                onChange={(value)=>{
+                  let newdataCartUnique = this.state.dataCartUnique.slice() //copy the array
+                  newdataCartUnique[index].qty=value
+                  this.setState({dataCartUnique:newdataCartUnique})
+                }}
+              />
+              <Text style={{fontWeight:'bold'}}>Rp {parseInt(item.product_price) * item.qty}</Text>
+              {/* <Text style={{fontWeight:'bold'}}>Rp {parseInt(item.product_price)}</Text> */}
             </Body> 
             </ListItem>
             )}
@@ -154,12 +228,12 @@ class Cart extends Component{
                 checked={item.checked}
                 onValueChange={() => this.toggleCheckbox(item._id)}
             />
-            <Image style={{width:100, height:100}} source={{uri:item.photo[0]}}/>
+            <Image style={{width:100, height:100}} source={{uri:item.photo}}/>
             <Body>
               <Text>{item.product_name}</Text>
-              {/* <Text style={{color:'grey', fontSize:15}}>x{item.amount}</Text> */}
-              {/* <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.product_price}</Text> */}
-              <Text style={{fontWeight:'bold'}}>Rp {item.product_price}</Text>
+              <Text style={{color:'grey', fontSize:15}}>x{item.qty}</Text>
+              <Text style={{fontWeight:'bold'}}>Rp {parseInt(item.product_price) * item.qty}</Text>
+              {/* <Text style={{fontWeight:'bold'}}>Rp {item.product_price}</Text> */}
             </Body>
           </ListItem>)}
           })}

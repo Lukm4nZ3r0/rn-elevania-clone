@@ -41,16 +41,16 @@ class DetailProduct extends Component{
         this.props.dispatch(getProductById(productId)).then(()=>this.setState({carouselItems:this.props.productById.Photo}))
     }
 
-    addCart = () => {
-        this.props.dispatch(
-          addToCart(this.props.productById.product_id, this.props.user.user[0]._id),
-        )
-        console.log('sukses pro : '+this.props.productById.product_id);
-        console.log('sukses user : '+this.props.user.user[0]._id);
+    // addCart = () => {
+    //     this.props.dispatch(
+    //       addToCart(this.props.productById.product_id, this.props.user.user[0]._id),
+    //     )
+    //     console.log('sukses pro : '+this.props.productById.product_id);
+    //     console.log('sukses user : '+this.props.user.user[0]._id);
         
-        const { navigation } = this.props;
-        navigation.navigate('Home')
-    }
+    //     const { navigation } = this.props;
+    //     navigation.navigate('Home')
+    // }
 
     render(){
         console.log(this.props.productById.productId)
@@ -208,7 +208,14 @@ class DetailProduct extends Component{
                 <Footer >
                     <FooterTab>
                     <Button full style={{backgroundColor: '#ff8040'}} 
-                    onPress={() => {this.addCart()}}>
+                    onPress={() => {
+                        this.props.navigation.navigate('AddToCart',
+                        { product_id: this.props.productById.product_id,
+                          product_name: this.props.productById.product_name,
+                          product_price: this.props.productById.product_price,
+                          profileImage: this.props.productById.profileImage  
+                         }
+                        )}}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Beli Sekarang</Text>
                     </Button>
                     </FooterTab>

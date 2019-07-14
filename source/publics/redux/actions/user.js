@@ -82,6 +82,7 @@ export const postProduct = (data) => {
     return {
         type: 'POST_NEW_PRODUCT',
         payload: axios.post(`${URL}/products/`, upload)
+
     }
 }
 
@@ -89,6 +90,7 @@ export const profile = (id) => {
     return{
         type: 'GET_PROFILE',
         payload: axios.get(`${URL}/users/${id}`)
+
     }
 }
 
@@ -96,5 +98,16 @@ export const logout = () =>{
     return {
         type: 'LOGOUT',
         payload: false
-   }
+
+    }
+}
+
+export const editAlamat = (data, id) => {
+    console.log(data);
+ 
+    return {
+        type: 'PATCH_EDIT_ALAMAT',
+        payload: axios.patch(`${URL}/users/${id}`, {alamat: data})
+    }
+
 }

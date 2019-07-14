@@ -24,13 +24,27 @@ export const getAllCartItems = (id) =>{
 }
 
 export const addToCart = (productId,userId) =>{
-  console.log('dari action');
+  console.log('dari action', productId);
+  // let a = [];
+  // a.push({ field : 'products', value: [productId ] });
+  console.log('sebelum input', productId);
   
   return{
     type: 'ADD_TO_CART',
-    payload : axios.patch(`http://192.168.6.163:3000/tmpCart/${userId}`,[
-      {field: products, value: [productId]}
-    ]
-    )
+    payload : axios.patch(`http://192.168.6.163:3000/tmpCart/${userId}`, productId )
+  }
+}
+
+export const checkoutPembelian = ({cartItem, userId, total}) => {
+  console.log(cartItem);
+  
+  const body = {
+    products: cartItem, 
+    id_user: userId, 
+    total: total
+  }
+  return {
+    type: 'CHECKOUT_PEMBELIAN',
+    payload: axios.post(`http://192.168.6.163:3000/transactions/`, body)
   }
 }

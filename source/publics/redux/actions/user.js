@@ -49,7 +49,15 @@ export const getWishList = (id) => {
         payload: axios.get(`${URL}/wishlist/${id}`)
     }
 }
-
+export const addWishList = (id,wishlist) => {
+    return{
+        type: 'ADD_WISHLIST',
+        payload: axios.patch(`${URL}/wishlist/${id}`,
+        [
+            {"field": "productId", "value": wishlist}
+        ])
+    }
+}
 export const getProductByCategory = (idCategory) =>{
     return{
         type: 'GET_PRODUCT_BY_CATEGORY',

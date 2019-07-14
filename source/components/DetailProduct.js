@@ -4,6 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
 import { getProductById,addToCart } from '../publics/redux/actions/products'
+import { addWishList } from '../publics/redux/actions/user';
 import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
@@ -13,8 +14,14 @@ class DetailProduct extends Component{
         super(props)
         this.state = {
             activeIndex:0,
-            carouselItems:[]
+            carouselItems:[],
+            colorFavorite : 'red'
         }
+        // const { navigation } = this.props;
+        // const productId = navigation.getParam('productId', '');
+        // if (this.props.user.wishlist.productId.find( (id) => { id._id == productId }) == undefined ) {
+        //     this.setState({ colorFavorite: '#d9d9d9' })
+        // }
     }
     static navigationOptions = ({navigation}) => {
         return {
@@ -39,15 +46,27 @@ class DetailProduct extends Component{
         const { navigation } = this.props;
         const productId = navigation.getParam('productId', '');
         this.props.dispatch(getProductById(productId)).then(()=>this.setState({carouselItems:this.props.productById.Photo}))
+        
+        if (this.props.user.wishlist.productId.find( id => { return id._id == productId }) == undefined ) {
+            this.setState({ colorFavorite: '#d9d9d9' })
+        }
     }
-
+    setFavorite = (id, color) => {
+        if (color == 'red'){
+            let newWishlist = this.props.user.wishlist.productId.filter(product => product._id != id )
+            this.setState({colorFavorite: '#d9d9d9' },() => {
+                this.props.dispatch(addWishList(this.props.user.wishlist._id,newWishlist))} )
+        } else {
+            this.setState({colorFavorite: 'red' },() => {
+                let newWishlist = [...this.props.user.wishlist.productId,id]
+                this.props.dispatch(addWishList(this.props.user.wishlist._id, newWishlist))} )
+        }
+    }
+        
     addCart = () => {
         this.props.dispatch(
           addToCart(this.props.productById.product_id, this.props.user.user[0]._id),
         )
-        console.log('sukses pro : '+this.props.productById.product_id);
-        console.log('sukses user : '+this.props.user.user[0]._id);
-        
         const { navigation } = this.props;
         navigation.navigate('Home')
     }
@@ -56,6 +75,7 @@ class DetailProduct extends Component{
         console.log(this.props.productById.productId)
         data = this.props.productById.numberOfProduct;
         let productNo = data;
+       
         return(
             <View style={{flex:1}}>
                 <Header androidStatusBarColor="#ff8040" style={{backgroundColor : '#ff8040'}}>
@@ -109,7 +129,10 @@ class DetailProduct extends Component{
                             </View>
                             <View style={{flex:1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <FontAwesome style={{fontSize:20, color:'#000000'}} name="share-alt"/>
-                                <FontAwesome style={{marginLeft: 10, fontSize:20, color:'#d9d9d9'}} name="heart"/>
+                                <TouchableOpacity onPress={()=> this.setFavorite(this.props.productById.product_id, this.state.colorFavorite)}>
+                                    <FontAwesome style={{marginLeft: 10, fontSize:20, color:this.state.colorFavorite }} name="heart"/>
+                                </TouchableOpacity>
+                                
                             </View>
                         </View>
                     </View>

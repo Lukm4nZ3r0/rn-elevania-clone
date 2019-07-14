@@ -4,6 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 //redux
 import {getAllCategories,profile} from '../publics/redux/actions/user'
+import {getWishList} from '../publics/redux/actions/user';
 import {connect} from 'react-redux'
 
 const {height, width} = Dimensions.get('window')
@@ -110,7 +111,16 @@ class Home extends Component{
     }
     componentWillMount(){
         this.props.dispatch(getAllCategories())
-
+        if (this.props.user.user[0] != null) {
+            this.props.dispatch(getWishList(this.props.user.user[0]._id))
+        } else {
+            AsyncStorage.getItem('user').then((keyValue) => {
+                this.props.dispatch(getWishList(keyValue))
+            },(error) => {
+                console.log(error)
+            });
+            
+        }
         this.intervalCarousel = setInterval(()=>{
             this.nextCarouselImage()
         },5000)

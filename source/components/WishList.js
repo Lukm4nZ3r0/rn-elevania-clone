@@ -26,9 +26,6 @@ class WishLists extends Component{
             currentScreen:0,
         }
     }
-    componentDidMount(){
-        this.props.dispatch(getWishList(this.props.user.user[0]._id))
-    }
     
     static navigationOptions = ({ navigation }) => ({
         headerTitle: navigation.getParam('title')|| 'Wishlist',
@@ -111,13 +108,12 @@ class Wishlist extends Component{
                      <View style={{justifyContent: 'center', flex:2, marginBottom: 5}}>
                          <Text style={{fontSize: 16}} numberOfLines={2}>{/*item.productName*/item.product_name}</Text>
                          <Text style={{fontSize: 14, color: 'red', fontWeight: 'bold'}}>Rp {/*item.price*/item.product_price}</Text><View style={{flexDirection:'row'}}>
-                         <Icon name='star' style={{color: 'white'}}/>
-                         <Icon name='star' style={{color: 'green'}}/>
-                         <Icon name='star' style={{color: 'red'}}/>
                          <Icon name='star' style={{color: 'yellow'}}/>
                          <Icon name='star' style={{color: 'yellow'}}/>
-                         </View>
-                         
+                         <Icon name='star' style={{color: 'yellow'}}/>
+                         <Icon name='star' style={{color: 'yellow'}}/>
+                         <Icon name='star' style={{color: 'yellow'}}/>
+                    </View>
                      </View>
                  </View>
              </TouchableOpacity>

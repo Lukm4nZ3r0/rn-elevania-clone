@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView} from 'react-native'
+import {View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView, AsyncStorage} from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
@@ -51,6 +51,7 @@ class DetailProduct extends Component{
             this.setState({ colorFavorite: '#d9d9d9' })
         }
     }
+<<<<<<< HEAD
     setFavorite = (id, color) => {
         if (color == 'red'){
             let newWishlist = this.props.user.wishlist.productId.filter(product => product._id != id )
@@ -70,9 +71,11 @@ class DetailProduct extends Component{
         const { navigation } = this.props;
         navigation.navigate('Home')
     }
+=======
+>>>>>>> origin/v2
 
     render(){
-        console.log(this.props.productById.productId)
+        console.log('ini adalah product_id',this.props.productById.product_id)
         data = this.props.productById.numberOfProduct;
         let productNo = data;
        
@@ -129,10 +132,14 @@ class DetailProduct extends Component{
                             </View>
                             <View style={{flex:1, flexDirection: 'row', justifyContent: 'flex-end'}}>
                                 <FontAwesome style={{fontSize:20, color:'#000000'}} name="share-alt"/>
+<<<<<<< HEAD
                                 <TouchableOpacity onPress={()=> this.setFavorite(this.props.productById.product_id, this.state.colorFavorite)}>
                                     <FontAwesome style={{marginLeft: 10, fontSize:20, color:this.state.colorFavorite }} name="heart"/>
                                 </TouchableOpacity>
                                 
+=======
+                                <TouchableOpacity><FontAwesome style={{marginLeft: 10, fontSize:20, color:'#d9d9d9'}} name="heart"/></TouchableOpacity>
+>>>>>>> origin/v2
                             </View>
                         </View>
                     </View>
@@ -231,7 +238,14 @@ class DetailProduct extends Component{
                 <Footer >
                     <FooterTab>
                     <Button full style={{backgroundColor: '#ff8040'}} 
-                    onPress={() => {this.addCart()}}>
+                    onPress={() => {
+                        this.props.navigation.navigate('AddToCart',
+                        { product_id: this.props.productById.product_id,
+                          product_name: this.props.productById.product_name,
+                          product_price: this.props.productById.product_price,
+                          profileImage: this.props.productById.profileImage  
+                         }
+                        )}}>
                         <Text style={{color: 'white', fontWeight: 'bold'}}>Beli Sekarang</Text>
                     </Button>
                     </FooterTab>

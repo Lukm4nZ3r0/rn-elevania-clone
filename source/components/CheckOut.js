@@ -43,7 +43,8 @@ class CheckOut extends Component {
       currentPage: 0,
       total : 0,
       date  : '',
-      dataCart: []
+      dataCart: [],
+      checkOutProduct:[]
     }
   }
   
@@ -110,7 +111,7 @@ onCheckoutButton(){
       },
       {text: 'OK', onPress: () => {
         const data = {
-          cartItem: [this.props.products.cartItem[0]._id],
+          cartItem:  this.state.checkOutProduct,
           userId: this.props.user.user[0]._id,
           total: this.state.total
         }
@@ -170,10 +171,9 @@ render () {
                   </CardItem>
                   <View style={{height: '82%'}}>
                       <View style={{marginLeft:'8%', flexDirection:'column'}}>
-                      <Text>jalan</Text>
-                      <Text>kota</Text>
-                      <Text>provinsi</Text>
-                      <Text>no telepon</Text>
+                      <Text>Jl. Kaliurang, KM 10</Text>
+                      <Text>Sleman</Text>
+                      <Text>YogyaKarta</Text>
                       </View>
                   </View>
                 <Footer style={{backgroundColor:'white'}}>
@@ -196,17 +196,17 @@ render () {
                     </CardItem>
                     <View style={{height: '82%'}}>
                     <ScrollView >
-                    {(this.props.products.cartItem).map((item, index) => {
+                    {(this.props.products.dataCheckOut).map((item, index) => {
                     // this.state.total = this.state.total + (item.price * item.amount)
-                    this.state.total = this.state.total + (item.product_price)
+                    this.state.total = this.state.total + item.product_price * item.qty
                     return (
                     <ListItem>
-                    <Image style={{width:100, height:100}} source={{uri:item.photo[0]}}/>
+                    <Image style={{width:100, height:100}} source={{uri:item.photo}}/>
                     <Body>
                       <Text>{item.product_name}</Text>
-                      {/* <Text>{item.amount}</Text> */}
+                      <Text>x{item.qty}</Text>
                       {/* <Text style={{fontWeight:'bold'}}>Rp {item.amount * item.price}</Text> */}
-                      <Text style={{fontWeight:'bold'}}>Rp {item.product_price}</Text>
+                      <Text style={{fontWeight:'bold'}}>Rp {item.product_price * item.qty}</Text>
                     </Body>
                   </ListItem>)
                   })}
@@ -234,16 +234,21 @@ render () {
                     </View>
                     </CardItem>
                     <View style={{height: '72%'}}>
-                    {(this.props.products.cartItem).map((item, index) => {
+                    {(this.props.products.dataCheckOut).map((item, index) => {
+                   this.state.checkOutProduct.push(item._id)
                    
                     return (
-                      <View style={{marginLeft:'5%', flexDirection:'row'}}>
+                      <View style={{marginLeft:'5%'}}>
                       <Text>{item.product_name}</Text>
+                      <Text> x{item.qty}</Text>
                       {/* <Text> x{item.amount}</Text> */}
-                      <Text style={{fontWeight:'bold'}}> : Rp { item.product_price}</Text>
+                      <Text style={{fontWeight:'bold'}}>Rp {item.product_price * item.qty}</Text>
                       </View>
                     )
-                  })}
+                  })
+                  
+                  }
+                  
                   </View>
                    <ListItem>
             <Left>

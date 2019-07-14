@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {StyleSheet,Image,View,ScrollView,Text,TouchableOpacity,FlatList, ActivityIndicator} from 'react-native'
+import {StyleSheet,Image,View,ScrollView,Text,TouchableOpacity,FlatList, ActivityIndicator, AsyncStorage} from 'react-native'
 import { Icon, ListItem} from 'native-base';
 import {connect} from 'react-redux';
 
-import {getWishList} from '../publics/redux/actions/user';
+import {getWishList} from '../publics/redux/actions/user'
 class WishLists extends Component{
 
     constructor(props){
@@ -88,15 +88,23 @@ class Wishlist extends Component{
             ]
         }
     }
+    componentDidMount(){
+        AsyncStorage.getItem('user').then((response)=>{
+            console.log('USER ID : ',response)
+        })
+    }
     render(){
         const {product} = this.state
        // const product=this.props.wishlist.productId
        // console.warn(this.props.wishlist)
         return(
             <ScrollView style={{flex:1, width:'100%', padding:10}}>
-                { this.props.wishlist == null ?  <View style={[styles.container, styles.horizontal]}>
-                    <ActivityIndicator size="large" color="#0000ff" />
-                </View> : 
+            { this.props.wishlist == null ?  
+            <View style={[styles.container, styles.horizontal]}>
+                {/* <ActivityIndicator size="large" color="#0000ff" /> */}
+                <Text>Tidak ada Data</Text>
+            </View> 
+            : 
             <FlatList
             data={this.props.wishlist.productId}
              renderItem={({item}) => (

@@ -1,25 +1,42 @@
 import React, {Component} from 'react'
-import {View, Text, TouchableOpacity} from 'react-native'
+import {View, Text, TouchableOpacity,AsyncStorage} from 'react-native'
 import NumericInput from 'react-native-numeric-input';
 
 import {connect} from 'react-redux'
-import {addToCart} from '../publics/redux/actions/products'
+import {addToCart,getAllCartItems} from '../publics/redux/actions/products'
 
 class AddToCart extends Component{
     constructor(props){
         super(props)
         this.state = {
-            stock:1,
-            product_id: props.navigation.state.params.productId.product_id,
-            product_name: props.navigation.state.params.productId.product_name,
-            product_price: props.navigation.state.params.productId.product_price,
-            profileImage: props.navigation.state.params.productId.profileImage
+            qty:1,
+            // product_idQty:[],
+            product_id: props.navigation.state.params.product_id,
+            product_name: props.navigation.state.params.product_name,
+            product_price: props.navigation.state.params.product_price,
+            profileImage: props.navigation.state.params.profileImage,
+            userId:''
         }
     }
 
     addCart = () => {
+        let product_idQty = [];
+        let product_idQtyLast=[];
+
+        // Set state
+        for (i = 0; i < this.props.cartItem.length; i++) { 
+            product_idQty.push(this.props.cartItem[i]._id)
+        }
+
+        for (i = 0; i < this.state.qty; i++) { 
+            product_idQty.push(this.props.productById.product_id)
+        }
+        
+        console.log('sebelum cart id',product_idQty)
+        product_idQtyLast.push({ field : 'products', value: product_idQty})
+        console.log('sebelum cart',product_idQtyLast)
         this.props.dispatch(
-          addToCart([this.props.productById.product_id], this.props.user.user[0]._id, this.state.stock),
+            addToCart(product_idQtyLast, this.props.user.user[0]._id),
         )
         const { navigation } = this.props;
         navigation.navigate('Home')
@@ -36,18 +53,17 @@ class AddToCart extends Component{
     }
     componentDidMount(){
         console.warn('state global cart: ',this.props.cartItem)
-    }
-    addToCart = () =>{
-        const {stock,product_id,product_name,product_price,profileImage} = this.state
-        const dataCart = {
-            stock:stock,
-            product_id:product_id,
-            product_name:product_name,
-            product_price:product_price*stock,
-            profileImage:profileImage,
-            userId:this.props.user.user[0]._id
+        console.log('userId dari redux: ',this.props.user.user[0]._id)
+        if(this.props.user.user[0]._id===undefined){
+            AsyncStorage.getItem('user').then((userData)=>{
+                this.props.dispatch(getAllCartItems(userData))
+                this.setState({userId:userData})
+            })
         }
-        this.props.dispatch(addToCart(dataCart))
+        else{
+            this.props.dispatch(getAllCartItems(this.props.user.user[0]._id))
+            this.setState({userId:this.props.user.user[0]._id})
+        }
     }
     render(){
         // console.log('idproduct'+this.props.productById.product_id)
@@ -58,12 +74,12 @@ class AddToCart extends Component{
                     <Text style={{fontSize:18, fontWeight:'bold', marginBottom:10, marginTop:15, color:'orange'}}>{this.state.product_name}</Text>
                     <View style={{alignItems:'center', flexDirection:'row', alignItems:'center', backgroundColor:'white', alignItems:'center', justifyContent:'center', height:'100%'}}>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
-                            <Text style={{color:'#ff8040'}}>Rp {this.state.product_price * this.state.stock}</Text>
+                            <Text style={{color:'#ff8040'}}>Rp {this.state.product_price * this.state.qty}</Text>
                         </View>
                         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
                             <NumericInput 
-                                value={this.state.stock}
-                                onChange={(value)=>this.setState({stock:value})}
+                                value={this.state.qty}
+                                onChange={(value)=>this.setState({qty:value})}
                             />
                         </View>
                     </View>

@@ -4,6 +4,7 @@ const initialState = {
   productById: [],
   totalPrice:0,
   cartItem:[],
+  cartItemProductId:[],
   dataCheckOut: []
 }
 export default products = (state = initialState, action)=>{
@@ -38,11 +39,15 @@ export default products = (state = initialState, action)=>{
               productsByCategory: action.payload.data.data
           }
       case 'GET_CART_ITEMS_FULFILLED':
-        //   console.log('cart fulfil')
+          console.log('cart fulfil',action.payload.data.data.products)
           return{
               ...state,
               cartItem: action.payload.data.data.products,
-          }
+              dataCheckOut: []
+            //   cartItemProductId: action.payload.data.data.products._id,
+            }
+          
+          
       case 'ADD_TO_CART_FULFILLED':
           return{
               ...state,

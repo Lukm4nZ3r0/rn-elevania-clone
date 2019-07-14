@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView} from 'react-native'
+import {View, FlatList, Image, List, TextInput, TouchableOpacity, ScrollView,AsyncStorage} from 'react-native'
 import { Tab, Header,NumberInput, Input, Left, Right, Title, TabHeading, Tabs, CardItem, Layout, Body, Text, Button, Container, Picker, Content, Form, Item, Icon, Label, ListItem} from 'native-base';
 import SwitchToggle from 'react-native-switch-toggle';
 import ImagePicker from 'react-native-image-picker';
@@ -23,9 +23,15 @@ class SellProduct extends Component{
         stock:0,
         weight:0,
         warranty:0,
-        sellerID: '5d26b629bd4fdb0ab0e4ba13'
+        sellerID: ''
 
       };
+
+      componentDidMount(){
+        AsyncStorage.getItem('user').then((value)=>{
+          this.setState({sellerID:value})
+        })
+      }
       
       chooseFile = () => {
         let options = {
@@ -167,12 +173,7 @@ class SellProduct extends Component{
               <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput value={this.state.weight} onChange={(value)=>this.setState({weight:value})}/></View>
               <Text style={{flex:1}}>Kg</Text>
             </Item>
-
-            <Item >
-              <Label style={{flex:1}}>Garansi  :</Label>
-              <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><NumericInput value={this.state.warranty} onChange={(value)=>this.setState({warranty:value})}/></View>
-              <Text style={{flex:1}}>Tahun</Text>
-            </Item>
+            
             <Item >
 
               <Picker
